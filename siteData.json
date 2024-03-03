@@ -8,7 +8,7 @@
         "about-us": "About Us",
         "project-team": "Project team",
         "john-doe": "John Doe",
-        "jane-doe": "Jane Doe",
+        "shang-feiyang": "Shang Feiyang",
         "tan-jia-jun": "Tan Jia Jun",
         "jean-doe": "Jean Doe",
         "james-doe": "James Doe"
@@ -132,6 +132,14 @@
       "title": "",
       "headings": {
         "addressbook-level-3": "AddressBook Level-3"
+      },
+      "headingKeywords": {}
+    },
+    {
+      "src": "team/feiyang.md",
+      "title": "Feiyang's Project Portfolio Page",
+      "headings": {
+        "project-educonnect": "Project: EduConnect"
       },
       "headingKeywords": {}
     },

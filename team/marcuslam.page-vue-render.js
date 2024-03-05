@@ -5,7 +5,7 @@ with(this){return _c('div',{attrs:{"id":"app"}},[_c('header',{attrs:{"sticky":""
 };
     var pageVueStaticRenderFns = [function anonymous(
 ) {
-with(this){return _c('div',{attrs:{"id":"content-wrapper"}},[_c('h1',{attrs:{"id":"configuration-guide"}},[_v("Configuration guide"),_c('a',{staticClass:"fa fa-anchor",attrs:{"href":"#configuration-guide","onclick":"event.stopPropagation()"}})]),_v(" "),_c('p',[_v("Certain properties of the application can be controlled (e.g user preferences file location, logging level) through the configuration file (default: "),_c('code',{pre:true,attrs:{"class":"hljs inline no-lang"}},[_v("config.json")]),_v(").")])])}
+with(this){return _c('div',{attrs:{"id":"content-wrapper"}},[_c('h3',{attrs:{"id":"project-addressbook-level-3"}},[_v("Project: AddressBook Level 3"),_c('a',{staticClass:"fa fa-anchor",attrs:{"href":"#project-addressbook-level-3","onclick":"event.stopPropagation()"}})]),_v(" "),_c('p',[_v("AddressBook - Level 3 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.")]),_v(" "),_c('p',[_v("Given below are my contributions to the project.")])])}
 },function anonymous(
 ) {
 with(this){return _c('footer',[_c('div',{staticClass:"text-center"},[_c('small',[_v("["),_c('span',[_c('strong',[_v("Powered by")])]),_v(" "),_c('img',{attrs:{"src":"https://markbind.org/favicon.ico","width":"30"}}),_v(" "),_c('a',{attrs:{"href":"https://markbind.org/"}},[_v("MarkBind 5.3.0")]),_v(", generated on Tue, 5 Mar 2024, 14:04:45 GMT+8]")])])])}

@@ -7,7 +7,8 @@
       "headings": {
         "about-us": "About Us",
         "project-team": "Project team",
-        "john-doe": "John Doe",
+        "damith-c-rajapakse": "Damith C. Rajapakse",
+        "darryl-chan": "Darryl Chan",
         "shang-feiyang": "Shang Feiyang",
         "tan-jia-jun": "Tan Jia Jun",
         "jeremiah-lim-zhi-zhong": "Jeremiah Lim Zhi Zhong",
@@ -133,6 +134,14 @@
       "title": "",
       "headings": {
         "addressbook-level-3": "AddressBook Level-3"
+      },
+      "headingKeywords": {}
+    },
+    {
+      "src": "team/darryl-chan.md",
+      "title": "Darryl Chan's Project Portfolio Page",
+      "headings": {
+        "project-addressbook-level-3": "Project: AddressBook Level 3"
       },
       "headingKeywords": {}
     },

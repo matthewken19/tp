@@ -10,6 +10,7 @@
         "john-doe": "John Doe",
         "shang-feiyang": "Shang Feiyang",
         "tan-jia-jun": "Tan Jia Jun",
+        "jeremiah-lim-zhi-zhong": "Jeremiah Lim Zhi Zhong",
         "marcus-lam": "Marcus Lam",
         "james-doe": "James Doe"
       },
@@ -138,6 +139,14 @@
     {
       "src": "team/feiyang.md",
       "title": "Feiyang's Project Portfolio Page",
+      "headings": {
+        "project-educonnect": "Project: EduConnect"
+      },
+      "headingKeywords": {}
+    },
+    {
+      "src": "team/jeremiah.md",
+      "title": "Jeremiah's Project Portfolio Page",
       "headings": {
         "project-educonnect": "Project: EduConnect"
       },

@@ -213,22 +213,22 @@ public class ParserUtilTest {
 
     @Test
     public void parsePeriod_validValueWithoutWhitespace_returnsPeriod() throws Exception {
-        Period actualPeriod1 = ParserUtil.parsePeriod(TypicalTimetableAndValues.VALID_PERIOD1);
-        Period actualPeriod2 = ParserUtil.parsePeriod(TypicalTimetableAndValues.VALID_PERIOD3);
+        Period actualPeriod1 = ParserUtil.parsePeriod(TypicalTimetableAndValues.VALID_PERIOD1_STRING);
+        Period actualPeriod2 = ParserUtil.parsePeriod(TypicalTimetableAndValues.VALID_PERIOD3_STRING);
 
-        assertEquals(TypicalTimetableAndValues.EXPECTED_PERIOD_1, actualPeriod1);
-        assertEquals(TypicalTimetableAndValues.EXPECTED_PERIOD_3, actualPeriod2);
+        assertEquals(TypicalTimetableAndValues.VALID_PERIOD_1, actualPeriod1);
+        assertEquals(TypicalTimetableAndValues.VALID_PERIOD_3, actualPeriod2);
     }
 
     @Test
     public void parsePeriod_validValueWithWhitespace_returnsPeriodWithTrimmedName() throws Exception {
         Period actualPeriod1 = ParserUtil.parsePeriod(
-                WHITESPACE + TypicalTimetableAndValues.VALID_PERIOD1 + WHITESPACE);
+                WHITESPACE + TypicalTimetableAndValues.VALID_PERIOD1_STRING + WHITESPACE);
         Period actualPeriod2 = ParserUtil.parsePeriod(
-                WHITESPACE + TypicalTimetableAndValues.VALID_PERIOD2 + WHITESPACE);
+                WHITESPACE + TypicalTimetableAndValues.VALID_PERIOD2_STRING + WHITESPACE);
 
-        assertEquals(TypicalTimetableAndValues.EXPECTED_PERIOD_1, actualPeriod1);
-        assertEquals(TypicalTimetableAndValues.EXPECTED_PERIOD_2, actualPeriod2);
+        assertEquals(TypicalTimetableAndValues.VALID_PERIOD_1, actualPeriod1);
+        assertEquals(TypicalTimetableAndValues.VALID_PERIOD_2, actualPeriod2);
     }
 
     @Test
@@ -246,20 +246,20 @@ public class ParserUtilTest {
     @Test
     public void parsePeriods_stringWithInvalidValues_throwsParseException() throws Exception {
         assertThrows(ParseException.class, () ->
-                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_STRING_WITH_INVALID_INPUT));
+                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_PERIODS_STRING_WITH_INVALID_INPUT));
     }
 
     @Test
     public void parsePeriods_stringWithValidValuesWithoutWhitespace_returnsOptionalArrayList() throws Exception {
         assertEquals(TypicalTimetableAndValues.VALID_PERIOD_OPTIONAL_ARRAYLIST,
-                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_STRING_VALID_INPUT));
+                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_PERIODS_STRING_VALID_INPUT));
     }
 
     @Test
     public void parsePeriods_stringWithValidValuesWithWhitespace_returnsOptionalArrayListWithTrimmedPeriods()
             throws Exception {
         assertEquals(TypicalTimetableAndValues.VALID_PERIOD_OPTIONAL_ARRAYLIST,
-                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_STRING_WITH_WHITESPACE_VALID_INPUT));
+                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_PERIODS_STRING_WITH_WHITESPACE_VALID_INPUT));
     }
 
     @Test

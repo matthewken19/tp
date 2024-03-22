@@ -6,8 +6,10 @@ import static java.util.Objects.requireNonNull;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import educonnect.model.student.timetable.exceptions.InvalidDurationException;
 import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 
 /**
@@ -16,6 +18,10 @@ import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 public class Day {
     private final DayOfWeek dayOfWeek;
     private final ArrayList<Period> periods;
+
+    private static int DEFAULT_START_TIME_OF_DAY = 8; // 8 AM
+
+    private static int DEFAULT_END_TIME_OF_DAY = 22; // 10 PM
 
     /**
      * Constructor for JSON Serialisation, included only for JSON to work, not intended as a constructor to be used!
@@ -71,14 +77,92 @@ public class Day {
      * @return {@code true} if added successfully.
      */
     public boolean addPeriod(Period period) throws OverlapPeriodException {
-        for (Period per : periods) {
-            if (per.hasOverlap(period)) {
-                throw new OverlapPeriodException();
+        if (hasAnyOverlaps(period)) {
+            throw new OverlapPeriodException();
+        }
+        periods.add(period);
+        Collections.sort(periods);
+        return true;
+    }
+
+    /**
+     * Checks if a {@code Period} has any overlaps with existing periods in this {@code Day}
+     *
+     * @param periodToBeChecked period that is to be checked.
+     * @return {@code true} if there are any overlaps.
+     */
+    public boolean hasAnyOverlaps(Period periodToBeChecked) {
+        for (Period period : periods) {
+            if (period.hasOverlap(periodToBeChecked)) {
+                return true;
             }
         }
-        this.periods.add(period);
-        Collections.sort(this.periods);
-        return true;
+        return false;
+    }
+
+    /**
+     * Finds a time slot of specified duration, no specified timeframe.
+     *
+     * @param duration specified time.
+     * @return a list of all {@code Period} objects that has no overlaps within this {@code Day}.
+     */
+    public ArrayList<Period> findSlot(int duration) {
+        return findSlot(duration, Optional.empty());
+    }
+
+    /**
+     * Finds a time slot of specified duration, with a specified timeframe in {@code int}.
+     *
+     * @param duration specified time.
+     * @param startTime specified start time for the time frame.
+     * @param endTime specified end time for the time frame.
+     * @return a list of all {@code Period} objects that has no overlaps within this {@code Day}.
+     */
+    public ArrayList<Period> findSlot(int duration, int startTime, int endTime) {
+        Period period = new Period("period", startTime, endTime);
+        return findSlot(duration, Optional.of(period));
+    }
+
+    /**
+     * Finds a time slot of specified duration, with a specified timeframe in {@code String}.
+     *
+     * @param duration specified time.
+     * @param periodString specified timeframe in the {@code Period} format, e.g. "12-14".
+     * @return a list of all {@code Period} objects that has no overlaps within this {@code Day}.
+     */
+    public ArrayList<Period> findSlot(int duration, String periodString) {
+        Period period = new Period("period", periodString);
+        return findSlot(duration, Optional.of(period));
+    }
+
+    /**
+     * Finds a time slot of specified duration, optionally with a specified timeframe.
+     *
+     * @param duration specified time.
+     * @param timeframe specified time frame.
+     * @return a list of all {@code Period} objects that has no overlaps within this {@code Day}.
+     */
+    ArrayList<Period> findSlot(int duration, Optional<Period> timeframe) {
+        if (duration > 24 || duration < 1) {
+            throw new InvalidDurationException();
+        }
+
+        ArrayList<Period> allSlots = new ArrayList<>();
+        int startTime = DEFAULT_START_TIME_OF_DAY;
+        int endTime = DEFAULT_END_TIME_OF_DAY;
+
+        if (timeframe.isPresent()) {
+            startTime = timeframe.get().getStartTimeHour();
+            endTime = timeframe.get().getEndTimeHour();
+        }
+
+        for (int i = startTime; i <= endTime - duration; i++) {
+            Period period = new Period("period", i, i + duration);
+            if (!hasAnyOverlaps(period)) {
+                allSlots.add(period);
+            }
+        }
+        return allSlots;
     }
 
     /**
@@ -95,7 +179,7 @@ public class Day {
      *
      * @return {@code String} command, e.g. "mon: 13-15, 16-18"
      */
-    public String convertToCommandString() {
+    String convertToCommandString() {
         if (periods.isEmpty()) {
             return ""; // returns empty string as no command specified will result in a day with no periods
         }

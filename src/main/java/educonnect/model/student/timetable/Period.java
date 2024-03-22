@@ -15,6 +15,7 @@ public class Period implements Comparable<Period> {
             "Periods should be in the format of time-time, "
             + "where time can be any digit between 0 - 23. \n"
             + "This means that all Period objects are tracked with a 24-hour clock.";
+    public static final String DEFAULT_PERIOD_NAME = "period";
     private final String periodName;
     private final LocalTime timeStart;
     private final LocalTime timeEnd;
@@ -61,6 +62,17 @@ public class Period implements Comparable<Period> {
         this.timeEnd = timeEnd;
     }
 
+    public Period(String periodName, int startTime, int endTime) {
+        requireAllNonNull(periodName, startTime, endTime);
+
+        LocalTime timeStart = LocalTime.of(startTime, 0, 0);
+        LocalTime timeEnd = LocalTime.of(endTime, 0, 0);
+
+        this.periodName = periodName.trim();
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+    }
+
     /**
      * Constructor for JSON Serialisation, included only for JSON to work, not intended as a constructor to be used!
      */
@@ -68,6 +80,14 @@ public class Period implements Comparable<Period> {
         this.periodName = "";
         this.timeStart = null;
         this.timeEnd = null;
+    }
+
+    public int getStartTimeHour() {
+        return timeStart.getHour();
+    }
+
+    public int getEndTimeHour() {
+        return timeEnd.getHour();
     }
 
     /**
@@ -94,7 +114,7 @@ public class Period implements Comparable<Period> {
      *
      * @return {@code String} command, e.g. "13-15"
      */
-    public String convertToCommandString() {
+    String convertToCommandString() {
         return timeStart.getHour() + "-" + timeEnd.getHour();
     }
 

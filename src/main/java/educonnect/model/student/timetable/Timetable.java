@@ -97,6 +97,8 @@ public class Timetable {
         return true;
     }
 
+
+
     /**
      * Converts {@code Timetable} object back into its command {@code String}.
      *

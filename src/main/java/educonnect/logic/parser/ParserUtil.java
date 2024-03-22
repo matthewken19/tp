@@ -228,7 +228,7 @@ public class ParserUtil {
         if (!Period.isValidPeriod(trimmedPeriod)) {
             throw new ParseException(Period.PERIOD_CONSTRAINTS);
         }
-        return new Period("period", trimmedPeriod);
+        return new Period(Period.DEFAULT_PERIOD_NAME, trimmedPeriod);
     }
 
     /**

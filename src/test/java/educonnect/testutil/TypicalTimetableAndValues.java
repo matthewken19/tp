@@ -39,6 +39,8 @@ public class TypicalTimetableAndValues {
     public static final int VALID_PERIOD2_VALUE2 = 23;
     public static final int VALID_PERIOD3_VALUE1 = 16;
     public static final int VALID_PERIOD3_VALUE2 = 18;
+    public static final int VALID_PERIOD4_VALUE1 = 12;
+    public static final int VALID_PERIOD4_VALUE2 = 14;
 
     // valid period strings used in parsing
     public static final String VALID_PERIOD_NAME = "period";
@@ -69,18 +71,26 @@ public class TypicalTimetableAndValues {
             + SPACE + PREFIX_TIMETABLE_WEDNESDAY + SPACE + VALID_PERIODS_STRING1;
 
     // valid period objects used in assertions.
-    public static final Period VALID_PERIOD_1 = // Period of 13-15
+    /** Period of 13-15 */
+    public static final Period VALID_PERIOD_1 =
             new Period(VALID_PERIOD_NAME,
             LocalTime.of(VALID_PERIOD1_VALUE1, 0, 0),
             LocalTime.of(VALID_PERIOD1_VALUE2, 0, 0));
-    public static final Period VALID_PERIOD_2 = // Period of 0-23
+    /** Period of 0-23 */
+    public static final Period VALID_PERIOD_2 =
             new Period(VALID_PERIOD_NAME,
             LocalTime.of(VALID_PERIOD2_VALUE1, 0, 0),
             LocalTime.of(VALID_PERIOD2_VALUE2, 0, 0));
-    public static final Period VALID_PERIOD_3 = // Period of 16-18
+    /** Period of 16-18 */
+    public static final Period VALID_PERIOD_3 =
             new Period(VALID_PERIOD_NAME,
-            LocalTime.of(VALID_PERIOD3_VALUE1, 0, 0),
-            LocalTime.of(VALID_PERIOD3_VALUE2, 0, 0));
+                    LocalTime.of(VALID_PERIOD3_VALUE1, 0, 0),
+                    LocalTime.of(VALID_PERIOD3_VALUE2, 0, 0));
+    /** Period of 12-14 */
+    public static final Period VALID_PERIOD_4 =
+            new Period(VALID_PERIOD_NAME,
+                    LocalTime.of(VALID_PERIOD4_VALUE1, 0, 0),
+                    LocalTime.of(VALID_PERIOD4_VALUE2, 0, 0));
 
     // ArrayLists of valid Periods
     public static final ArrayList<Period> VALID_PERIODS_LIST1 = // Periods {13-15, 16-18}

@@ -1,17 +1,27 @@
 package educonnect.model.student.timetable;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 
+import educonnect.model.student.timetable.exceptions.InvalidDurationException;
 import educonnect.model.student.timetable.exceptions.NumberOfDaysException;
 import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Represents the timetable of a student for a week.
  */
 public class Timetable {
-    private static final boolean TIMETABLE_7_DAYS = false; // default is 5 days
+    private static final boolean IS_TIMETABLE_7_DAYS = false; // default is 5 days
     private static final int NUMBER_OF_DAYS_MAX = 7;
     private static final int NUMBER_OF_DAYS_TYPICAL = 5;
+    private static final Period DEFAULT_TIMEFRAME = new Period(Period.DEFAULT_PERIOD_NAME,
+            Day.DEFAULT_START_TIME_OF_DAY, Day.DEFAULT_END_TIME_OF_DAY);
+    private static final HashSet<DayOfWeek> DEFAULT_ALL_DAYSOFWEEK = is7Days()
+            ? new HashSet<>(List.of(DayOfWeek.values()))
+            : new HashSet<>(List.of(Arrays.copyOf(DayOfWeek.values(), NUMBER_OF_DAYS_TYPICAL)));
     private final ArrayList<Day> days;
     private final int numOfDays;
 
@@ -20,7 +30,7 @@ public class Timetable {
      * Checks against TIMETABLE_7_DAYS for 5 or 7 days in the week.
      */
     public Timetable() {
-        this.numOfDays = TIMETABLE_7_DAYS ? NUMBER_OF_DAYS_MAX : NUMBER_OF_DAYS_TYPICAL;
+        this.numOfDays = is7Days() ? NUMBER_OF_DAYS_MAX : NUMBER_OF_DAYS_TYPICAL;
         this.days = createTimetable(this.numOfDays);
     }
 
@@ -59,7 +69,7 @@ public class Timetable {
      * @return {@code true} if 7 days, {@code false} if 5 days.
      */
     public static boolean is7Days() {
-        return TIMETABLE_7_DAYS;
+        return IS_TIMETABLE_7_DAYS;
     }
 
     /**
@@ -97,7 +107,62 @@ public class Timetable {
         return true;
     }
 
+    /**
+     * Finds all time slots of specified duration.
+     *
+     * @param duration specified time.
+     * @return a {@code Timetable} object containing the available time slots.
+     */
+    public AvailableSlots findSlots(int duration) throws OverlapPeriodException {
+        return findSlots(duration, DEFAULT_TIMEFRAME, DEFAULT_ALL_DAYSOFWEEK);
+    }
 
+    /**
+     * Finds all time slots of specified duration, with a specified timeframe in {@code Period},.
+     *
+     * @param duration specified time.
+     * @param daysOfWeek specified day(s) to be included.
+     * @return a {@code Timetable} object containing the available time slots.
+     */
+    public AvailableSlots findSlots(int duration, HashSet<DayOfWeek> daysOfWeek) throws OverlapPeriodException {
+        return findSlots(duration, DEFAULT_TIMEFRAME, daysOfWeek);
+    }
+
+    /**
+     * Finds all time slots of specified duration, with a specified timeframe in {@code Period},.
+     *
+     * @param duration specified time.
+     * @param timeframe specified time frame.
+     * @return a {@code Timetable} object containing the available time slots.
+     */
+    public AvailableSlots findSlots(int duration, Period timeframe) throws OverlapPeriodException {
+        return findSlots(duration, timeframe, DEFAULT_ALL_DAYSOFWEEK);
+    }
+
+    /**
+     * Finds all time slots of specified duration, with a specified timeframe in {@code Period},
+     * and specified {@code Day}(s).
+     *
+     * @param duration specified time.
+     * @param timeframe specified time frame.
+     * @param daysOfWeek specified day(s) to be included.
+     * @return an {@code List} of {@code Lists} of {@code Periods}.
+     */
+    public AvailableSlots findSlots(int duration, Period timeframe, HashSet<DayOfWeek> daysOfWeek)
+            throws OverlapPeriodException {
+        if (duration > 24 || duration < 1) {
+            throw new InvalidDurationException();
+        }
+
+       AvailableSlots allSlots = new AvailableSlots(daysOfWeek);
+
+        for (Day eachDay : days) {
+            if (daysOfWeek.contains(eachDay.getDayOfWeek())) {
+                allSlots.addPeriodsToDay(eachDay.getDayOfWeek(), eachDay.findSlots(duration, timeframe));
+            }
+        }
+        return allSlots;
+    }
 
     /**
      * Converts {@code Timetable} object back into its command {@code String}.
@@ -116,7 +181,7 @@ public class Timetable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Timetable\n");
+        sb.append("Timetable:\n");
         for (Day eachDay : this.days) {
             sb.append(eachDay).append("\n");
         }

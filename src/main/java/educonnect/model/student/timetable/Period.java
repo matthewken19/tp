@@ -15,7 +15,7 @@ public class Period implements Comparable<Period> {
             "Periods should be in the format of time-time, "
             + "where time can be any digit between 0 - 23. \n"
             + "This means that all Period objects are tracked with a 24-hour clock.";
-    public static final String DEFAULT_PERIOD_NAME = "period";
+    static final String DEFAULT_PERIOD_NAME = "period";
     private final String periodName;
     private final LocalTime timeStart;
     private final LocalTime timeEnd;
@@ -28,7 +28,7 @@ public class Period implements Comparable<Period> {
      * @param timeEnd the end timing of this {@code Period}
      * @throws InvalidPeriodException if the name is invalid or if the end timing is before the start timing.
      */
-    public Period(String periodName, LocalTime timeStart, LocalTime timeEnd) throws InvalidPeriodException {
+    Period(String periodName, LocalTime timeStart, LocalTime timeEnd) throws InvalidPeriodException {
         requireAllNonNull(periodName, timeStart, timeEnd);
 
         if (timeEnd.isBefore(timeStart) || periodName.isBlank()) {
@@ -47,7 +47,7 @@ public class Period implements Comparable<Period> {
      * @param periodString the period of this {@code Period}, accepts only "0-23" in this format.
      * @throws InvalidPeriodException if the name is invalid or if the end timing is before the start timing.
      */
-    public Period(String periodName, String periodString) throws InvalidPeriodException {
+    Period(String periodName, String periodString) throws InvalidPeriodException {
         requireAllNonNull(periodName, periodString);
         String[] args = periodString.split("-");
         LocalTime timeStart = LocalTime.of(Integer.parseInt(args[0]), 0, 0);
@@ -70,7 +70,7 @@ public class Period implements Comparable<Period> {
      * @param endTime {@code int} representing the end hour (0-23) of the {@code Period}.
      * @throws InvalidPeriodException if the name is invalid or if the end timing is before the start timing.
      */
-    public Period(String periodName, int startTime, int endTime) {
+    Period(String periodName, int startTime, int endTime) {
         requireAllNonNull(periodName, startTime, endTime);
 
         LocalTime timeStart = LocalTime.of(startTime, 0, 0);

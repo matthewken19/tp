@@ -47,7 +47,7 @@ public class AvailableSlots {
      * @throws OverlapPeriodException if there is an overlap in the period,
      *     but should not happen under normal circumstances.
      */
-    public static AvailableSlots findAllCommonSlots(ArrayList<AvailableSlots> allAvailableSlots)
+    static AvailableSlots findAllCommonSlots(ArrayList<AvailableSlots> allAvailableSlots)
             throws OverlapPeriodException {
         AvailableSlots result = new AvailableSlots(new HashSet<>());
         ArrayList<DayOfWeek> allDaysPossible = findAllDays(allAvailableSlots);
@@ -71,7 +71,7 @@ public class AvailableSlots {
      *     generated from {@code Student} objects.
      * @return a list of DayOfWeek objects that appears in any of the {@code AvailableSlots}.
      */
-    public static ArrayList<DayOfWeek> findAllDays(ArrayList<AvailableSlots> allAvailableSlots) {
+    static ArrayList<DayOfWeek> findAllDays(ArrayList<AvailableSlots> allAvailableSlots) {
         Set<DayOfWeek> allDays = new HashSet<>(allAvailableSlots.get(0).days.keySet());
 
         for (AvailableSlots eachSlot : allAvailableSlots) {

@@ -40,7 +40,7 @@ public class Day implements Comparable<Day> {
      *            starts from 1, representing MONDAY,
      *            till 7, representing SUNDAY.
      */
-    public Day(int day) {
+    Day(int day) {
         this.dayOfWeek = DayOfWeek.of(day);
         this.periods = new ArrayList<>();
     }
@@ -155,7 +155,7 @@ public class Day implements Comparable<Day> {
      * @param duration specified time.
      * @return a list of all {@code Period} objects that has no overlaps within this {@code Day}.
      */
-    public ArrayList<Period> findSlots(int duration) {
+    ArrayList<Period> findSlots(int duration) {
         return findSlots(duration, DEFAULT_START_TIME_OF_DAY, DEFAULT_END_TIME_OF_DAY);
     }
 

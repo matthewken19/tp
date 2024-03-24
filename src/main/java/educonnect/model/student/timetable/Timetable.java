@@ -29,7 +29,7 @@ public class Timetable {
      * Default constructor for {@code Timetable} class.
      * Checks against TIMETABLE_7_DAYS for 5 or 7 days in the week.
      */
-    public Timetable() {
+    Timetable() {
         this.numOfDays = is7Days() ? NUMBER_OF_DAYS_MAX : NUMBER_OF_DAYS_TYPICAL;
         this.days = createTimetable(this.numOfDays);
     }
@@ -38,7 +38,7 @@ public class Timetable {
      * Overloaded constructor where the number of days in a week can be specified.
      * @param numOfDays the number of days in a week to keep track of.
      */
-    public Timetable(int numOfDays) {
+    Timetable(int numOfDays) {
         this.numOfDays = numOfDays;
         this.days = createTimetable(this.numOfDays);
     }
@@ -113,7 +113,7 @@ public class Timetable {
      * @param duration specified time.
      * @return a {@code Timetable} object containing the available time slots.
      */
-    public AvailableSlots findSlots(int duration) throws OverlapPeriodException {
+    AvailableSlots findSlots(int duration) throws OverlapPeriodException {
         return findSlots(duration, DEFAULT_TIMEFRAME, DEFAULT_ALL_DAYSOFWEEK);
     }
 
@@ -124,7 +124,7 @@ public class Timetable {
      * @param daysOfWeek specified day(s) to be included.
      * @return a {@code Timetable} object containing the available time slots.
      */
-    public AvailableSlots findSlots(int duration, HashSet<DayOfWeek> daysOfWeek) throws OverlapPeriodException {
+    AvailableSlots findSlots(int duration, HashSet<DayOfWeek> daysOfWeek) throws OverlapPeriodException {
         return findSlots(duration, DEFAULT_TIMEFRAME, daysOfWeek);
     }
 
@@ -135,7 +135,7 @@ public class Timetable {
      * @param timeframe specified time frame.
      * @return a {@code Timetable} object containing the available time slots.
      */
-    public AvailableSlots findSlots(int duration, Period timeframe) throws OverlapPeriodException {
+    AvailableSlots findSlots(int duration, Period timeframe) throws OverlapPeriodException {
         return findSlots(duration, timeframe, DEFAULT_ALL_DAYSOFWEEK);
     }
 
@@ -148,7 +148,7 @@ public class Timetable {
      * @param daysOfWeek specified day(s) to be included.
      * @return an {@code List} of {@code Lists} of {@code Periods}.
      */
-    public AvailableSlots findSlots(int duration, Period timeframe, HashSet<DayOfWeek> daysOfWeek)
+    AvailableSlots findSlots(int duration, Period timeframe, HashSet<DayOfWeek> daysOfWeek)
             throws OverlapPeriodException {
         if (duration > 24 || duration < 1) {
             throw new InvalidDurationException();

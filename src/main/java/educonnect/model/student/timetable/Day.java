@@ -18,12 +18,12 @@ import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
  * Represents a day in a weekly timetable schedule.
  */
 public class Day implements Comparable<Day> {
+    static final int DEFAULT_START_TIME_OF_DAY = 8; // 8 AM
+
+    static final int DEFAULT_END_TIME_OF_DAY = 22; // 10 PM
     private final DayOfWeek dayOfWeek;
     private final ArrayList<Period> periods;
 
-    static int DEFAULT_START_TIME_OF_DAY = 8; // 8 AM
-
-    static int DEFAULT_END_TIME_OF_DAY = 22; // 10 PM
 
     /**
      * Constructor for JSON Serialisation, included only for JSON to work, not intended as a constructor to be used!
@@ -109,6 +109,11 @@ public class Day implements Comparable<Day> {
         return this.periods.stream().sorted().collect(Collectors.toList()).equals(this.periods);
     }
 
+    /**
+     * Gets the {@code DayOfWeek} of this {@code Day}
+     *
+     * @return {@code DayOfWeek}
+     */
     public DayOfWeek getDayOfWeek() {
         return this.dayOfWeek;
     }

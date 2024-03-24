@@ -3,13 +3,14 @@ package educonnect.model.student.timetable;
 import static educonnect.testutil.TypicalTimetableAndValues.VALID_PERIOD_1;
 import static educonnect.testutil.TypicalTimetableAndValues.VALID_PERIOD_3;
 
-import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 
 public class AvailableSlotsTest {
     @Test
@@ -25,6 +26,6 @@ public class AvailableSlotsTest {
 
         ArrayList<AvailableSlots> allSlots = new ArrayList<>(List.of(availableSlot1, availableSlot2));
 
-        AvailableSlots.findAllCommonSlots(allSlots);
+        System.out.println(AvailableSlots.findAllCommonSlots(allSlots));
     }
 }

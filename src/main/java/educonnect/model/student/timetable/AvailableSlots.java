@@ -24,6 +24,10 @@ public class AvailableSlots {
         this.days = (HashMap<DayOfWeek, Day>) daysOfWeeks.stream().collect(Collectors.toMap(x -> x, Day::new));
     }
 
+    Day getDay(DayOfWeek dayOfWeek) {
+        return this.days.get(dayOfWeek);
+    }
+
     /**
      * Adds a Collection of {@code Period} to a specified day.
      *
@@ -34,14 +38,19 @@ public class AvailableSlots {
         this.days.put(dayOfWeek, new Day(dayOfWeek, periods));
     }
 
-    Day getDay(DayOfWeek dayOfWeek) {
-        return this.days.get(dayOfWeek);
-    }
-
+    /**
+     * Finds all common available slots, given each {@code AvailableSlots} from each {@code Student}.
+     *
+     * @param allAvailableSlots {@code ArrayList} of {@code AvailableSlots} objects
+     *     generated from {@code Student} objects.
+     * @return an {@code AvailableSlot} object containing all common slots from multiple students.
+     * @throws OverlapPeriodException if there is an overlap in the period,
+     *     but should not happen under normal circumstances.
+     */
     public static AvailableSlots findAllCommonSlots(ArrayList<AvailableSlots> allAvailableSlots)
             throws OverlapPeriodException {
         AvailableSlots result = new AvailableSlots(new HashSet<>());
-        Set<DayOfWeek> allDaysPossible = findAllDays(allAvailableSlots);
+        ArrayList<DayOfWeek> allDaysPossible = findAllDays(allAvailableSlots);
 
         for (DayOfWeek dayOfWeek : allDaysPossible) {
             ArrayList<Day> allDays = new ArrayList<>();
@@ -52,10 +61,16 @@ public class AvailableSlots {
             Day day = Day.findAllCommonSlots(allDays);
             result.days.put(day.getDayOfWeek(), day);
         }
-        System.out.println(result);
         return result;
     }
 
+    /**
+     * Finds all available {@code DayOfWeek} across all {@code AvailableSlots} objects.
+     *
+     * @param allAvailableSlots {@code ArrayList} of {@code AvailableSlots} objects
+     *     generated from {@code Student} objects.
+     * @return a list of DayOfWeek objects that appears in any of the {@code AvailableSlots}.
+     */
     public static ArrayList<DayOfWeek> findAllDays(ArrayList<AvailableSlots> allAvailableSlots) {
         Set<DayOfWeek> allDays = new HashSet<>(allAvailableSlots.get(0).days.keySet());
 

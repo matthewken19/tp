@@ -62,11 +62,23 @@ public class Period implements Comparable<Period> {
         this.timeEnd = timeEnd;
     }
 
+    /**
+     * Constructor for this class, accepts {@code String} as inputs.
+     *
+     * @param periodName the name of this {@code Period}
+     * @param startTime {@code int} representing the start hour (0-23) of the {@code Period}.
+     * @param endTime {@code int} representing the end hour (0-23) of the {@code Period}.
+     * @throws InvalidPeriodException if the name is invalid or if the end timing is before the start timing.
+     */
     public Period(String periodName, int startTime, int endTime) {
         requireAllNonNull(periodName, startTime, endTime);
 
         LocalTime timeStart = LocalTime.of(startTime, 0, 0);
         LocalTime timeEnd = LocalTime.of(endTime, 0, 0);
+
+        if (timeEnd.isBefore(timeStart) || periodName.isBlank()) {
+            throw new InvalidPeriodException();
+        }
 
         this.periodName = periodName.trim();
         this.timeStart = timeStart;
@@ -82,10 +94,20 @@ public class Period implements Comparable<Period> {
         this.timeEnd = null;
     }
 
+    /**
+     * Gets the {@code int} hour for the start time.
+     *
+     * @return {@code int} hour.
+     */
     public int getStartTimeHour() {
         return timeStart.getHour();
     }
 
+    /**
+     * Gets the {@code int} hour for the end time.
+     *
+     * @return {@code int} hour.
+     */
     public int getEndTimeHour() {
         return timeEnd.getHour();
     }

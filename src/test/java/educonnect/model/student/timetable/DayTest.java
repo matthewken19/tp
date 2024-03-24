@@ -10,15 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import educonnect.model.student.timetable.exceptions.InvalidDurationException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import educonnect.model.student.timetable.exceptions.InvalidDurationException;
 import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 
 public class DayTest {
@@ -93,10 +92,10 @@ public class DayTest {
         Day day = VALID_DAY1; // mon: 13-15, 16-18
 
         // find slot of 0 hour, invalid input -> throws InvalidDurationException
-        assertThrows(InvalidDurationException.class,() -> day.findSlots(0));
+        assertThrows(InvalidDurationException.class, () -> day.findSlots(0));
 
         // find slot of 25 hours, invalid input -> throws InvalidDurationException
-        assertThrows(InvalidDurationException.class,() -> day.findSlots(25));
+        assertThrows(InvalidDurationException.class, () -> day.findSlots(25));
     }
 
     @Test

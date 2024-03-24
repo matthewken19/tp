@@ -5,11 +5,11 @@ import static educonnect.testutil.TypicalTimetableAndValues.VALID_TIMETABLE_1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import educonnect.model.student.timetable.exceptions.InvalidDurationException;
 import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
+import educonnect.model.student.timetable.exceptions.InvalidDurationException;
 import educonnect.model.student.timetable.exceptions.NumberOfDaysException;
 import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 
@@ -83,21 +83,15 @@ public class TimetableTest {
         Timetable timetable = VALID_TIMETABLE_1;
 
         // find slot of 0 hour, invalid input -> throws InvalidDurationException
-        assertThrows(InvalidDurationException.class,() -> timetable.findSlots(0));
+        assertThrows(InvalidDurationException.class, () -> timetable.findSlots(0));
 
         // find slot of 25 hours, invalid input -> throws InvalidDurationException
-        assertThrows(InvalidDurationException.class,() -> timetable.findSlots(25));
+        assertThrows(InvalidDurationException.class, () -> timetable.findSlots(25));
     }
 
     @Test
     public void findSlots_validInputs() {
         Timetable timetable = VALID_TIMETABLE_1;
-
-        try {
-            System.out.println(timetable.findSlots(2));
-        } catch (OverlapPeriodException e) {
-
-        }
     }
 
     @Test

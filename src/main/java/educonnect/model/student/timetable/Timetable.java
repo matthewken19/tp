@@ -2,13 +2,13 @@ package educonnect.model.student.timetable;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 import educonnect.model.student.timetable.exceptions.InvalidDurationException;
 import educonnect.model.student.timetable.exceptions.NumberOfDaysException;
 import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Represents the timetable of a student for a week.
@@ -154,7 +154,7 @@ public class Timetable {
             throw new InvalidDurationException();
         }
 
-       AvailableSlots allSlots = new AvailableSlots(daysOfWeek);
+        AvailableSlots allSlots = new AvailableSlots(daysOfWeek);
 
         for (Day eachDay : days) {
             if (daysOfWeek.contains(eachDay.getDayOfWeek())) {

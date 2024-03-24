@@ -29,7 +29,7 @@ public class Timetable {
      * Default constructor for {@code Timetable} class.
      * Checks against TIMETABLE_7_DAYS for 5 or 7 days in the week.
      */
-    Timetable() {
+    public Timetable() {
         this.numOfDays = is7Days() ? NUMBER_OF_DAYS_MAX : NUMBER_OF_DAYS_TYPICAL;
         this.days = createTimetable(this.numOfDays);
     }

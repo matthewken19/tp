@@ -15,16 +15,16 @@ import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 
 public class TimetableTest {
     private static final String EMPTY_TIMETABLE_FIVE =
-            "Timetable\n"
-            + "For MONDAY, schedule is:\n\n"
-            + "For TUESDAY, schedule is:\n\n"
-            + "For WEDNESDAY, schedule is:\n\n"
-            + "For THURSDAY, schedule is:\n\n"
-            + "For FRIDAY, schedule is:\n\n";
+            "Timetable:\n"
+            + "For MONDAY, no classes.\n\n"
+            + "For TUESDAY, no classes.\n\n"
+            + "For WEDNESDAY, no classes.\n\n"
+            + "For THURSDAY, no classes.\n\n"
+            + "For FRIDAY, no classes.\n\n";
     private static final String EMPTY_TIMETABLE_SEVEN =
             EMPTY_TIMETABLE_FIVE
-            + "For SATURDAY, schedule is:\n\n"
-            + "For SUNDAY, schedule is:\n\n";
+            + "For SATURDAY, no classes.\n\n"
+            + "For SUNDAY, no classes.\n\n";
 
     private static final Period PERIOD_1 = new Period("period1",
             LocalTime.of(13, 0, 0),

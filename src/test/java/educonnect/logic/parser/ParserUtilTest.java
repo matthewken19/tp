@@ -286,20 +286,20 @@ public class ParserUtilTest {
     public void parseDay_validInputs_returnsTimetableWithUpdatedDay() throws OverlapPeriodException {
         Timetable timetable = new Timetable();
 
-        String expectedTimetable = "Timetable\n"
+        String expectedTimetable = "Timetable:\n"
                                    + "For MONDAY, schedule is:\n"
                                    + "Period: (13:00 to 15:00)\n"
                                    + "Period: (16:00 to 18:00)\n\n"
-                                   + "For TUESDAY, schedule is:\n\n"
-                                   + "For WEDNESDAY, schedule is:\n\n"
-                                   + "For THURSDAY, schedule is:\n\n"
+                                   + "For TUESDAY, no classes.\n\n"
+                                   + "For WEDNESDAY, no classes.\n\n"
+                                   + "For THURSDAY, no classes.\n\n"
                                    + "For FRIDAY, schedule is:\n"
                                    + "Period: (13:00 to 15:00)\n"
                                    + "Period: (16:00 to 18:00)\n\n";
 
         if (Timetable.is7Days()) {
-            expectedTimetable += "For SATURDAY, schedule is:\n\n"
-                                 + "For SUNDAY, schedule is:\n\n";
+            expectedTimetable += "For SATURDAY, no classes.\n\n"
+                                 + "For SUNDAY, no classes.\n\n";
         }
 
         // valid inputs, successfully added -> returns true

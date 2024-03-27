@@ -290,16 +290,16 @@ public class ParserUtilTest {
                                    + "For MONDAY, schedule is:\n"
                                    + "Period: (13:00 to 15:00)\n"
                                    + "Period: (16:00 to 18:00)\n\n"
-                                   + "For TUESDAY, no classes.\n\n"
-                                   + "For WEDNESDAY, no classes.\n\n"
-                                   + "For THURSDAY, no classes.\n\n"
+                                   + "For TUESDAY, no periods.\n\n"
+                                   + "For WEDNESDAY, no periods.\n\n"
+                                   + "For THURSDAY, no periods.\n\n"
                                    + "For FRIDAY, schedule is:\n"
                                    + "Period: (13:00 to 15:00)\n"
                                    + "Period: (16:00 to 18:00)\n\n";
 
         if (Timetable.is7Days()) {
-            expectedTimetable += "For SATURDAY, no classes.\n\n"
-                                 + "For SUNDAY, no classes.\n\n";
+            expectedTimetable += "For SATURDAY, no periods.\n\n"
+                                 + "For SUNDAY, no periods.\n\n";
         }
 
         // valid inputs, successfully added -> returns true

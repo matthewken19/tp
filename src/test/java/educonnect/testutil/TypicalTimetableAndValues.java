@@ -9,12 +9,15 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import educonnect.model.student.timetable.AvailableSlots;
 import educonnect.model.student.timetable.Day;
 import educonnect.model.student.timetable.Period;
 import educonnect.model.student.timetable.Timetable;
+import educonnect.model.student.timetable.exceptions.InvalidPeriodException;
 import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 
 /**
@@ -186,5 +189,57 @@ public class TypicalTimetableAndValues {
             }
         }
         return timetable;
+    }
+
+    /**
+     * Helper method to help build {@code AvailableSlot}.
+     * <br><br>
+     * Example: buildAvailableSlot("mon", "11-13", "13-15", "wed", "10-12", "thu", "15-17")
+     *
+     * @param stringArgs 3-letter short-forms for day, e.g. "mon", or "thu", and valid period strings, e.g. "11-13".
+     * @return {@code AvailableSlot} objects
+     * @throws OverlapPeriodException if there are any overlap periods, but it should not happen in normal
+     *     circumstances,as the checks for overlap periods are turned off.
+     */
+    public static AvailableSlots buildAvailableSlot(String... stringArgs) throws OverlapPeriodException {
+        AvailableSlots as = new AvailableSlots(new HashSet<>());
+        DayOfWeek dayOfWeek = DayOfWeek.MONDAY;
+
+        for (String arg : stringArgs) {
+            switch (arg) {
+            case "mon":
+                dayOfWeek = DayOfWeek.MONDAY;
+                break;
+            case "tue":
+                dayOfWeek = DayOfWeek.TUESDAY;
+                break;
+            case "wed":
+                dayOfWeek = DayOfWeek.WEDNESDAY;
+                break;
+            case "thu":
+                dayOfWeek = DayOfWeek.THURSDAY;
+                break;
+            case "fri":
+                dayOfWeek = DayOfWeek.FRIDAY;
+                break;
+            case "sat":
+                dayOfWeek = DayOfWeek.SATURDAY;
+                break;
+            case "sun":
+                dayOfWeek = DayOfWeek.SUNDAY;
+                break;
+            case "isCommonSlot":
+                as.setCommonSlots();
+                break;
+            default:
+                if (Period.isValidPeriod(arg)) {
+                    Period period = new Period(Period.DEFAULT_PERIOD_NAME, arg);
+                    as.addPeriodToDay(dayOfWeek, period);
+                } else {
+                    throw new InvalidPeriodException();
+                }
+            }
+        }
+        return as;
     }
 }

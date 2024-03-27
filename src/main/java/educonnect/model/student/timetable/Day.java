@@ -21,8 +21,9 @@ public class Day implements Comparable<Day> {
     static final int DEFAULT_START_TIME_OF_DAY = 8; // 8 AM
 
     static final int DEFAULT_END_TIME_OF_DAY = 22; // 10 PM
+    final ArrayList<Period> periods;
     private final DayOfWeek dayOfWeek;
-    private final ArrayList<Period> periods;
+    private final boolean checksForOverlaps;
 
 
     /**
@@ -31,6 +32,7 @@ public class Day implements Comparable<Day> {
     private Day() {
         this.dayOfWeek = null;
         this.periods = new ArrayList<>();
+        this.checksForOverlaps = true;
     }
 
     /**
@@ -43,6 +45,7 @@ public class Day implements Comparable<Day> {
     Day(int day) {
         this.dayOfWeek = DayOfWeek.of(day);
         this.periods = new ArrayList<>();
+        this.checksForOverlaps = true;
     }
 
     /**
@@ -54,6 +57,22 @@ public class Day implements Comparable<Day> {
         requireNonNull(day);
         this.dayOfWeek = day;
         this.periods = new ArrayList<>();
+        this.checksForOverlaps = true;
+    }
+
+    /**
+     * Constructor for {@code Day} objects, uses {@code DayOfWeek} as input.
+     * Does not check for Overlaps, used for {@code AvailableSlots}.
+     *
+     * @param day {@code DayOfWeek} enum, e.g {@code DayOfWeek.MONDAY}.
+     * @param checksForOverlaps signals whether this {@code Day} checks for overlapping {@code Period},
+     *     false only for generating common slots.
+     */
+    public Day(DayOfWeek day, boolean checksForOverlaps) {
+        requireNonNull(day);
+        this.dayOfWeek = day;
+        this.periods = new ArrayList<>();
+        this.checksForOverlaps = checksForOverlaps;
     }
 
     /**
@@ -67,6 +86,27 @@ public class Day implements Comparable<Day> {
         requireAllNonNull(day, periods);
         this.dayOfWeek = day;
         this.periods = new ArrayList<>();
+        this.checksForOverlaps = true;
+
+        for (Period period : periods) {
+            this.addPeriod(period);
+        }
+    }
+
+    /**
+     * Constructor for {@code Day} objects, uses {@code DayOfWeek} as input.
+     *
+     * @param day {@code DayOfWeek} enum, e.g {@code DayOfWeek.MONDAY}.
+     * @param periods list of periods to be added to the day.
+     * @param checksForOverlaps signals whether this {@code Day} checks for overlapping {@code Period},
+     *     false only for generating common slots.
+     * @throws OverlapPeriodException when there is an overlap in the period list
+     */
+    Day(DayOfWeek day, ArrayList<Period> periods, boolean checksForOverlaps) throws OverlapPeriodException {
+        requireAllNonNull(day, periods);
+        this.dayOfWeek = day;
+        this.periods = new ArrayList<>();
+        this.checksForOverlaps = checksForOverlaps;
 
         for (Period period : periods) {
             this.addPeriod(period);
@@ -126,7 +166,7 @@ public class Day implements Comparable<Day> {
      * @return {@code true} if added successfully.
      */
     public boolean addPeriod(Period period) throws OverlapPeriodException {
-        if (hasAnyOverlaps(period)) {
+        if (checksForOverlaps && hasAnyOverlaps(period)) {
             throw new OverlapPeriodException();
         }
         periods.add(period);
@@ -229,7 +269,7 @@ public class Day implements Comparable<Day> {
 
         ArrayList<Period> periodArrayList = new ArrayList<>(result);
         Collections.sort(periodArrayList);
-        return new Day(dayCheck, periodArrayList);
+        return new Day(dayCheck, periodArrayList, false);
     }
 
     /**
@@ -260,6 +300,7 @@ public class Day implements Comparable<Day> {
     public int compareTo(Day day) {
         return this.dayOfWeek.compareTo(day.dayOfWeek);
     }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -304,7 +345,7 @@ public class Day implements Comparable<Day> {
         if (hasPeriods()) {
             sb.append(", schedule is:\n");
         } else {
-            sb.append(", no classes.\n");
+            sb.append(", no periods.\n");
         }
 
         for (Period per : periods) {

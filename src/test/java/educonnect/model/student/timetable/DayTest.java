@@ -8,6 +8,7 @@ import static educonnect.testutil.TypicalTimetableAndValues.VALID_PERIOD_3;
 import static educonnect.testutil.TypicalTimetableAndValues.VALID_PERIOD_4;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.DayOfWeek;
@@ -70,6 +71,36 @@ public class DayTest {
 
         // check if the periods added are sorted automatically.
         assertTrue(day.isSorted());
+    }
+
+    @Test
+    public void addPeriod_validInputsAllowedOverlaps() throws OverlapPeriodException {
+        Day day = new Day(DayOfWeek.TUESDAY, false);
+
+        Period period1 =
+                new Period(DEFAULT_PERIOD_NAME, LocalTime.of(1, 0, 0), LocalTime.of(4, 0, 0));
+        Period period2 =
+                new Period(DEFAULT_PERIOD_NAME, LocalTime.of(2, 0, 0), LocalTime.of(3, 0, 0));
+
+        // has overlaps, but allowed -> returns true
+        assertTrue(day.addPeriod(period1));
+        assertTrue(day.addPeriod(period2));
+    }
+
+    @Test
+    public void hasPeriods() throws OverlapPeriodException {
+        Day day = new Day(DayOfWeek.MONDAY);
+        Period period1 =
+                new Period(DEFAULT_PERIOD_NAME, LocalTime.of(1, 0, 0), LocalTime.of(4, 0, 0));
+
+        // has no periods -> returns false
+        assertFalse(day.hasPeriods());
+
+        day.addPeriod(period1);
+
+        // has period -> returns true
+        assertTrue(day.hasPeriods());
+
     }
 
     @Test
@@ -164,28 +195,54 @@ public class DayTest {
     }
 
     @Test
+    public void compareTo() throws OverlapPeriodException {
+        Day dayTest = new Day(DayOfWeek.TUESDAY, new ArrayList<>(List.of(VALID_PERIOD_1, VALID_PERIOD_3)));
+        Day daySame = new Day(DayOfWeek.TUESDAY, new ArrayList<>(List.of(VALID_PERIOD_1, VALID_PERIOD_3)));
+        Day dayBefore = new Day(DayOfWeek.MONDAY, new ArrayList<>(List.of(VALID_PERIOD_1, VALID_PERIOD_3)));
+        Day dayAfter = new Day(DayOfWeek.WEDNESDAY, new ArrayList<>(List.of(VALID_PERIOD_1, VALID_PERIOD_3)));
+
+        // dayTest is after dayBefore -> compareTo returns a positive number
+        assertTrue(dayTest.compareTo(dayBefore) > 0);
+
+        // dayTest is before than dayAfter -> compareTo returns a negative number
+        assertTrue(dayTest.compareTo(dayAfter) < 0);
+
+        // dayTest is on the same day as daySame -> compareTo returns 0
+        assertEquals(0, dayTest.compareTo(daySame));
+    }
+
+    @Test
     public void equals() throws OverlapPeriodException {
-        Day dayTest = new Day(DayOfWeek.MONDAY, new ArrayList<>(List.of(VALID_PERIOD_1, VALID_PERIOD_3)));
-        Day daySameDaySamePeriods = new Day(DayOfWeek.MONDAY, new ArrayList<>(List.of(VALID_PERIOD_1, VALID_PERIOD_3)));
-        Day daySameDayDiffPeriods = new Day(DayOfWeek.MONDAY, new ArrayList<>(List.of(VALID_PERIOD_3, VALID_PERIOD_4)));
-        Day dayDiffDaySamePeriods = new Day(DayOfWeek.SUNDAY, new ArrayList<>(List.of(VALID_PERIOD_1, VALID_PERIOD_3)));
-        Day dayDiffDayDiffPeriods = new Day(DayOfWeek.SUNDAY, new ArrayList<>(List.of(VALID_PERIOD_3, VALID_PERIOD_4)));
+        Day dayTest = new Day(DayOfWeek.TUESDAY, new ArrayList<>(List.of(VALID_PERIOD_1, VALID_PERIOD_3)));
+        Day daySameDaySamePeriod = new Day(DayOfWeek.TUESDAY, new ArrayList<>(List.of(VALID_PERIOD_1, VALID_PERIOD_3)));
+        Day daySameDayDiffPeriod = new Day(DayOfWeek.TUESDAY, new ArrayList<>(List.of(VALID_PERIOD_3, VALID_PERIOD_4)));
+        Day dayDiffDaySamePeriod = new Day(DayOfWeek.SUNDAY, new ArrayList<>(List.of(VALID_PERIOD_1, VALID_PERIOD_3)));
+        Day dayDiffDayDiffPeriod = new Day(DayOfWeek.SUNDAY, new ArrayList<>(List.of(VALID_PERIOD_3, VALID_PERIOD_4)));
 
         // not same object -> returns false
-        assertFalse(dayTest.equals(null));
-        assertFalse(dayTest.equals(new Object()));
+        assertNotEquals(null, dayTest);
+        assertNotEquals(dayTest, new Object());
+
+        // same object -> returns true
+        assertEquals(dayTest, dayTest);
 
         // same day, different periods -> returns false
-        assertFalse(dayTest.equals(daySameDayDiffPeriods));
+        assertNotEquals(dayTest, daySameDayDiffPeriod);
 
         // different day, same periods -> returns false
-        assertFalse(dayTest.equals(dayDiffDaySamePeriods));
+        assertNotEquals(dayTest, dayDiffDaySamePeriod);
 
         // different day, different periods -> returns false
-        assertFalse(dayTest.equals(dayDiffDayDiffPeriods));
+        assertNotEquals(dayTest, dayDiffDayDiffPeriod);
 
         // same day and same periods -> returns true
-        assertTrue(dayTest.equals(daySameDaySamePeriods));
+        assertEquals(dayTest, daySameDaySamePeriod);
+
+        // check hashcode, same days and periods -> same hash code
+        assertEquals(dayTest.hashCode(), daySameDaySamePeriod.hashCode());
+
+        // check hashcode, different day, different periods -> different hash code
+        assertNotEquals(dayTest.hashCode(), dayDiffDayDiffPeriod.hashCode());
     }
 
     @Test
@@ -201,9 +258,12 @@ public class DayTest {
                 new Period("period2", LocalTime.of(3, 0, 0), LocalTime.of(5, 0, 0));
         Period period3 = // 7 AM to 11 AM
                 new Period("period3", LocalTime.of(7, 0, 0), LocalTime.of(11, 0, 0));
-        day.addPeriod(period1);
+
+        // no periods
+        assertEquals("", day.convertToCommandString());
 
         // only 1 period
+        day.addPeriod(period1);
         assertEquals(expectedString1, day.convertToCommandString());
 
         // multiple periods

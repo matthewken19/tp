@@ -19,7 +19,7 @@ public class Timetable {
     private static final int NUMBER_OF_DAYS_TYPICAL = 5;
     private static final Period DEFAULT_TIMEFRAME = new Period(Period.DEFAULT_PERIOD_NAME,
             Day.DEFAULT_START_TIME_OF_DAY, Day.DEFAULT_END_TIME_OF_DAY);
-    private static final HashSet<DayOfWeek> DEFAULT_ALL_DAYSOFWEEK = is7Days()
+    static final HashSet<DayOfWeek> DEFAULT_ALL_DAYSOFWEEK = is7Days()
             ? new HashSet<>(List.of(DayOfWeek.values()))
             : new HashSet<>(List.of(Arrays.copyOf(DayOfWeek.values(), NUMBER_OF_DAYS_TYPICAL)));
     private final ArrayList<Day> days;
@@ -98,7 +98,7 @@ public class Timetable {
      */
     public boolean addPeriodsToDay(int dayNumber, ArrayList<Period> periods) throws OverlapPeriodException {
         if (dayNumber < 1 || dayNumber > this.numOfDays) {
-            return false;
+            throw new NumberOfDaysException();
         }
 
         for (Period period : periods) {
@@ -158,7 +158,12 @@ public class Timetable {
 
         for (Day eachDay : days) {
             if (daysOfWeek.contains(eachDay.getDayOfWeek())) {
-                allSlots.addPeriodsToDay(eachDay.getDayOfWeek(), eachDay.findSlots(duration, timeframe));
+                ArrayList<Period> list = eachDay.findSlots(duration, timeframe);
+                if (!list.isEmpty()) {
+                    allSlots.addPeriodsToDay(eachDay.getDayOfWeek(), list);
+                } else {
+                    allSlots.deleteDay(eachDay.getDayOfWeek());
+                }
             }
         }
         return allSlots;

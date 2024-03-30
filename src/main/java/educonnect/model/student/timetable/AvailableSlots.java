@@ -90,6 +90,11 @@ public class AvailableSlots {
         }
     }
 
+    /**
+     * Checks if the {@code AvailableSlots} object has any common slots found.
+     *
+     * @return {@code true} if there is any {@code Period} found.
+     */
     public boolean hasCommonSlots() {
         if (this.days.isEmpty()) {
             return false;

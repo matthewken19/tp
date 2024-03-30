@@ -11,6 +11,7 @@ import static educonnect.logic.parser.CliSyntax.PREFIX_TIMETABLE;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
+
 import educonnect.logic.commands.CopyCommand;
 import educonnect.logic.parser.exceptions.ParseException;
 import educonnect.model.student.Student;
@@ -41,7 +42,7 @@ public class CopyCommandParser implements Parser<CopyCommand> {
         for (Tag keywordTag: tagList) {
             predicates.add(new TagContainsKeywordsPredicate(keywordTag));
         }
-        
+
         return new CopyCommand(predicates);
     }
 }

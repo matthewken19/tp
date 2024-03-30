@@ -13,6 +13,7 @@ import educonnect.logic.Messages;
 import educonnect.logic.commands.exceptions.CommandException;
 import educonnect.model.Model;
 import educonnect.model.student.Student;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -39,30 +40,21 @@ public class CopyCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        Predicate<Student> combinedPredicate = predicates.stream()
-                .reduce(Predicate::and)
-                .orElse(student -> true);
-        FilteredList<Student> filteredStudents = model.getFilteredStudentList().filtered(combinedPredicate);
+        model.updateFilteredStudentList(predicates);
+        ObservableList<Student> filteredStudents = model.getFilteredStudentList();
         if (filteredStudents.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_NO_STUDENT_FOUND);
         }
 
-        StringBuilder response = new StringBuilder(String.format(Messages.MESSAGE_STUDENT_EMAIL_COPIED_OVERVIEW,
-                filteredStudents.size()));
-        response.append("\n");
-        StringJoiner emails = new StringJoiner(", ");
-
-        for (Student s : filteredStudents) {
-            response.append("\n").append(Messages.formatNameAndEmail(s)).append("\n");
-            emails.add(s.getEmail().value);
-        }
-
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
+        StringJoiner emails = new StringJoiner(", ");
+        filteredStudents.forEach(s -> emails.add(s.getEmail().value));
         content.putString(emails.toString());
         clipboard.setContent(content);
 
+        String response = String.format(Messages.MESSAGE_STUDENT_EMAIL_COPIED_OVERVIEW,
+                filteredStudents.size());
         return new CommandResult(response.toString());
     }
 

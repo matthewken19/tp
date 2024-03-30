@@ -19,7 +19,6 @@ import static educonnect.logic.parser.CliSyntax.PREFIX_TIMETABLE_WEDNESDAY;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import educonnect.logic.commands.AddCommand;
 import educonnect.logic.parser.exceptions.ParseException;

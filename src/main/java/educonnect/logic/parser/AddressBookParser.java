@@ -11,6 +11,7 @@ import educonnect.commons.core.LogsCenter;
 import educonnect.logic.commands.AddCommand;
 import educonnect.logic.commands.ClearCommand;
 import educonnect.logic.commands.Command;
+import educonnect.logic.commands.CopyCommand;
 import educonnect.logic.commands.DeleteCommand;
 import educonnect.logic.commands.EditCommand;
 import educonnect.logic.commands.ExitCommand;
@@ -70,6 +71,9 @@ public class AddressBookParser {
 
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
+
+        case CopyCommand.COMMAND_WORD:
+            return new CopyCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

@@ -14,7 +14,6 @@ import educonnect.logic.commands.exceptions.CommandException;
 import educonnect.model.Model;
 import educonnect.model.student.Student;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
@@ -32,9 +31,31 @@ public class CopyCommand extends Command {
             + "Example 2: " + COMMAND_WORD + " t/tutorial-1";
 
     private final Collection<Predicate<Student>> predicates;
+    private final boolean copy;
 
+    /**
+     * Creates a CopyCommand to copy emails to the clipboard.
+     * @param predicates to filter the students with.
+     */
     public CopyCommand(Collection<Predicate<Student>> predicates) {
         this.predicates = predicates;
+        this.copy = true;
+    }
+
+    /**
+     * Creates a CopyCommand for testing purposes.
+     *
+     * <p>JUnit does not handle JavaFX Clipboard library and returns the error below:
+     * <p><code>
+     * java.lang.IllegalStateException: This operation is permitted on the event thread only;
+     * currentThread = Test worker
+     * </code>
+     * @param predicates to filter the students with.
+     * @param copy flag to copy emails to clipboard. Set to false for testing.
+     */
+    public CopyCommand(Collection<Predicate<Student>> predicates, boolean copy) {
+        this.predicates = predicates;
+        this.copy = copy;
     }
 
     @Override
@@ -46,12 +67,14 @@ public class CopyCommand extends Command {
             throw new CommandException(Messages.MESSAGE_NO_STUDENT_FOUND);
         }
 
-        Clipboard clipboard = Clipboard.getSystemClipboard();
-        ClipboardContent content = new ClipboardContent();
-        StringJoiner emails = new StringJoiner(", ");
-        filteredStudents.forEach(s -> emails.add(s.getEmail().value));
-        content.putString(emails.toString());
-        clipboard.setContent(content);
+        if (copy) {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            StringJoiner emails = new StringJoiner(", ");
+            filteredStudents.forEach(s -> emails.add(s.getEmail().value));
+            content.putString(emails.toString());
+            clipboard.setContent(content);
+        }
 
         String response = String.format(Messages.MESSAGE_STUDENT_EMAIL_COPIED_OVERVIEW,
                 filteredStudents.size());

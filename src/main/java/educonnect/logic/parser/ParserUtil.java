@@ -232,6 +232,9 @@ public class ParserUtil {
         return new Period(Period.DEFAULT_PERIOD_NAME, trimmedPeriod);
     }
 
+    /**
+     * Parses {@code String duration} into a {@code int}. Helper method.
+     */
     public static int parseDuration(String duration) throws ParseException {
         String trimmedDuration = duration.trim();
         try {
@@ -241,6 +244,9 @@ public class ParserUtil {
         }
     }
 
+    /**
+     * Parses {@code String days} into a {@code HashSet<DayOfWeek>}. Helper method.
+     */
     public static HashSet<DayOfWeek> parseDaysSpecified(String days) {
         HashSet<DayOfWeek> daysContained = new HashSet<>();
 

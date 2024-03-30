@@ -1,12 +1,11 @@
 package educonnect.logic.commands;
 
-import educonnect.commons.util.ToStringBuilder;
-import educonnect.logic.commands.exceptions.CommandException;
-import educonnect.model.Model;
-import educonnect.model.student.Student;
-import educonnect.model.student.timetable.AvailableSlots;
-import educonnect.model.student.timetable.Period;
-import educonnect.model.student.timetable.Timetable;
+import static educonnect.logic.parser.CliSyntax.PREFIX_DURATION;
+import static educonnect.logic.parser.CliSyntax.PREFIX_ON_DAYS;
+import static educonnect.logic.parser.CliSyntax.PREFIX_PERIOD;
+import static educonnect.logic.parser.CliSyntax.PREFIX_TAG;
+import static java.util.Objects.requireNonNull;
+
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,14 +13,15 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import educonnect.commons.util.ToStringBuilder;
+import educonnect.logic.commands.exceptions.CommandException;
+import educonnect.model.Model;
+import educonnect.model.student.Student;
+import educonnect.model.student.timetable.AvailableSlots;
+import educonnect.model.student.timetable.Period;
+import educonnect.model.student.timetable.Timetable;
 import javafx.collections.ObservableList;
-
-import static educonnect.logic.parser.CliSyntax.PREFIX_DURATION;
-import static educonnect.logic.parser.CliSyntax.PREFIX_ON_DAYS;
-import static educonnect.logic.parser.CliSyntax.PREFIX_PERIOD;
-import static educonnect.logic.parser.CliSyntax.PREFIX_TAG;
-import static java.util.Objects.requireNonNull;
-
 
 /**
  * Finds a common slot amongst the list of students (a subgroup can be specified, identified using tags).

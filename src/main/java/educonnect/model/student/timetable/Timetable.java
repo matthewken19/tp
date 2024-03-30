@@ -14,14 +14,14 @@ import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
  * Represents the timetable of a student for a week.
  */
 public class Timetable {
-    private static final boolean IS_TIMETABLE_7_DAYS = false; // default is 5 days
-    private static final int NUMBER_OF_DAYS_MAX = 7;
-    private static final int NUMBER_OF_DAYS_TYPICAL = 5;
+    public static final int NUMBER_OF_DAYS_TYPICAL = 5;
     public static final Period DEFAULT_TIMEFRAME = new Period(Period.DEFAULT_PERIOD_NAME,
             Day.DEFAULT_START_TIME_OF_DAY, Day.DEFAULT_END_TIME_OF_DAY);
     public static final HashSet<DayOfWeek> DEFAULT_ALL_DAYS = is7Days()
             ? new HashSet<>(List.of(DayOfWeek.values()))
             : new HashSet<>(List.of(Arrays.copyOf(DayOfWeek.values(), NUMBER_OF_DAYS_TYPICAL)));
+    private static final boolean IS_TIMETABLE_7_DAYS = false; // default is 5 days
+    private static final int NUMBER_OF_DAYS_MAX = 7;
     private final ArrayList<Day> days;
     private final int numOfDays;
 

@@ -18,7 +18,6 @@ import educonnect.testutil.EditStudentDescriptorBuilder;
 
 public class EditStudentDescriptorTest {
 
-    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void equals() {
         // same values -> returns true

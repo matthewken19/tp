@@ -79,4 +79,8 @@ public class ArgumentMultimap {
     public boolean areAnyPrefixesPresent(Prefix... prefixes) {
         return Stream.of(prefixes).anyMatch(prefix -> argMultimap.containsKey(prefix));
     }
+
+    public boolean areAllPrefixesPresent(Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argMultimap.containsKey(prefix));
+    }
 }

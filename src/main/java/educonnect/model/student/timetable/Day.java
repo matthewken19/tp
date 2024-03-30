@@ -100,17 +100,12 @@ public class Day implements Comparable<Day> {
      * @param periods list of periods to be added to the day.
      * @param checksForOverlaps signals whether this {@code Day} checks for overlapping {@code Period},
      *     false only for generating common slots.
-     * @throws OverlapPeriodException when there is an overlap in the period list
      */
-    Day(DayOfWeek day, ArrayList<Period> periods, boolean checksForOverlaps) throws OverlapPeriodException {
+    Day(DayOfWeek day, ArrayList<Period> periods, boolean checksForOverlaps) {
         requireAllNonNull(day, periods);
         this.dayOfWeek = day;
-        this.periods = new ArrayList<>();
+        this.periods = periods;
         this.checksForOverlaps = checksForOverlaps;
-
-        for (Period period : periods) {
-            this.addPeriod(period);
-        }
     }
 
     /**
@@ -255,7 +250,7 @@ public class Day implements Comparable<Day> {
      * @param allDays all the same {@code DayOfWeek}, from different {@code Timetable}.
      * @return {@code Day} containing all common Periods.
      */
-    static Day findAllCommonSlots(ArrayList<Day> allDays) throws OverlapPeriodException {
+    static Day findAllCommonSlots(ArrayList<Day> allDays) {
         Set<Period> result = new HashSet<>(allDays.get(0).periods);
         DayOfWeek dayCheck = allDays.get(0).getDayOfWeek();
 

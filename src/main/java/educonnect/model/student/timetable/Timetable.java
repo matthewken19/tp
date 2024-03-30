@@ -17,9 +17,9 @@ public class Timetable {
     private static final boolean IS_TIMETABLE_7_DAYS = false; // default is 5 days
     private static final int NUMBER_OF_DAYS_MAX = 7;
     private static final int NUMBER_OF_DAYS_TYPICAL = 5;
-    private static final Period DEFAULT_TIMEFRAME = new Period(Period.DEFAULT_PERIOD_NAME,
+    public static final Period DEFAULT_TIMEFRAME = new Period(Period.DEFAULT_PERIOD_NAME,
             Day.DEFAULT_START_TIME_OF_DAY, Day.DEFAULT_END_TIME_OF_DAY);
-    static final HashSet<DayOfWeek> DEFAULT_ALL_DAYSOFWEEK = is7Days()
+    public static final HashSet<DayOfWeek> DEFAULT_ALL_DAYS = is7Days()
             ? new HashSet<>(List.of(DayOfWeek.values()))
             : new HashSet<>(List.of(Arrays.copyOf(DayOfWeek.values(), NUMBER_OF_DAYS_TYPICAL)));
     private final ArrayList<Day> days;
@@ -108,38 +108,6 @@ public class Timetable {
     }
 
     /**
-     * Finds all time slots of specified duration.
-     *
-     * @param duration specified time.
-     * @return a {@code Timetable} object containing the available time slots.
-     */
-    AvailableSlots findSlots(int duration) throws OverlapPeriodException {
-        return findSlots(duration, DEFAULT_TIMEFRAME, DEFAULT_ALL_DAYSOFWEEK);
-    }
-
-    /**
-     * Finds all time slots of specified duration, with a specified timeframe in {@code Period},.
-     *
-     * @param duration specified time.
-     * @param daysOfWeek specified day(s) to be included.
-     * @return a {@code Timetable} object containing the available time slots.
-     */
-    AvailableSlots findSlots(int duration, HashSet<DayOfWeek> daysOfWeek) throws OverlapPeriodException {
-        return findSlots(duration, DEFAULT_TIMEFRAME, daysOfWeek);
-    }
-
-    /**
-     * Finds all time slots of specified duration, with a specified timeframe in {@code Period},.
-     *
-     * @param duration specified time.
-     * @param timeframe specified time frame.
-     * @return a {@code Timetable} object containing the available time slots.
-     */
-    AvailableSlots findSlots(int duration, Period timeframe) throws OverlapPeriodException {
-        return findSlots(duration, timeframe, DEFAULT_ALL_DAYSOFWEEK);
-    }
-
-    /**
      * Finds all time slots of specified duration, with a specified timeframe in {@code Period},
      * and specified {@code Day}(s).
      *
@@ -148,8 +116,7 @@ public class Timetable {
      * @param daysOfWeek specified day(s) to be included.
      * @return an {@code List} of {@code Lists} of {@code Periods}.
      */
-    AvailableSlots findSlots(int duration, Period timeframe, HashSet<DayOfWeek> daysOfWeek)
-            throws OverlapPeriodException {
+    public AvailableSlots findSlots(int duration, Period timeframe, HashSet<DayOfWeek> daysOfWeek) {
         if (duration > 24 || duration < 1) {
             throw new InvalidDurationException();
         }

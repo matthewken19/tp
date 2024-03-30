@@ -71,7 +71,7 @@ public class AvailableSlots {
      * @param dayOfWeek {@code DayOfWeek} enum.
      * @param periods {@code ArrayList} of available {@code Period} objects.
      */
-    public void addPeriodsToDay(DayOfWeek dayOfWeek, ArrayList<Period> periods) throws OverlapPeriodException {
+    public void addPeriodsToDay(DayOfWeek dayOfWeek, ArrayList<Period> periods) {
         this.days.put(dayOfWeek, new Day(dayOfWeek, periods, false));
     }
 
@@ -90,17 +90,27 @@ public class AvailableSlots {
         }
     }
 
+    public boolean hasCommonSlots() {
+        if (this.days.isEmpty()) {
+            return false;
+        }
+
+        for (Day day: this.days.values()) {
+            if (day.hasPeriods()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Finds all common available slots, given each {@code AvailableSlots} from each {@code Student}.
      *
      * @param allAvailableSlots {@code ArrayList} of {@code AvailableSlots} objects
      *     generated from {@code Student} objects.
      * @return an {@code AvailableSlot} object containing all common slots from multiple students.
-     * @throws OverlapPeriodException if there is an overlap in the period,
-     *     but should not happen under normal circumstances.
      */
-    static AvailableSlots findAllCommonSlots(ArrayList<AvailableSlots> allAvailableSlots)
-            throws OverlapPeriodException {
+    public static AvailableSlots findAllCommonSlots(ArrayList<AvailableSlots> allAvailableSlots) {
         AvailableSlots result = new AvailableSlots(new HashSet<>());
         ArrayList<DayOfWeek> allDaysPossible = findAllDays(allAvailableSlots);
 

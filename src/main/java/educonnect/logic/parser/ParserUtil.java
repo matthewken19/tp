@@ -3,6 +3,7 @@ package educonnect.logic.parser;
 import static educonnect.commons.util.CollectionUtil.requireAllNonNull;
 import static java.util.Objects.requireNonNull;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -183,8 +184,8 @@ public class ParserUtil {
     public static Timetable parseTimetable(ArrayList<String> allDays) throws ParseException {
         requireNonNull(allDays);
         Timetable timetable = new Timetable();
-        for (int i = 1; i < allDays.size(); i++) {
-            parseDay(i, timetable, parsePeriods(allDays.get(i - 1)));
+        for (int i = 0; i < allDays.size(); i++) {
+            parseDay(i + 1, timetable, parsePeriods(allDays.get(i)));
         }
         return timetable;
     }
@@ -229,6 +230,42 @@ public class ParserUtil {
             throw new ParseException(Period.PERIOD_CONSTRAINTS);
         }
         return new Period(Period.DEFAULT_PERIOD_NAME, trimmedPeriod);
+    }
+
+    public static int parseDuration(String duration) throws ParseException {
+        String trimmedDuration = duration.trim();
+        try {
+            return Integer.parseInt(trimmedDuration);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Invalid duration specified!");
+        }
+    }
+
+    public static HashSet<DayOfWeek> parseDaysSpecified(String days) {
+        HashSet<DayOfWeek> daysContained = new HashSet<>();
+
+        if (days.contains("mon")) {
+            daysContained.add(DayOfWeek.MONDAY);
+        }
+        if (days.contains("tue")) {
+            daysContained.add(DayOfWeek.TUESDAY);
+        }
+        if (days.contains("wed")) {
+            daysContained.add(DayOfWeek.WEDNESDAY);
+        }
+        if (days.contains("thu")) {
+            daysContained.add(DayOfWeek.THURSDAY);
+        }
+        if (days.contains("fri")) {
+            daysContained.add(DayOfWeek.FRIDAY);
+        }
+        if (days.contains("sat")) {
+            daysContained.add(DayOfWeek.SATURDAY);
+        }
+        if (days.contains("sun")) {
+            daysContained.add(DayOfWeek.SUNDAY);
+        }
+        return daysContained;
     }
 
     /**

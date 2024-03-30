@@ -117,10 +117,12 @@ public class TimetableTest {
         Timetable timetable = VALID_TIMETABLE_1;
 
         // find slot of 0 hour, invalid input -> throws InvalidDurationException
-        assertThrows(InvalidDurationException.class, () -> timetable.findSlots(0));
+        assertThrows(InvalidDurationException.class, () ->
+                timetable.findSlots(0, Timetable.DEFAULT_TIMEFRAME, Timetable.DEFAULT_ALL_DAYS));
 
         // find slot of 25 hours, invalid input -> throws InvalidDurationException
-        assertThrows(InvalidDurationException.class, () -> timetable.findSlots(25));
+        assertThrows(InvalidDurationException.class, () ->
+                timetable.findSlots(25, Timetable.DEFAULT_TIMEFRAME, Timetable.DEFAULT_ALL_DAYS));
     }
 
     @Test
@@ -146,14 +148,15 @@ public class TimetableTest {
 
 
         // only duration specified, default 8 AM - 10 PM timeframe, default every day of the week.
-        assertEquals(expectedAvailableSlot1, timetable.findSlots(5));
+        assertEquals(expectedAvailableSlot1,
+                timetable.findSlots(5, Timetable.DEFAULT_TIMEFRAME, Timetable.DEFAULT_ALL_DAYS));
 
         // duration, timeframe of 10 AM to 8 PM specified, default every day of the week.
         assertEquals(expectedAvailableSlot2, timetable.findSlots(6,
-                new Period(Period.DEFAULT_PERIOD_NAME, "10-20")));
+                new Period(Period.DEFAULT_PERIOD_NAME, "10-20"), Timetable.DEFAULT_ALL_DAYS));
 
         // duration, and Tuesday specified, default 8 AM - 10 PM timeframe
-        assertEquals(expectedAvailableSlot3, timetable.findSlots(5,
+        assertEquals(expectedAvailableSlot3, timetable.findSlots(5, Timetable.DEFAULT_TIMEFRAME,
                 new HashSet<>(Collections.singleton(DayOfWeek.TUESDAY))));
 
         // duration, timeframe of 9 AM to 6 PM, only tues-thu specified.

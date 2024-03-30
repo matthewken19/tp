@@ -6,11 +6,11 @@ import static educonnect.logic.parser.CliSyntax.PREFIX_NAME;
 import static educonnect.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 import static educonnect.logic.parser.CliSyntax.PREFIX_TAG;
 import static educonnect.logic.parser.CliSyntax.PREFIX_TELEGRAM_HANDLE;
+import static educonnect.logic.parser.CliSyntax.PREFIX_TIMETABLE;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 import educonnect.logic.commands.FindCommand;
 import educonnect.logic.parser.exceptions.ParseException;
@@ -35,16 +35,15 @@ public class FindCommandParser implements Parser<FindCommand> {
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_STUDENT_ID, PREFIX_EMAIL,
-                        PREFIX_TELEGRAM_HANDLE, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_STUDENT_ID,
+                PREFIX_EMAIL, PREFIX_TELEGRAM_HANDLE, PREFIX_TAG, PREFIX_TIMETABLE);
+
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_STUDENT_ID,
                 PREFIX_EMAIL, PREFIX_TELEGRAM_HANDLE);
 
-        if (!argMultimap.getPreamble().isEmpty()) {
+        if (argMultimap.areAnyPrefixesPresent(PREFIX_TIMETABLE) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
@@ -55,11 +54,11 @@ public class FindCommandParser implements Parser<FindCommand> {
         argMultimap.getValue(PREFIX_STUDENT_ID).ifPresent(keywordId ->
                 predicates.add(new IdContainsKeywordsPredicate(keywordId))
         );
-        argMultimap.getValue(PREFIX_EMAIL).ifPresent(keywordName ->
-                predicates.add(new EmailContainsKeywordsPredicate(keywordName))
+        argMultimap.getValue(PREFIX_EMAIL).ifPresent(keywordEmail ->
+                predicates.add(new EmailContainsKeywordsPredicate(keywordEmail))
         );
-        argMultimap.getValue(PREFIX_TELEGRAM_HANDLE).ifPresent(keywordName ->
-                predicates.add(new TelegramContainsKeywordsPredicate(keywordName))
+        argMultimap.getValue(PREFIX_TELEGRAM_HANDLE).ifPresent(keywordTeleHandle ->
+                predicates.add(new TelegramContainsKeywordsPredicate(keywordTeleHandle))
         );
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         for (Tag keywordTag: tagList) {
@@ -67,13 +66,5 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         return new FindCommand(predicates);
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }

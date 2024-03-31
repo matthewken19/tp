@@ -16,7 +16,6 @@ import educonnect.logic.commands.EditCommand;
 import educonnect.logic.commands.ExitCommand;
 import educonnect.logic.commands.FindCommand;
 import educonnect.logic.commands.HelpCommand;
-import educonnect.logic.commands.LinkCommand;
 import educonnect.logic.commands.ListCommand;
 import educonnect.logic.commands.SlotsCommand;
 import educonnect.logic.parser.exceptions.ParseException;
@@ -71,7 +70,7 @@ public class AddressBookParser {
             return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+            return new ListCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

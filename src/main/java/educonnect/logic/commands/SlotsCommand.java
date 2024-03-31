@@ -176,8 +176,8 @@ public class SlotsCommand extends Command {
 
             SlotsFinderDescriptor slotsFinderDescriptor = (SlotsFinderDescriptor) obj;
             return this.duration == slotsFinderDescriptor.duration
-                    && this.timeframe.equals(slotsFinderDescriptor.timeframe)
-                    && this.days.equals(slotsFinderDescriptor.days);
+                    && this.getTimeframe().equals(slotsFinderDescriptor.getTimeframe())
+                    && this.getDays().equals(slotsFinderDescriptor.getDays());
         }
 
         @Override

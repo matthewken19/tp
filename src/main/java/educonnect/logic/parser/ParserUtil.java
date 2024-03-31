@@ -3,6 +3,7 @@ package educonnect.logic.parser;
 import static educonnect.commons.util.CollectionUtil.requireAllNonNull;
 import static java.util.Objects.requireNonNull;
 
+import educonnect.logic.commands.SlotsCommand;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,6 +31,9 @@ import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_DURATION =
+            "Invalid duration specified! "
+            + "Duration should be between 0-23 hours, more typically 1-4 hours.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -87,8 +91,7 @@ public class ParserUtil {
             }
             namesUnparsed.delete(0, indexOfWord + lengthOfWord);
         }
-        String capitalised = result.toString();
-        return capitalised;
+        return result.toString();
     }
 
     /**
@@ -109,15 +112,12 @@ public class ParserUtil {
 
     /**
      * Capitalises the 'A' at the start of the Student ID
-     * @param trimmedId
+     *
      * @return Capitalised String of Student ID
      */
     public static String createCapitalStudentId(String trimmedId) {
-        StringBuilder result = new StringBuilder();
-        result.append(Character.toUpperCase(trimmedId.charAt(0)));
-        result.append(trimmedId.substring(1));
-        String capitalised = result.toString();
-        return capitalised;
+        return Character.toUpperCase(trimmedId.charAt(0))
+               + trimmedId.substring(1);
     }
 
     /**
@@ -238,16 +238,26 @@ public class ParserUtil {
     public static int parseDuration(String duration) throws ParseException {
         String trimmedDuration = duration.trim();
         try {
-            return Integer.parseInt(trimmedDuration);
+            int i = Integer.parseInt(trimmedDuration);
+            if (i < 1 || i > 23) {
+                throw new ParseException(MESSAGE_INVALID_DURATION);
+            }
+            return i;
         } catch (NumberFormatException e) {
-            throw new ParseException("Invalid duration specified!");
+            throw new ParseException(MESSAGE_INVALID_DURATION);
         }
     }
 
     /**
      * Parses {@code String days} into a {@code HashSet<DayOfWeek>}. Helper method.
      */
-    public static HashSet<DayOfWeek> parseDaysSpecified(String days) {
+    public static HashSet<DayOfWeek> parseDaysSpecified(String days) throws ParseException {
+        if (days.trim().isBlank()) {
+            throw new ParseException(SlotsCommand.MESSAGE_USAGE);
+        }
+
+        // ToDo: Rework this to check for non-valid Strings
+
         HashSet<DayOfWeek> daysContained = new HashSet<>();
 
         if (days.contains("mon")) {

@@ -164,11 +164,11 @@ This section describes some noteworthy details on how certain features are imple
 * Each `Day` object can contain <u>0 to 24 1-hour</u> `Period` objects, or less if each `Period` has intervals longer
   than 1 hour.
 * Each `Period` is defined by the start time and end time, indicated by integers on a 24-hour clock, i.e. 0-23.
-* Each `Day` cannot contain overlapping `Period`, an overlap occurs when the start time of the previos `Period` is 
+* Each `Day` cannot contain overlapping `Period`, an overlap occurs when the start time of the previous `Period` is 
   before the end time of the next `Period`. E.g. for the case of `Period` of 12-14, `Period` of 14-16 is allowed,
   but `Period` of 13-15 is not.
 
-![StudentClassDiagram.png](diagrams%2FStudentClassDiagram.png)
+<puml src="diagrams/StudentClassDiagram.puml" width="450"/>
 
 #### Adding/Editing a Student's Timetable
 * The `Timetable` of the `Student` is specified during the `add` command, indicated with a `c/` prefix.
@@ -177,10 +177,11 @@ This section describes some noteworthy details on how certain features are imple
   the `Student`.
   * The arguments for the `Timetable` object can be broken down into its respective day and the period that day contains.
   * The day is indicated by its respective prefix as well, the format is `{DAY_3_LETTERS}:`, e.g. `"mon:"` or `"fri:"`.
+  * The period follows this format `{HOUR-HOUR}`, in a 24-hour clock, i.e. 0-23.
   * E.g. an accepted `String` is `"mon: 13-15, 15-17 tue: 12-14 thu: 12-18"`
 * Below shows the sequence diagram when <u>adding</u> a student.
 
-![AddSequenceDiagram.png](diagrams%2FAddSequenceDiagram.png)
+<puml src="diagrams/AddSequenceDiagram.puml" width="450"/>
 
 #### \[Proposed\] Finding a Common Slot
 
@@ -197,8 +198,35 @@ outputted to the user.
     list if ran after the `find` command, then returns the earliest 1-hour slot available for the week.
   * `slot t/TUT-1 d/2` - EduConnect will first filter and return a list of students with the tag `TUT-1`, then return
     the earliest 2-hour slot available for the week.
+* The command's execution will iterate through the selected list of students, accessing each `Timetable` object's 
+  list of `Day` objects.
+  * Each `Day` object will look for valid `Period` that does not overlap with its own list of `Period` objects.
+  * The series of valid `Period` and `Day` will be collected from each `Timetable` of each `Student`.
+  * Common slots across all `Timetable` will then be filtered out and returned.
 
 _{more functionality to be implemented in later versions}_
+
+### Website URL support
+
+The inclusion of the `Link` attribute enhances the versatility of EduConnect, enabling storage and access to project or assignment weblinks for each student. This feature facilitates efficient collaboration and evaluation by Teaching Assistants (TAs) and provides students with a convenient means to showcase their work.
+* Each `Student` has an additional attribute `Link`
+* `Link` is responsible for storing the student's project or assignment weblink for ease of access by the TA.
+* `Link` is wrapped around a Java `Optional` in `Student`. This means that if the link is not specified during construction of a new `Student`, the student's `Link` attribute will initialized as `Optional.empty`.
+* `Link` must be a valid URL, and a validation regex is present to check the validity of the `link`.
+* In scenarios involving group projects, the `Link` attribute need not be unique as group members will share the same project link. Therefore, enforcing uniqueness for the `Link` attribute could lead to unnecessary constraints and complexity.
+
+#### UI implementation
+* A student's weblink will be displayed using the JavaFX `Hyperlink` class at `StudentCard.java`. 
+* Due to potential UI issues arising from excessively long URLs, a clickable embedded text labeled "Project Link" will be displayed instead of the actual URL.
+* If the student has a valid Link, the Hyperlink will be visible and clickable, allowing users to access the weblink directly.
+* If the student does not have a Link attribute or if the Link is not specified, the Hyperlink will be toggled to be invisible, ensuring a clean and uncluttered user interface.
+
+#### Adding/Editing a student's Link
+* Just like any other attribute of `Student`, `Link` can be specified during the `add` command, indicated with a `l/` prefix.
+* When creating a new `Student` using the add command, the `l/` prefix is optional.
+* `Link` can also be modified using the `edit` command with the `l/` prefix.
+* Below shows the sequence diagram when editing a student's `Link`.
+
 
 ### \[Proposed\] Undo/redo feature
 
@@ -535,6 +563,13 @@ testers are expected to do more *exploratory* testing.
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
+
+### Listing all students
+1. Listing all students in the address book.
+    1. Test case: `list`<br>
+      Expected: All students showing without timetables.
+    1. Test case: `list timetable`<br>
+      Expected: All students showing with timetables appearing in student cards.
 
 ### Deleting a student
 

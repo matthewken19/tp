@@ -337,13 +337,17 @@ public class ParserUtilTest {
 
     @Test
     public void parseDaysSpecified_invalidInputs_throwsParseException() {
+        // no days specified
         assertThrows(ParseException.class, () -> ParserUtil.parseDaysSpecified(""));
+
+        // wrong days format specified
+        assertThrows(ParseException.class, () -> ParserUtil.parseDaysSpecified("not, a, valid, day"));
     }
 
     @Test
     public void parseDaysSpecified_validInputs() throws ParseException {
         HashSet<DayOfWeek> expectedDays = new HashSet<>(
                 Set.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY));
-        assertEquals(expectedDays, ParserUtil.parseDaysSpecified("mon wed thu"));
+        assertEquals(expectedDays, ParserUtil.parseDaysSpecified("mon, wed, thu"));
     }
 }

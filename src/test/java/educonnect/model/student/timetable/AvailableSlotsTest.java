@@ -28,6 +28,16 @@ public class AvailableSlotsTest {
     }
 
     @Test
+    public void findAllDay_emptyInput() {
+        AvailableSlots expectedAs1 = new AvailableSlots();
+        AvailableSlots expectedAs2 = new AvailableSlots();
+
+        ArrayList<AvailableSlots> asList = new ArrayList<>(List.of(expectedAs1, expectedAs2));
+
+        assertEquals(new ArrayList<>(), AvailableSlots.findAllDays(asList));
+    }
+
+    @Test
     public void findAllCommonSlots() throws OverlapPeriodException {
         AvailableSlots expectedAvailableSlot = buildAvailableSlot("mon", "13-15", "16-18", "tue", "13-15", "16-18");
         expectedAvailableSlot.setCommonSlots();

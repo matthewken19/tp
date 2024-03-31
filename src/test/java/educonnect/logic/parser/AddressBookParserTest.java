@@ -96,8 +96,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_slots() throws Exception {
-        assertTrue(parser.parseCommand(SlotsCommand.COMMAND_WORD) instanceof SlotsCommand);
-        assertTrue(parser.parseCommand(SlotsCommand.COMMAND_WORD + "d/5 t/T01") instanceof SlotsCommand);
+        assertTrue(parser.parseCommand(SlotsCommand.COMMAND_WORD + " d/5 t/T01") instanceof SlotsCommand);
     }
 
     @Test

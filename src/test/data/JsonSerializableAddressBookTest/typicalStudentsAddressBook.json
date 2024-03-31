@@ -73,7 +73,7 @@
     "studentId" : "A9876543N",
     "email" : "heinz@example.com",
     "telegramHandle" : "@wallstreet",
-    "tags" : [ ],
+    "tags" : [ "tutorial-1" ],
     "timetable" : {
       "days" : [ {
         "dayOfWeek" : "MONDAY",
@@ -141,7 +141,7 @@
     "studentId" : "A9482224Y",
     "email" : "werner@example.com",
     "telegramHandle" : "@michegan",
-    "tags" : [ ],
+    "tags" : [ "tutorial-1" ],
     "timetable" : {
       "days" : [ {
         "dayOfWeek" : "MONDAY",
@@ -183,7 +183,7 @@
     "studentId" : "A9482427K",
     "email" : "lydia@example.com",
     "telegramHandle" : "@littletokyo",
-    "tags" : [ ],
+    "tags" : [ "tutorial-1" ],
     "timetable" : {
       "days" : [ {
         "dayOfWeek" : "MONDAY",
@@ -209,7 +209,7 @@
     "studentId" : "A6482442L",
     "email" : "anna@example.com",
     "telegramHandle" : "@georgie",
-    "tags" : [ ],
+    "tags" : [ "tutorial-2" ],
     "timetable" : {
       "days" : [ {
         "dayOfWeek" : "MONDAY",

@@ -27,7 +27,7 @@ public class SlotsCommandParserTest {
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, SlotsCommand.MESSAGE_USAGE);
     private static final String VALID_DURATION = "5";
     private static final String VALID_TIMEFRAME = "10-18";
-    private static final String VALID_ON_DAYS = "mon tue thu";
+    private static final String VALID_ON_DAYS = "mon, tue, thu";
     private static final String VALID_TAG = "tutorial-1";
     private static final String validCommand = " " + PREFIX_DURATION + VALID_DURATION;
 
@@ -35,9 +35,19 @@ public class SlotsCommandParserTest {
 
     @Test
     public void parse_missingParts_failure() {
-        // no duration specified
+        // no duration prefix specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
-        assertParseFailure(parser, " " + PREFIX_DURATION, MESSAGE_INVALID_FORMAT);
+
+        // no duration specified
+        assertParseFailure(parser, " " + PREFIX_DURATION, MESSAGE_INVALID_DURATION);
+
+        // no timeframe specified, but prefix included
+        assertParseFailure(parser, " " + PREFIX_DURATION + VALID_DURATION + " " + PREFIX_PERIOD,
+                Period.PERIOD_CONSTRAINTS);
+
+        // no on days specified, but prefix included
+        assertParseFailure(parser, " " + PREFIX_DURATION + VALID_DURATION + " " + PREFIX_ON_DAYS,
+                MESSAGE_INVALID_FORMAT);
     }
 
     @Test

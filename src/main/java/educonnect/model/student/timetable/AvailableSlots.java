@@ -105,6 +105,8 @@ public class AvailableSlots {
                 return true;
             }
         }
+        // unlikely that this will happen as we put Periods into Days,
+        // and if otherwise, no Days will be in the object.
         return false;
     }
 

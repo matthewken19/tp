@@ -1,6 +1,7 @@
 package educonnect.logic.parser;
 
 import static educonnect.commons.util.CollectionUtil.requireAllNonNull;
+import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static java.util.Objects.requireNonNull;
 
 import educonnect.logic.commands.SlotsCommand;
@@ -34,6 +35,10 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_DURATION =
             "Invalid duration specified! "
             + "Duration should be between 0-23 hours, more typically 1-4 hours.";
+    public static final String MESSAGE_INVALID_DAY =
+            "Invalid day specified! "
+            + "Each day is indicated by their 3-letter identifier, e.g. 'mon', or 'fri'.\n"
+            + "(Hint: by default Saturdays and Sundays are not included.)";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -66,7 +71,7 @@ public class ParserUtil {
 
     /**
      * Capitalises the names separated by a space
-     * Removes unecessary spaces in between names
+     * Removes necessary spaces in between names
      */
     public static String createCapitalName(String trimmedName) {
         String[] words = trimmedName.split("[\\s-]+");
@@ -253,33 +258,46 @@ public class ParserUtil {
      */
     public static HashSet<DayOfWeek> parseDaysSpecified(String days) throws ParseException {
         if (days.trim().isBlank()) {
-            throw new ParseException(SlotsCommand.MESSAGE_USAGE);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SlotsCommand.MESSAGE_USAGE));
         }
-
-        // ToDo: Rework this to check for non-valid Strings
 
         HashSet<DayOfWeek> daysContained = new HashSet<>();
+        String[] args = days.split(",");
 
-        if (days.contains("mon")) {
-            daysContained.add(DayOfWeek.MONDAY);
-        }
-        if (days.contains("tue")) {
-            daysContained.add(DayOfWeek.TUESDAY);
-        }
-        if (days.contains("wed")) {
-            daysContained.add(DayOfWeek.WEDNESDAY);
-        }
-        if (days.contains("thu")) {
-            daysContained.add(DayOfWeek.THURSDAY);
-        }
-        if (days.contains("fri")) {
-            daysContained.add(DayOfWeek.FRIDAY);
-        }
-        if (days.contains("sat")) {
-            daysContained.add(DayOfWeek.SATURDAY);
-        }
-        if (days.contains("sun")) {
-            daysContained.add(DayOfWeek.SUNDAY);
+        for (String each : args) {
+            switch (each.trim()) {
+            case "mon":
+                daysContained.add(DayOfWeek.MONDAY);
+                break;
+            case "tue":
+                daysContained.add(DayOfWeek.TUESDAY);
+                break;
+            case "wed":
+                daysContained.add(DayOfWeek.WEDNESDAY);
+                break;
+            case "thu":
+                daysContained.add(DayOfWeek.THURSDAY);
+                break;
+            case "fri":
+                daysContained.add(DayOfWeek.FRIDAY);
+                break;
+            case "sat":
+                if (Timetable.is7Days()) {
+                    daysContained.add(DayOfWeek.SATURDAY);
+                } else {
+                    throw new ParseException(MESSAGE_INVALID_DAY);
+                }
+                break;
+            case "sun":
+                if (Timetable.is7Days()) {
+                    daysContained.add(DayOfWeek.SUNDAY);
+                } else {
+                    throw new ParseException(MESSAGE_INVALID_DAY);
+                }
+                break;
+            default:
+                throw new ParseException(MESSAGE_INVALID_DAY);
+            }
         }
         return daysContained;
     }

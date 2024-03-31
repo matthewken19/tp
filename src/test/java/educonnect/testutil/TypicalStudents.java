@@ -46,6 +46,7 @@ public class TypicalStudents {
             .withEmail("heinz@example.com")
             .withTelegramHandle("@wallstreet")
             .withLink("https://github.com/tanjiajiajun/tp")
+            .withTags("tutorial-1")
             .withTimetable(VALID_TIMETABLE_1).build();
 
     public static final Student DANIEL = new StudentBuilder()
@@ -62,12 +63,14 @@ public class TypicalStudents {
             .withEmail("werner@example.com")
             .withTelegramHandle("@michegan")
             .withLink("https://github.com/tanjiajiajun/tp")
+            .withTags("tutorial-1")
             .withTimetable(VALID_TIMETABLE_2).build();
 
     public static final Student FIONA = new StudentBuilder()
             .withName("Fiona Kunz")
             .withStudentId("A9482427K")
             .withLink("https://en.wikipedia.org/wiki/LeBron_James")
+            .withTags("tutorial-1")
             .withEmail("lydia@example.com")
             .withTelegramHandle("@littletokyo").build();
 
@@ -75,6 +78,7 @@ public class TypicalStudents {
             .withName("George Best")
             .withStudentId("A6482442L")
             .withEmail("anna@example.com")
+            .withTags("tutorial-2")
             .withTelegramHandle("@georgie")
             .withTimetable(VALID_TIMETABLE_2).buildNoLink();
 

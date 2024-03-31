@@ -26,7 +26,7 @@ public class AvailableSlots {
      * Default constructor, empty HashMap and not a common slots AvailableSlots object.
      */
     public AvailableSlots() {
-        this.days = new HashMap<DayOfWeek, Day>();
+        this.days = new HashMap<>();
         this.isCommonSlots = false;
     }
 
@@ -140,6 +140,10 @@ public class AvailableSlots {
      * @return a list of DayOfWeek objects that appears in any of the {@code AvailableSlots}.
      */
     static ArrayList<DayOfWeek> findAllDays(ArrayList<AvailableSlots> allAvailableSlots) {
+        if (allAvailableSlots.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         Set<DayOfWeek> allDays = new HashSet<>(allAvailableSlots.get(0).days.keySet());
 
         for (AvailableSlots eachSlot : allAvailableSlots) {

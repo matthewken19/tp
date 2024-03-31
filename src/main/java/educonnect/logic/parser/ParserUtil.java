@@ -4,7 +4,6 @@ import static educonnect.commons.util.CollectionUtil.requireAllNonNull;
 import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static java.util.Objects.requireNonNull;
 
-import educonnect.logic.commands.SlotsCommand;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,6 +13,7 @@ import java.util.Set;
 
 import educonnect.commons.core.index.Index;
 import educonnect.commons.util.StringUtil;
+import educonnect.logic.commands.SlotsCommand;
 import educonnect.logic.parser.exceptions.ParseException;
 import educonnect.model.student.Email;
 import educonnect.model.student.Link;

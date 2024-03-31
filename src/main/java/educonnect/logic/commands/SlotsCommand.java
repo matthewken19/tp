@@ -7,12 +7,10 @@ import static educonnect.logic.parser.CliSyntax.PREFIX_TAG;
 import static java.util.Objects.requireNonNull;
 
 import java.time.DayOfWeek;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import educonnect.commons.util.ToStringBuilder;
 import educonnect.logic.commands.exceptions.CommandException;
@@ -21,7 +19,6 @@ import educonnect.model.student.Student;
 import educonnect.model.student.timetable.AvailableSlots;
 import educonnect.model.student.timetable.Period;
 import educonnect.model.student.timetable.Timetable;
-import javafx.collections.ObservableList;
 
 /**
  * Finds a common slot amongst the list of students (a subgroup can be specified, identified using tags).
@@ -82,16 +79,7 @@ public class SlotsCommand extends Command {
             days = Timetable.DEFAULT_ALL_DAYS;
         }
 
-        ObservableList<Student> listOfStudents = model.getFilteredStudentList();
-
-        ArrayList<Timetable> timetables =
-                listOfStudents.stream().map(Student::getTimetable)
-                        .collect(Collectors.toCollection(ArrayList::new));
-
-        ArrayList<AvailableSlots> allAvailableSlots =
-                timetables.stream().map(x -> x.findSlots(duration, timeframe, days))
-                        .collect(Collectors.toCollection(ArrayList::new));
-        AvailableSlots availableSlots = AvailableSlots.findAllCommonSlots(allAvailableSlots);
+        AvailableSlots availableSlots = model.findAllCommonSlots(duration, timeframe, days);
 
         if (availableSlots.hasCommonSlots()) {
             return new CommandResult(String.format(MESSAGE_FOUND_SLOTS_SUCCESS, availableSlots));

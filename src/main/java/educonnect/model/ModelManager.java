@@ -3,10 +3,14 @@ package educonnect.model;
 import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
+import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import educonnect.commons.core.GuiSettings;
 import educonnect.commons.core.LogsCenter;
@@ -15,6 +19,9 @@ import educonnect.model.student.Email;
 import educonnect.model.student.Student;
 import educonnect.model.student.StudentId;
 import educonnect.model.student.TelegramHandle;
+import educonnect.model.student.timetable.AvailableSlots;
+import educonnect.model.student.timetable.Period;
+import educonnect.model.student.timetable.Timetable;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
@@ -165,6 +172,21 @@ public class ModelManager implements Model {
         CollectionUtil.requireAllNonNull(target, editedStudent);
 
         addressBook.setStudent(target, editedStudent);
+    }
+
+    //=========== Available Slots Computation =================================================================
+    @Override
+    public AvailableSlots findAllCommonSlots(int duration, Period timeframe, HashSet<DayOfWeek> days) {
+        ObservableList<Student> listOfStudents = getFilteredStudentList();
+
+        ArrayList<Timetable> timetables =
+                listOfStudents.stream().map(Student::getTimetable)
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+        ArrayList<AvailableSlots> allAvailableSlots =
+                timetables.stream().map(x -> x.findSlots(duration, timeframe, days))
+                        .collect(Collectors.toCollection(ArrayList::new));
+        return AvailableSlots.findAllCommonSlots(allAvailableSlots);
     }
 
     //=========== Filtered Student List Accessors =============================================================

@@ -17,7 +17,6 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
     - [Listing all students : `list`](#listing-all-students--list)
     - [Editing a student : `edit`](#editing-a-student--edit)
     - [Locating students by name: `find`](#locating-students-by-name-find)
-    - [Linking a student to a weblink: `link`](#linking-a-student-to-a-weblink-link)
     - [Deleting a student : `delete`](#deleting-a-student--delete)
     - [Clearing all entries : `clear`](#clearing-all-entries--clear)
     - [Exiting the program : `exit`](#exiting-the-program--exit)
@@ -71,7 +70,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
@@ -89,11 +88,11 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 * Unique identifiers are `e/EMAIL`, `s/STUDENT_ID` and `h/TELEGRAM_HANDLE`
 
-* There can only be one unique indentifier at each time. Which means no two students can share the same unique identifiers above.
+* There can only be one unique identifier at each time. Which means no two students can share the same unique identifiers above.
 
 ### Viewing help : `help`
 
-Shows a message explaning how to access the help page.
+Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
@@ -104,11 +103,13 @@ Format: `help`
 
 Adds a student to the address book.
 
-Format: `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [c/TIMETABLE] [t/TAG]…​`
+Format: `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`
 
 <box type="tip" seamless>
 
 **Tip:** A student can have any number of tags (including 0)
+
+**Tip:** A student can have its project page linked to its contact.
 
 **Tip:** A student can have its timetable field left empty, a default empty timetable will be allocated.
 </box>
@@ -133,7 +134,7 @@ Format: `edit INDEX [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEB
 * Edits the student at the specified `INDEX`. The index refers to the index number shown in the displayed student list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the student will be removed i.e adding of tags is not cumulative.
+* When editing tags, the existing tags of the student will be removed i.e. adding of tags is not cumulative.
 * When editing unique identifiers, EduConnect will throw an error if another unique identifier is found in the address
 * You can remove all the student’s tags by typing `t/` without
     specifying any tags after it.
@@ -152,7 +153,7 @@ Find students whose criteria match any of the given keywords.
 
 Format: `find [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`
 
-* The search is case-insensitive. e.g `find n/hans` will match Hans
+* The search is case-insensitive. e.g. `find n/hans` will match Hans
 * The order of the keywords does not matter. e.g. `find n/hans t/tutorial-1` will return the same result as `find t/tutorial-1 n/hans`
 * Name and other criteria are searched using fuzzy matching
   * Students with any part of the names matching the keyword will be returned.
@@ -169,23 +170,6 @@ Examples:
 * `find n/john t/tutorial-1` returns John Doe (name contains john and is tagged with tutorial-1)
   <br>
   ![result for 'find John'](images/findJohn.png)
-
-### Linking a student to a weblink: `link`
-
-Links a student to a Website URL.
-
-Format: `link [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] l/WEBLINK`
-* Users can choose to use any of the 3 optional identifiers `s/STUDENT_ID` or `e/EMAIL` or `h/TELEGRAM_HANDLE`.
-  * At least one identifier must be supplied.
-* The identifiers are case-sensitive. e.g `h/@JOHNDOE` will only match a student with telegram handle `@JOHNDOE`.
-* The order of the keywords does not matter. e.g. `link l/https://www.google.com/ s/A1654327X` will return the same result as `link s/A1654327X l/https://www.google.com/`.
-* `l/WEBLINK` must be a valid website URL, starting with `https://` or `ftp://` or `file://`.
-* The weblink in the GUI will only be displayed if the student has a weblink attached.
-
-Examples:
-* `link s/A1654327X l/https://nus-cs2103-ay2324s2.github.io/website/` links the website `https://nus-cs2103-ay2324s2.github.io/website/` to a student with ID `A1654327X`.
-* `link h/@john.doe l/https://nus-cs2103-ay2324s2.github.io/website/` links the website `https://nus-cs2103-ay2324s2.github.io/website/` to a student with Telegram Handle `@john.doe`
-  ![result for 'link s/A1234537X l/https://nus-cs2103-ay2324s2.github.io/website/'](images/linkCommand.png)
 
 ### Deleting a student : `delete`
 
@@ -257,6 +241,5 @@ Action     | Format, Examples
 **Delete** | `delete [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE]`<br> e.g., `delete s/A1654327X`
 **Edit**   | `edit INDEX [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
 **Find**   | `find [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`<br> e.g., `find n/john t/tutorial-1`
-**Link**   | `link [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] l/WEBLINK` <br> e.g. `link s/A1654327X l/https://nus-cs2103-ay2324s2.github.io/website/`
 **List**   | `list`<br> `list timetable`
 **Help**   | `help`

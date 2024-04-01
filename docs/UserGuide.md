@@ -187,7 +187,7 @@ Format: `copy [t/TAG]…`
 * Copied emails are in the form of `example1@email.com, example2@email.com, example3@email.com` and adheres to the format specified in [section 3.4 of RFC5322](https://tools.ietf.org/html/rfc5322#section-3.4).
   * This makes it easy to paste into `Gmail`, `Outlook`, `Yahoo Mail`, etc.
   <br>
-  ![result for 'copy t/tutorial-2'](images/copyToGmail.png)
+  <img src="images/copyToGmail.png" alt="result for 'copy t/tutorial-2'" style="border:4px solid #808080"/>
 
 Examples:
 * `copy` copies all emails

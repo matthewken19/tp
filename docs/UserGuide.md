@@ -178,12 +178,9 @@ Copy student emails to the clipboard.
 
 Format: `copy [t/TAG]…`
 
-* Tags are optional. When no tags are supplied, copies all student emails.
-* When multiple tags are used, copies emails from students that match **ALL** tags supplied.
-* The order of the tags do not matter. e.g. `copy t/tutorial-2 t/strong-student` will return the same result as `copy t/strong-student t/tutorial-2`.
+* When no tags are supplied, copies all student emails.
 * Tag is searched as complete tag names. e.g. `copy t/tutorial-1` will only return those with a tag 'tutorial-1'
 (tag 'tutorial-10', 'tutorial-11', etc. will NOT be copied)
-  * This is different from the fuzzy matching used in name and other criteria
 * Copied emails are in the form of `example1@email.com, example2@email.com, example3@email.com` and adheres to the format specified in [section 3.4 of RFC5322](https://tools.ietf.org/html/rfc5322#section-3.4).
   * This makes it easy to paste into `Gmail`, `Outlook`, `Yahoo Mail`, etc.
   <br>

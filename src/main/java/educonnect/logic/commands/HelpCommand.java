@@ -2,6 +2,8 @@ package educonnect.logic.commands;
 
 import educonnect.model.Model;
 
+import java.util.Objects;
+
 /**
  * Format full help instructions for every command for display.
  */
@@ -63,10 +65,14 @@ public class HelpCommand extends Command {
 
     public HelpCommand() {
         this.args = null;
-    };
+    }
+
+    ;
+
     public HelpCommand(String args) {
         this.args = args;
     }
+
     @Override
     public CommandResult execute(Model model) {
         if (this.args == null) {
@@ -85,5 +91,20 @@ public class HelpCommand extends Command {
         } else {
             return new CommandResult(SHOWING_HELP_MESSAGE_CLEAR);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof HelpCommand)) {
+            return false;
+        }
+
+        HelpCommand otherHelp = (HelpCommand) other;
+        return Objects.equals(this.args, otherHelp.args);
     }
 }

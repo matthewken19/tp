@@ -12,7 +12,7 @@ import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
  */
 public class HelpCommandParser implements Parser<HelpCommand>{
 
-    private static String[] VALID_COMMANDS = {"add", "clear", "delete", "edit", "find", "list"};
+    public static String[] VALID_COMMANDS = {"add", "clear", "delete", "edit", "find", "list"};
     public HelpCommand parse(String args) throws ParseException {
         args = args.trim();
         if (args.isEmpty()) {

@@ -28,11 +28,11 @@ public class StudentIdTest {
         assertFalse(StudentId.isValidStudentId("")); // empty string
         assertFalse(StudentId.isValidStudentId(" ")); // spaces only
         assertFalse(StudentId.isValidStudentId("A")); // one character
-        assertFalse(StudentId.isValidStudentId("A127461242412319824X"));
+        assertFalse(StudentId.isValidStudentId("A127461242412319824X")); // long id
 
         // valid student id
         assertTrue(StudentId.isValidStudentId("A1234567H"));
-        assertTrue(StudentId.isValidStudentId("A1274612X")); // long id
+        assertTrue(StudentId.isValidStudentId("A1274612X"));
     }
 
     @SuppressWarnings("unlikely-arg-type")

@@ -70,7 +70,6 @@ public class AddCommand extends Command {
         if (model.hasTelegramHandle(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_TELEGRAM_HANDLE);
         }
-
         model.addStudent(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }

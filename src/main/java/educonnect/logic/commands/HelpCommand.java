@@ -81,6 +81,7 @@ public class HelpCommand extends Command {
             return new CommandResult(SHOWING_HELP_MESSAGE_EDIT);
         } else if (this.args.equals("delete")) {
             return new CommandResult(SHOWING_HELP_MESSAGE_DELETE);
+            // All other invalid arguments are already removed at the parsing stage
         } else {
             return new CommandResult(SHOWING_HELP_MESSAGE_CLEAR);
         }

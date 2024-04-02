@@ -140,6 +140,15 @@ public class AddCommandTest {
         }
 
         @Override
+        public void setShowTimetable(boolean showTimetable) {
+            throw new AssertionError("This method should not be called.");
+        }
+        @Override
+        public boolean getShowTimetable() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setGuiSettings(GuiSettings guiSettings) {
             throw new AssertionError("This method should not be called.");
         }

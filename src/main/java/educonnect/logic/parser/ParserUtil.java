@@ -61,7 +61,7 @@ public class ParserUtil {
 
     /**
      * Capitalises the names separated by a space
-     * Removes unecessary spaces in between names
+     * Removes unnecessary spaces in between names
      */
     public static String createCapitalName(String trimmedName) {
         String[] words = trimmedName.split("[\\s-]+");
@@ -107,15 +107,12 @@ public class ParserUtil {
     }
 
     /**
-     * Capitalises the 'A' at the start of the Student ID
+     * Capitalises the 'A' and the letter at the start and end of the Student ID
      * @param trimmedId
      * @return Capitalised String of Student ID
      */
     public static String createCapitalStudentId(String trimmedId) {
-        StringBuilder result = new StringBuilder();
-        result.append(Character.toUpperCase(trimmedId.charAt(0)));
-        result.append(trimmedId.substring(1));
-        String capitalised = result.toString();
+        String capitalised = trimmedId.toUpperCase();
         return capitalised;
     }
 

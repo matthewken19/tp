@@ -10,13 +10,13 @@ import static java.util.Objects.requireNonNull;
 public class StudentId {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Student ID must start with A followed by 7 digits and end with a capital letter";
+            "Student ID must start with A followed by 7 digits and end with a letter.";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "^[aA]\\d{7}[A-Z]$";
+    public static final String VALIDATION_REGEX = "^[aA]\\d{7}[a-zA-Z]$";
 
     public final String value;
 

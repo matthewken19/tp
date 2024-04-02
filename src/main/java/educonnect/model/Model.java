@@ -51,6 +51,15 @@ public interface Model {
     void setAddressBookFilePath(Path addressBookFilePath);
 
     /**
+     * Returns the user prefs' show timetable option.
+     */
+    boolean getShowTimetable();
+
+    /**
+     * Sets the user prefs' show timetable option.
+     */
+    void setShowTimetable(boolean showTimetableh);
+    /**
      * Replaces address book data with the data in {@code addressBook}.
      */
     void setAddressBook(ReadOnlyAddressBook addressBook);

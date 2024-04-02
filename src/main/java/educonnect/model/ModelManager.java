@@ -79,6 +79,16 @@ public class ModelManager implements Model {
         requireNonNull(addressBookFilePath);
         userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
+    @Override
+    public boolean getShowTimetable() {
+        return userPrefs.getShowTimetable();
+    }
+
+    @Override
+    public void setShowTimetable(boolean showTimetable) {
+        requireNonNull(showTimetable);
+        userPrefs.setShowTimetable(showTimetable);
+    }
 
     //=========== AddressBook ================================================================================
 

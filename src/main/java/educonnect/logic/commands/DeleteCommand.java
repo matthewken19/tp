@@ -29,8 +29,8 @@ public class DeleteCommand extends Command {
 
             + "Parameters: "
             + "<choose only 1>"
-            + "[" + PREFIX_EMAIL + "EMAIL]"
-            + "[" + PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE]"
+            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE] "
             + "[" + PREFIX_STUDENT_ID + "STUDENT_ID]\n\n"
 
             + "Example 1: " + COMMAND_WORD + " " + PREFIX_EMAIL + "example@email.com\n"

@@ -16,6 +16,7 @@ public class Period implements Comparable<Period> {
             + "where time can be any digit between 0 - 23. \n"
             + "This means that all Period objects are tracked with a 24-hour clock.";
     public static final String DEFAULT_PERIOD_NAME = "period";
+    @SuppressWarnings("unused")
     private final String periodName;
     private final LocalTime timeStart;
     private final LocalTime timeEnd;
@@ -88,6 +89,7 @@ public class Period implements Comparable<Period> {
     /**
      * Constructor for JSON Serialisation, included only for JSON to work, not intended as a constructor to be used!
      */
+    @SuppressWarnings("unused")
     private Period() {
         this.periodName = "";
         this.timeStart = null;

@@ -29,6 +29,7 @@ public class Day implements Comparable<Day> {
     /**
      * Constructor for JSON Serialisation, included only for JSON to work, not intended as a constructor to be used!
      */
+    @SuppressWarnings("unused")
     private Day() {
         this.dayOfWeek = null;
         this.periods = new ArrayList<>();

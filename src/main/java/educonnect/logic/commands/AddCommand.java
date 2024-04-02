@@ -2,12 +2,12 @@ package educonnect.logic.commands;
 
 import static educonnect.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static educonnect.logic.parser.CliSyntax.PREFIX_LINK;
-import static educonnect.logic.parser.CliSyntax.PREFIX_TIMETABLE_MONDAY;
 import static educonnect.logic.parser.CliSyntax.PREFIX_NAME;
 import static educonnect.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
 import static educonnect.logic.parser.CliSyntax.PREFIX_TAG;
-import static educonnect.logic.parser.CliSyntax.PREFIX_TIMETABLE;
 import static educonnect.logic.parser.CliSyntax.PREFIX_TELEGRAM_HANDLE;
+import static educonnect.logic.parser.CliSyntax.PREFIX_TIMETABLE;
+import static educonnect.logic.parser.CliSyntax.PREFIX_TIMETABLE_MONDAY;
 import static educonnect.logic.parser.CliSyntax.PREFIX_TIMETABLE_TUESDAY;
 import static java.util.Objects.requireNonNull;
 
@@ -24,16 +24,18 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a student to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a student to the address book.\n\n"
+
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_STUDENT_ID + "STUDENT_ID "
             + PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE "
             + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_LINK + "LINK "
-            + PREFIX_TIMETABLE + "TIMETABLE "
+            + "[" + PREFIX_LINK + "LINK] "
+            + "[" + PREFIX_TIMETABLE + "TIMETABLE] "
             + "[" + PREFIX_TAG + "TAG]...\n\n"
-            + "Example: " + COMMAND_WORD + " "
+
+            + "Example1: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_STUDENT_ID + "A1234567X "
             + PREFIX_TELEGRAM_HANDLE + "@john.doe "
@@ -43,9 +45,16 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "high-ability "
             + PREFIX_TIMETABLE
             + PREFIX_TIMETABLE_MONDAY + " 8-10, 10-12 "
-            + PREFIX_TIMETABLE_TUESDAY + " 11-13";
+            + PREFIX_TIMETABLE_TUESDAY + " 11-13\n"
 
-//"add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17"
+            + "Example 2: " + COMMAND_WORD + " "
+            + PREFIX_NAME + "Anne-Marie Rose Nicholson "
+            + PREFIX_TAG + "singer "
+            + PREFIX_TAG + "songwriter "
+            + PREFIX_EMAIL + "rockabye@friends.uk "
+            + PREFIX_TELEGRAM_HANDLE + "@AnneMarieofficial "
+            + PREFIX_STUDENT_ID + "A7041991U ";
+
     public static final String MESSAGE_SUCCESS =
             "New student added: %1$s";
     public static final String MESSAGE_DUPLICATE_STUDENT_ID =

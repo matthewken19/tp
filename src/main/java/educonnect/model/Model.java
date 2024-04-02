@@ -1,7 +1,9 @@
 package educonnect.model;
 
 import java.nio.file.Path;
+import java.time.DayOfWeek;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -11,6 +13,8 @@ import educonnect.model.student.Email;
 import educonnect.model.student.Student;
 import educonnect.model.student.StudentId;
 import educonnect.model.student.TelegramHandle;
+import educonnect.model.student.timetable.AvailableSlots;
+import educonnect.model.student.timetable.Period;
 import javafx.collections.ObservableList;
 
 /**
@@ -113,4 +117,6 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredStudentList(Collection<Predicate<Student>> predicates);
+
+    AvailableSlots findAllCommonSlots(int duration, Period timeframe, HashSet<DayOfWeek> days);
 }

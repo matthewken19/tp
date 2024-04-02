@@ -1,7 +1,12 @@
 package educonnect.model.student.timetable;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
+import educonnect.model.student.timetable.exceptions.InvalidDurationException;
 import educonnect.model.student.timetable.exceptions.NumberOfDaysException;
 import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 
@@ -9,9 +14,14 @@ import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
  * Represents the timetable of a student for a week.
  */
 public class Timetable {
-    private static final boolean TIMETABLE_7_DAYS = false; // default is 5 days
+    public static final int NUMBER_OF_DAYS_TYPICAL = 5;
+    public static final Period DEFAULT_TIMEFRAME = new Period(Period.DEFAULT_PERIOD_NAME,
+            Day.DEFAULT_START_TIME_OF_DAY, Day.DEFAULT_END_TIME_OF_DAY);
+    public static final HashSet<DayOfWeek> DEFAULT_ALL_DAYS = is7Days()
+            ? new HashSet<>(List.of(DayOfWeek.values()))
+            : new HashSet<>(List.of(Arrays.copyOf(DayOfWeek.values(), NUMBER_OF_DAYS_TYPICAL)));
+    private static final boolean IS_TIMETABLE_7_DAYS = false; // default is 5 days
     private static final int NUMBER_OF_DAYS_MAX = 7;
-    private static final int NUMBER_OF_DAYS_TYPICAL = 5;
     private final ArrayList<Day> days;
     private final int numOfDays;
 
@@ -20,7 +30,7 @@ public class Timetable {
      * Checks against TIMETABLE_7_DAYS for 5 or 7 days in the week.
      */
     public Timetable() {
-        this.numOfDays = TIMETABLE_7_DAYS ? NUMBER_OF_DAYS_MAX : NUMBER_OF_DAYS_TYPICAL;
+        this.numOfDays = is7Days() ? NUMBER_OF_DAYS_MAX : NUMBER_OF_DAYS_TYPICAL;
         this.days = createTimetable(this.numOfDays);
     }
 
@@ -28,7 +38,7 @@ public class Timetable {
      * Overloaded constructor where the number of days in a week can be specified.
      * @param numOfDays the number of days in a week to keep track of.
      */
-    public Timetable(int numOfDays) {
+    Timetable(int numOfDays) {
         this.numOfDays = numOfDays;
         this.days = createTimetable(this.numOfDays);
     }
@@ -59,7 +69,7 @@ public class Timetable {
      * @return {@code true} if 7 days, {@code false} if 5 days.
      */
     public static boolean is7Days() {
-        return TIMETABLE_7_DAYS;
+        return IS_TIMETABLE_7_DAYS;
     }
 
     /**
@@ -88,13 +98,42 @@ public class Timetable {
      */
     public boolean addPeriodsToDay(int dayNumber, ArrayList<Period> periods) throws OverlapPeriodException {
         if (dayNumber < 1 || dayNumber > this.numOfDays) {
-            return false;
+            throw new NumberOfDaysException();
         }
 
         for (Period period : periods) {
             addPeriodToDay(dayNumber, period);
         }
         return true;
+    }
+
+    /**
+     * Finds all time slots of specified duration, with a specified timeframe in {@code Period},
+     * and specified {@code Day}(s).
+     *
+     * @param duration specified time.
+     * @param timeframe specified time frame.
+     * @param daysOfWeek specified day(s) to be included.
+     * @return an {@code List} of {@code Lists} of {@code Periods}.
+     */
+    public AvailableSlots findSlots(int duration, Period timeframe, HashSet<DayOfWeek> daysOfWeek) {
+        if (duration > 24 || duration < 1) {
+            throw new InvalidDurationException();
+        }
+
+        AvailableSlots allSlots = new AvailableSlots(daysOfWeek);
+
+        for (Day eachDay : days) {
+            if (daysOfWeek.contains(eachDay.getDayOfWeek())) {
+                ArrayList<Period> list = eachDay.findSlots(duration, timeframe);
+                if (!list.isEmpty()) {
+                    allSlots.addPeriodsToDay(eachDay.getDayOfWeek(), list);
+                } else {
+                    allSlots.deleteDay(eachDay.getDayOfWeek());
+                }
+            }
+        }
+        return allSlots;
     }
 
     /**
@@ -114,7 +153,7 @@ public class Timetable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Timetable\n");
+        sb.append("Timetable:\n");
         for (Day eachDay : this.days) {
             sb.append(eachDay).append("\n");
         }

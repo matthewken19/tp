@@ -22,6 +22,10 @@ public class PeriodTest {
         Assert.assertThrows(InvalidPeriodException.class, () -> new Period("period", time2, time1));
         Assert.assertThrows(InvalidPeriodException.class, () -> new Period("", time1, time2));
         Assert.assertThrows(InvalidPeriodException.class, () -> new Period(" ", time1, time2));
+
+        Assert.assertThrows(InvalidPeriodException.class, () -> new Period("period", "2-1"));
+        Assert.assertThrows(InvalidPeriodException.class, () -> new Period("", "1-2"));
+        Assert.assertThrows(InvalidPeriodException.class, () -> new Period(" ", "1-2"));
     }
     @Test
     public void hasOverlap() {

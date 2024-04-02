@@ -1,8 +1,10 @@
 package educonnect.logic.parser;
 
 import static educonnect.commons.util.CollectionUtil.requireAllNonNull;
+import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static java.util.Objects.requireNonNull;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -11,6 +13,7 @@ import java.util.Set;
 
 import educonnect.commons.core.index.Index;
 import educonnect.commons.util.StringUtil;
+import educonnect.logic.commands.SlotsCommand;
 import educonnect.logic.parser.exceptions.ParseException;
 import educonnect.model.student.Email;
 import educonnect.model.student.Link;
@@ -29,6 +32,13 @@ import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_DURATION =
+            "Invalid duration specified! "
+            + "Duration should be between 0-23 hours, more typically 1-4 hours.";
+    public static final String MESSAGE_INVALID_DAY =
+            "Invalid day specified! "
+            + "Each day is indicated by their 3-letter identifier, e.g. 'mon', or 'fri'.\n"
+            + "(Hint: by default Saturdays and Sundays are not included.)";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -61,7 +71,7 @@ public class ParserUtil {
 
     /**
      * Capitalises the names separated by a space
-     * Removes unecessary spaces in between names
+     * Removes necessary spaces in between names
      */
     public static String createCapitalName(String trimmedName) {
         String[] words = trimmedName.split("[\\s-]+");
@@ -86,8 +96,7 @@ public class ParserUtil {
             }
             namesUnparsed.delete(0, indexOfWord + lengthOfWord);
         }
-        String capitalised = result.toString();
-        return capitalised;
+        return result.toString();
     }
 
     /**
@@ -108,15 +117,12 @@ public class ParserUtil {
 
     /**
      * Capitalises the 'A' at the start of the Student ID
-     * @param trimmedId
+     *
      * @return Capitalised String of Student ID
      */
     public static String createCapitalStudentId(String trimmedId) {
-        StringBuilder result = new StringBuilder();
-        result.append(Character.toUpperCase(trimmedId.charAt(0)));
-        result.append(trimmedId.substring(1));
-        String capitalised = result.toString();
-        return capitalised;
+        return Character.toUpperCase(trimmedId.charAt(0))
+               + trimmedId.substring(1);
     }
 
     /**
@@ -183,8 +189,8 @@ public class ParserUtil {
     public static Timetable parseTimetable(ArrayList<String> allDays) throws ParseException {
         requireNonNull(allDays);
         Timetable timetable = new Timetable();
-        for (int i = 1; i < allDays.size(); i++) {
-            parseDay(i, timetable, parsePeriods(allDays.get(i - 1)));
+        for (int i = 0; i < allDays.size(); i++) {
+            parseDay(i + 1, timetable, parsePeriods(allDays.get(i)));
         }
         return timetable;
     }
@@ -228,7 +234,72 @@ public class ParserUtil {
         if (!Period.isValidPeriod(trimmedPeriod)) {
             throw new ParseException(Period.PERIOD_CONSTRAINTS);
         }
-        return new Period("period", trimmedPeriod);
+        return new Period(Period.DEFAULT_PERIOD_NAME, trimmedPeriod);
+    }
+
+    /**
+     * Parses {@code String duration} into a {@code int}. Helper method.
+     */
+    public static int parseDuration(String duration) throws ParseException {
+        String trimmedDuration = duration.trim();
+        try {
+            int i = Integer.parseInt(trimmedDuration);
+            if (i < 1 || i > 23) {
+                throw new ParseException(MESSAGE_INVALID_DURATION);
+            }
+            return i;
+        } catch (NumberFormatException e) {
+            throw new ParseException(MESSAGE_INVALID_DURATION);
+        }
+    }
+
+    /**
+     * Parses {@code String days} into a {@code HashSet<DayOfWeek>}. Helper method.
+     */
+    public static HashSet<DayOfWeek> parseDaysSpecified(String days) throws ParseException {
+        if (days.trim().isBlank()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SlotsCommand.MESSAGE_USAGE));
+        }
+
+        HashSet<DayOfWeek> daysContained = new HashSet<>();
+        String[] args = days.split(",");
+
+        for (String each : args) {
+            switch (each.trim()) {
+            case "mon":
+                daysContained.add(DayOfWeek.MONDAY);
+                break;
+            case "tue":
+                daysContained.add(DayOfWeek.TUESDAY);
+                break;
+            case "wed":
+                daysContained.add(DayOfWeek.WEDNESDAY);
+                break;
+            case "thu":
+                daysContained.add(DayOfWeek.THURSDAY);
+                break;
+            case "fri":
+                daysContained.add(DayOfWeek.FRIDAY);
+                break;
+            case "sat":
+                if (Timetable.is7Days()) {
+                    daysContained.add(DayOfWeek.SATURDAY);
+                } else {
+                    throw new ParseException(MESSAGE_INVALID_DAY);
+                }
+                break;
+            case "sun":
+                if (Timetable.is7Days()) {
+                    daysContained.add(DayOfWeek.SUNDAY);
+                } else {
+                    throw new ParseException(MESSAGE_INVALID_DAY);
+                }
+                break;
+            default:
+                throw new ParseException(MESSAGE_INVALID_DAY);
+            }
+        }
+        return daysContained;
     }
 
     /**

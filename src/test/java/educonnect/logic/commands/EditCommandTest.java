@@ -34,7 +34,7 @@ import educonnect.testutil.StudentBuilder;
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
@@ -202,5 +202,4 @@ public class EditCommandTest {
                 + editStudentDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }
-
 }

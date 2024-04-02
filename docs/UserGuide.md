@@ -50,7 +50,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
    * `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com t/tutorial-1 t/high-ability` : Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+   * `delete s/A1654327X` : Deletes the person with the `s/STUDENT_ID` unique identifier
 
    * `clear` : Deletes all contacts.
 
@@ -84,7 +84,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-**Notes about student info:**<br>
+**Notes about unique identifiers:**<br>
 
 * Unique identifiers are `e/EMAIL`, `s/STUDENT_ID` and `h/TELEGRAM_HANDLE`
 

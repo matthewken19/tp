@@ -69,7 +69,8 @@ public class TypicalStudents {
             .withStudentId("A9482427K")
             .withLink("https://en.wikipedia.org/wiki/LeBron_James")
             .withEmail("lydia@example.com")
-            .withTelegramHandle("@littletokyo").build();
+            .withTelegramHandle("@littletokyo")
+            .withTags("tutorial-2").build();
 
     public static final Student GEORGE = new StudentBuilder()
             .withName("George Best")

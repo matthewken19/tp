@@ -168,7 +168,6 @@ public class EditCommandTest {
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
     }
 
-    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void equals() {
         final EditCommand standardCommand = new EditCommand(INDEX_FIRST_STUDENT, DESC_AMY);
@@ -185,7 +184,7 @@ public class EditCommandTest {
         assertNotEquals(null, standardCommand);
 
         // different types -> returns false
-        assertNotEquals(standardCommand, new ClearCommand());
+        assertNotEquals(standardCommand, 1);
 
         // different index -> returns false
         assertNotEquals(standardCommand, new EditCommand(INDEX_SECOND_STUDENT, DESC_AMY));

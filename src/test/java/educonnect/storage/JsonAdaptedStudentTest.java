@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import educonnect.commons.exceptions.IllegalValueException;
 import educonnect.model.student.Email;
+import educonnect.model.student.Link;
 import educonnect.model.student.Name;
 import educonnect.model.student.StudentId;
 import educonnect.model.student.TelegramHandle;
@@ -125,6 +126,16 @@ public class JsonAdaptedStudentTest {
                 new JsonAdaptedStudent(VALID_NAME, VALID_STUDENT_ID, VALID_EMAIL,
                         VALID_TELEGRAM_HANDLE, VALID_LINK, invalidTags, VALID_DEFAULT_EMPTY_TIMETABLE);
         assertThrows(IllegalValueException.class, student::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidLink_throwsIllegalValueException() {
+        JsonAdaptedStudent student =
+                new JsonAdaptedStudent(
+                    VALID_NAME, VALID_STUDENT_ID, VALID_EMAIL, INVALID_TELEGRAM_HANDLE,
+                        INVALID_LINK, VALID_TAGS, VALID_DEFAULT_EMPTY_TIMETABLE);
+        String expectedMessage = Link.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, student::toModelType);
     }
 
     @Test

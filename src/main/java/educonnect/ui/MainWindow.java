@@ -168,13 +168,14 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleShowTimetable(boolean showTimetable) {
-        logger.info("User chooses to show timetables of students: " + showTimetable);
         if (showTimetable) {
+            logger.info("User chooses to show timetables of students.");
             studentListPanel.showTimetable();
         } else {
             studentListPanel.hideTimetable();
         }
     }
+
     public StudentListPanel getStudentListPanel() {
         return studentListPanel;
     }

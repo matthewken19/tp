@@ -27,7 +27,7 @@ public class AddCommand extends Command {
             + PREFIX_STUDENT_ID + "STUDENT_ID "
             + PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE "
             + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_LINK + "LINK"
+            + "[" + PREFIX_LINK + "LINK] "
             + "[" + PREFIX_TAG + "TAG]...\n\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "

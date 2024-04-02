@@ -15,10 +15,11 @@ public class Messages {
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n\n%1$s";
     public static final String MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX = "The student index provided is invalid";
-    public static final String MESSAGE_STUDENTS_LISTED_OVERVIEW = "%1$d students listed!";
+    public static final String MESSAGE_STUDENTS_LISTED_OVERVIEW = "%1$d student(s) listed!";
+    public static final String MESSAGE_STUDENT_EMAIL_COPIED_OVERVIEW = "%1$d students' email(s) copied!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
-    public static final String MESSAGE_NO_STUDENT_FOUND = "No such student is found.";
+    public static final String MESSAGE_NO_STUDENT_FOUND = "No student found.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -52,4 +53,14 @@ public class Messages {
         return builder.toString();
     }
 
+    /**
+     * Formats the {@code student} and displays the student's name and email.
+     */
+    public static String formatNameAndEmail(Student student) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(student.getName())
+                .append("\nEmail: ")
+                .append(student.getEmail());
+        return builder.toString();
+    }
 }

@@ -183,7 +183,7 @@
     "studentId" : "A9482427K",
     "email" : "lydia@example.com",
     "telegramHandle" : "@littletokyo",
-    "tags" : [ ],
+    "tags" : [ "tutorial-2" ],
     "timetable" : {
       "days" : [ {
         "dayOfWeek" : "MONDAY",

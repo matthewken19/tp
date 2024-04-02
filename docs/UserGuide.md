@@ -92,7 +92,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * By default optional prefix is not a required parameter when inputting commands.
 
 * Angular brackets `<CONDITION>` will inform the user of the optional prefix requirements that is used in the command <br>
-  e.g `<choose 1 only>` `[s/STUDENT_ID]` `[e/EMAIL]` `[h/TELEGRAM_HANDLE]` indicates that one of these optional prefix must be present in the command
+  e.g `<choose 1 only>` `[s/STUDENT_ID]` `[e/EMAIL]` `[h/TELEGRAM_HANDLE]` indicates that only one of these optional prefix must be present in the command
 
 **Notes about unique identifiers:**<br>
 

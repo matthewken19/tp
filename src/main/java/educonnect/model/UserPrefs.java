@@ -63,7 +63,6 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     }
 
     public void setShowTimetable(boolean showTimetable) {
-        requireNonNull(showTimetable);
         this.showTimetable = showTimetable;
     }
     @Override

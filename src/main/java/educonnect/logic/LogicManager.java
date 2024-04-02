@@ -80,7 +80,6 @@ public class LogicManager implements Logic {
     public GuiSettings getGuiSettings() {
         return model.getGuiSettings();
     }
-
     @Override
     public boolean getShowTimetable() {
         return model.getShowTimetable();

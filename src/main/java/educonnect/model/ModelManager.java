@@ -86,7 +86,6 @@ public class ModelManager implements Model {
 
     @Override
     public void setShowTimetable(boolean showTimetable) {
-        requireNonNull(showTimetable);
         userPrefs.setShowTimetable(showTimetable);
     }
 

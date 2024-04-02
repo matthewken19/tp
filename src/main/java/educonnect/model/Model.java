@@ -58,7 +58,7 @@ public interface Model {
     /**
      * Sets the user prefs' show timetable option.
      */
-    void setShowTimetable(boolean showTimetableh);
+    void setShowTimetable(boolean showTimetable);
     /**
      * Replaces address book data with the data in {@code addressBook}.
      */

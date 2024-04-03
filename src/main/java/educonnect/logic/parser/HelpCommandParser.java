@@ -12,7 +12,8 @@ import educonnect.logic.parser.exceptions.ParseException;
  */
 public class HelpCommandParser implements Parser<HelpCommand> {
 
-    private static final String[] VALID_COMMANDS = {"add", "clear", "delete", "edit", "find", "list"};
+    private static final String[] VALID_COMMANDS =
+            {"add", "clear", "delete", "edit", "find", "list", "", "slots", "copy"};
 
     /**
      * Parses the given {@code String} of arguments in the context of the HelpCommand

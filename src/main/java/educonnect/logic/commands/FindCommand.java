@@ -38,7 +38,7 @@ public class FindCommand extends Command {
             + "[" + PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE] "
             + "[" + PREFIX_TAG + "TAG]...\n\n"
 
-            + "Example 1: " + COMMAND_WORD + " " + PREFIX_NAME + "alice " + PREFIX_TAG + "tutorial-1\n"
+            + "Example 1: " + COMMAND_WORD + " " + PREFIX_NAME + "John " + PREFIX_TAG + "tutorial-1\n"
             + "Example 2: " + COMMAND_WORD + " " + PREFIX_NAME + "alex\n"
             + "Example 3: " + COMMAND_WORD + " " + PREFIX_STUDENT_ID + "A1";
 

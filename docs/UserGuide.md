@@ -17,9 +17,10 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
     - [Listing all students : `list`](#listing-all-students--list)
     - [Editing a student : `edit`](#editing-a-student--edit)
     - [Locating students by name: `find`](#locating-students-by-name-find)
+    - [Copying student emails: `copy`](#copying-student-emails-copy)
     - [Deleting a student : `delete`](#deleting-a-student--delete)
-    - [Clearing all entries : `clear`](#clearing-all-entries--clear)
-    - [Exiting the program : `exit`](#exiting-the-program--exit)
+    - [Clearing all students : `clear`](#clearing-all-students--clear)
+    - [Exiting EduConnect : `exit`](#exiting-educonnect--exit)
     - [Saving the data](#saving-the-data)
     - [Editing the data file](#editing-the-data-file)
     - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
@@ -117,7 +118,7 @@ Format: `help`
 
 ### Adding a student: `add`
 
-Adds a student to the address book.
+Adds a student.
 
 Format: `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`
 
@@ -137,13 +138,13 @@ Examples:
 
 ### Listing all students : `list`
 
-Shows a list of all students in the address book with the option to show timetables.
+Shows a list of all students with the option to show timetables.
 
 Format: `list [timetable]`
 
 ### Editing a student : `edit`
 
-Edits an existing student in the address book.
+Edits an existing student.
 
 Format: `edit INDEX <choose 1 or more> [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`
 
@@ -165,18 +166,18 @@ Examples:
 
 ### Locating students by name: `find`
 
-Find students whose criteria match any of the given keywords.
+Finds students whose criteria match any of the given keywords.
 
 Format: `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`
 
 * The search is case-insensitive. e.g. `find n/hans` will match Hans
-* The order of the keywords does not matter. e.g. `find n/hans t/tutorial-1` will return the same result as `find t/tutorial-1 n/hans`
+* The order of the keywords do not matter. e.g. `find n/hans t/tutorial-1` will return the same result as `find t/tutorial-1 n/hans`
 * Name and other criteria are searched using fuzzy matching
   * Students with any part of the names matching the keyword will be returned.
 * Tag is searched as complete tag names. e.g. `find t/tutorial-1` will only return those with a tag 'tutorial-1'
-(tag 'tutorial-10', 'tutorial-11', etc. will NOT come out on the result)
+(tag 'tutorial-10', 'tutorial-11', etc. will NOT appear in the results)
   * This is different from the fuzzy matching used in name and other criteria
-* When multiple criteria is used, searched students must match **ALL** criteria specified
+* When multiple criteria are used, searched students must match **ALL** criteria specified
 
 Examples:
 * `find n/John` returns john and John Doe
@@ -187,9 +188,28 @@ Examples:
   <br>
   ![result for 'find John'](images/findJohn.png)
 
+### Copying student emails: `copy`
+
+Copy student emails to the clipboard.
+
+Format: `copy [t/TAG]…`
+
+* When no tags are supplied, copies all student emails.
+* Tag is searched as complete tag names. e.g. `copy t/tutorial-1` will only return those with a tag 'tutorial-1'
+(tag 'tutorial-10', 'tutorial-11', etc. will NOT be copied)
+* Copied emails are in the form of `example1@email.com, example2@email.com, example3@email.com` and adheres to the format specified in [section 3.4 of RFC5322](https://tools.ietf.org/html/rfc5322#section-3.4).
+  * This makes it easy to paste into `Gmail`, `Outlook`, `Yahoo Mail`, etc.
+  <br>
+  <img src="images/copyToGmail.png" alt="result for 'copy t/tutorial-2'" style="border:4px solid #808080"/>
+
+Examples:
+* `copy` copies all emails
+* `copy t/tutorial-2` copies 3 emails (`johnsmith@example.com, irfan@example.com, royb@example.com` all with `tutorial-2` tag)
+* `copy t/tutorial-2 t/strong-student` copies 1 email (`royb@example.com` with both `tutorial-2` and `strong-student` tag) 
+
 ### Deleting a student : `delete`
 
-Deletes a specified student from the address book.
+Deletes a specified student.
 
 Format: `delete <choose only 1> [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE]`
 
@@ -202,31 +222,31 @@ Examples:
 * `delete s/A1654327X` deletes a student with a student id of `A1654327X` in the address book.
   ![result for 'find alex', followed by 'delete s/A1654327X'](images/findAndDelete.png)
 
-### Clearing all entries : `clear`
+### Clearing all students : `clear`
 
-Clears all entries from the address book.
+Clears all students.
 
 Format: `clear`
 
-### Exiting the program : `exit`
+### Exiting EduConnect : `exit`
 
-Exits the program.
+Exits EduConnect.
 
 Format: `exit`
 
 ### Saving the data
 
-EduConnect data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+EduConnect data is saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-EduConnect data are saved automatically as a JSON file `[JAR file location]/data/educonnect.json`. Advanced users are welcome to update data directly by editing that data file.
+EduConnect data is saved automatically as a JSON file `[JAR file location]/data/educonnect.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, EduConnect will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the EduConnect to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If changes to the data file makes its format invalid, EduConnect will discard all data and start with an empty data file at the next run.  Hence, it is recommended to create a backup of the file before editing it.<br>
+Furthermore, certain edits can cause EduConnect to behave in unexpected ways (e.g. if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
 ### Archiving data files `[coming in v2.0]`
@@ -252,10 +272,12 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Help**   | `help`
 **Add**    | `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​` <br> e.g., `add n/James Ho s/A2222444X e/jamesho@example.com h/@hohoho t/struggling t/3rd year c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
-**Clear**  | `clear`
 **Delete** | `delete <choose only 1> [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE]`<br> e.g., `delete s/A1654327X`
 **Edit**   | `edit INDEX <choose 1 or more> [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
 **Find**   | `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`<br> e.g., `find n/john t/tutorial-1`
+**Copy**   | `copy [t/TAG]…`<br> e.g. `copy t/tutorial-2`
 **List**   | `list`<br> `list timetable`
-**Help**   | `help`
+**Clear**  | `clear`
+**Exit**   | `exit`

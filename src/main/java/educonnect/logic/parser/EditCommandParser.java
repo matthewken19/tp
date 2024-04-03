@@ -31,7 +31,6 @@ import java.util.function.Predicate;
 
 import educonnect.commons.core.index.Index;
 import educonnect.logic.commands.EditCommand;
-import educonnect.logic.commands.FindCommand;
 import educonnect.logic.parser.exceptions.ParseException;
 import educonnect.model.student.Student;
 import educonnect.model.student.Tag;
@@ -54,28 +53,33 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_STUDENT_ID, PREFIX_EMAIL,
             PREFIX_TELEGRAM_HANDLE, PREFIX_LINK, PREFIX_TAG, PREFIX_TIMETABLE);
-        // check for duplicate field
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_STUDENT_ID, PREFIX_EMAIL, PREFIX_TELEGRAM_HANDLE,
-            PREFIX_LINK, PREFIX_TIMETABLE);
-        // check for empty field
-        if (argMultimap.size() < 2) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
         // get identifier
         String identifierArgs = " " + argMultimap.getPreamble();
         ArgumentMultimap identifierArgMultimap = ArgumentTokenizer.tokenize(identifierArgs, EDIT_ID_PREFIX_EMAIL,
             EDIT_ID_PREFIX_STUDENT_ID, EDIT_ID_PREFIX_INDEX, EDIT_ID_PREFIX_TELEGRAM_HANDLE);
-        // check for duplicate field
-        identifierArgMultimap.verifyNoDuplicatePrefixesFor(EDIT_ID_PREFIX_EMAIL, EDIT_ID_PREFIX_STUDENT_ID,
-            EDIT_ID_PREFIX_INDEX, EDIT_ID_PREFIX_TELEGRAM_HANDLE);
+        // check for any valid format
+        if (argMultimap.size() < 2 && identifierArgMultimap.size() < 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EditCommand.MESSAGE_USAGE));
+        }
         // check for multiple unique identifier
         if (identifierArgMultimap.size() != 2) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EditCommand.MESSAGE_INVALID_IDENTIFIER));
         }
-
+        // check for empty field
+        if (argMultimap.size() < 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_NOT_EDITED));
+        }
+        // check for duplicate field
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_STUDENT_ID, PREFIX_EMAIL, PREFIX_TELEGRAM_HANDLE,
+            PREFIX_LINK, PREFIX_TIMETABLE);
+        // check for duplicate identifier
+        identifierArgMultimap.verifyNoDuplicatePrefixesFor(EDIT_ID_PREFIX_EMAIL, EDIT_ID_PREFIX_STUDENT_ID,
+            EDIT_ID_PREFIX_INDEX, EDIT_ID_PREFIX_TELEGRAM_HANDLE);
         // check for invalid preamble
         if (!identifierArgMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
         List<Predicate<Student>> predicates = new ArrayList<>();
         identifierArgMultimap.getValue(EDIT_ID_PREFIX_EMAIL).ifPresent(keywordEmail ->

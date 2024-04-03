@@ -8,7 +8,6 @@ import educonnect.model.Model;
  * Format full help instructions for every command for display.
  */
 public class HelpCommand extends Command {
-    private final String args;
     public static final String COMMAND_WORD = "help";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows usage instructions for "
@@ -63,6 +62,7 @@ public class HelpCommand extends Command {
     public static final String SHOWING_HELP_MESSAGE_CLEAR = "clear - Clears all entries from the address book.";
 
 
+    private final String args;
     public HelpCommand() {
         this.args = null;
     }

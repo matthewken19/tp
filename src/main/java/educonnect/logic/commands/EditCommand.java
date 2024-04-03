@@ -1,6 +1,6 @@
 package educonnect.logic.commands;
 
-
+import static educonnect.logic.Messages.MESSAGE_NO_STUDENT_FOUND;
 import static educonnect.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static educonnect.logic.parser.CliSyntax.PREFIX_LINK;
 import static educonnect.logic.parser.CliSyntax.PREFIX_NAME;
@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import educonnect.commons.core.index.Index;
 import educonnect.commons.util.CollectionUtil;
@@ -70,16 +71,18 @@ public class EditCommand extends Command {
             "This telegram handle already exists in the address book";
 
     private final Index index;
+    private final List<Predicate<Student>> predicates;
     private final EditStudentDescriptor editStudentDescriptor;
 
     /**
      * @param index of the student in the filtered student list to edit
      * @param editStudentDescriptor details to edit the student with
      */
-    public EditCommand(Index index, EditStudentDescriptor editStudentDescriptor) {
+    public EditCommand(Index index, List<Predicate<Student>> predicates, EditStudentDescriptor editStudentDescriptor) {
         requireNonNull(index);
         requireNonNull(editStudentDescriptor);
-
+        requireNonNull(predicates);
+        this.predicates = predicates;
         this.index = index;
         this.editStudentDescriptor = new EditStudentDescriptor(editStudentDescriptor);
     }
@@ -87,10 +90,13 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        if (!predicates.isEmpty()) {
+            model.updateFilteredStudentList(predicates);
+        }
         List<Student> lastShownList = model.getFilteredStudentList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+            throw new CommandException(MESSAGE_NO_STUDENT_FOUND);
         }
 
         Student studentToEdit = lastShownList.get(index.getZeroBased());

@@ -11,8 +11,7 @@ import educonnect.model.ModelManager;
 public class HelpCommandTest {
 
     private static final String[] VALID_COMMANDS =
-            {"add", "clear", "delete", "edit", "find", "list", "", "slots", "copy"};
-
+    {"add", "clear", "delete", "edit", "find", "list", "", "slots", "copy"};
     private Model model = new ModelManager();
     private Model expectedModel = new ModelManager();
 

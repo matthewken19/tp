@@ -13,8 +13,8 @@ public class Link {
     //    This validation regex is obtained from Mustofa Rizwan at
     //    https://stackoverflow.com/questions/42618872/regex-for-website-or-url-validation
     public static final String VALIDATION_REGEX =
-            "^((ftp|http|https):\\/\\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\\.[a-zA-Z]+)+((\\/)[\\w#]+)" +
-                    "*(\\/\\w+\\?[a-zA-Z0-9_]+=\\w+(&[a-zA-Z0-9_]+=\\w+)*)?\\/?$";
+            "^((ftp|http|https):\\/\\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\\.[a-zA-Z]+)+((\\/)[\\w#]+)"
+            + "*(\\/\\w+\\?[a-zA-Z0-9_]+=\\w+(&[a-zA-Z0-9_]+=\\w+)*)?\\/?$";
     public final String url;
 
     /**

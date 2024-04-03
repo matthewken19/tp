@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(1, 2, 0, false);
+    public static final Version VERSION = new Version(1, 3, 0, false);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -81,7 +81,7 @@ public class MainApp extends Application {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Creating a new data file " + storage.getAddressBookFilePath()
-                        + " populated with a sample AddressBook.");
+                        + " populated with a sample EduConnect Student Data File.");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataLoadingException e) {
@@ -170,7 +170,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting EduConnect " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 

@@ -1,8 +1,5 @@
 package educonnect.ui;
 
-import java.util.logging.Logger;
-
-import educonnect.commons.core.LogsCenter;
 import educonnect.model.student.Student;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +12,7 @@ import javafx.scene.layout.Region;
  */
 public class StudentListPanel extends UiPart<Region> {
     private static final String FXML = "StudentListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(StudentListPanel.class);
+
     @FXML
     private ListView<Student> studentListView;
     /**
@@ -27,6 +24,7 @@ public class StudentListPanel extends UiPart<Region> {
         studentListView.setItems(studentList);
         studentListView.setCellFactory(listView -> new StudentListViewCell());
     }
+
     public void showTimetable() {
         studentListView.setCellFactory(listView -> new StudentListViewCell(true));
     }
@@ -44,9 +42,11 @@ public class StudentListPanel extends UiPart<Region> {
         public StudentListViewCell() {
             this.showTimetable = false;
         }
+
         public StudentListViewCell(boolean showTimetable) {
             this.showTimetable = showTimetable;
         }
+
         @Override
         protected void updateItem(Student student, boolean empty) {
             super.updateItem(student, empty);
@@ -59,5 +59,4 @@ public class StudentListPanel extends UiPart<Region> {
             }
         }
     }
-
 }

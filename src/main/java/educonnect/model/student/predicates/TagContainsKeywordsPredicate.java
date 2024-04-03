@@ -23,6 +23,11 @@ public class TagContainsKeywordsPredicate implements Predicate<Student> {
     }
 
     @Override
+    public int hashCode() {
+        return keywordTag.hashCode();
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;

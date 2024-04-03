@@ -206,7 +206,7 @@ public class AddCommandParserTest {
         assertParseFailure(parser, VALID_NAME_BOB + STUDENT_ID_DESC_BOB + EMAIL_DESC_BOB + TELEGRAM_HANDLE_DESC_BOB,
                 expectedMessage);
 
-        // missing phone prefix
+        // missing student id prefix
         assertParseFailure(parser, NAME_DESC_BOB + VALID_STUDENT_ID_BOB + EMAIL_DESC_BOB + TELEGRAM_HANDLE_DESC_BOB,
                 expectedMessage);
 

@@ -11,12 +11,14 @@ import educonnect.commons.core.LogsCenter;
 import educonnect.logic.commands.AddCommand;
 import educonnect.logic.commands.ClearCommand;
 import educonnect.logic.commands.Command;
+import educonnect.logic.commands.CopyCommand;
 import educonnect.logic.commands.DeleteCommand;
 import educonnect.logic.commands.EditCommand;
 import educonnect.logic.commands.ExitCommand;
 import educonnect.logic.commands.FindCommand;
 import educonnect.logic.commands.HelpCommand;
 import educonnect.logic.commands.ListCommand;
+import educonnect.logic.commands.SlotsCommand;
 import educonnect.logic.parser.exceptions.ParseException;
 
 /**
@@ -71,11 +73,17 @@ public class AddressBookParser {
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
 
+        case CopyCommand.COMMAND_WORD:
+            return new CopyCommandParser().parse(arguments);
+
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommandParser().parse(arguments);
+
+        case SlotsCommand.COMMAND_WORD:
+            return new SlotsCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

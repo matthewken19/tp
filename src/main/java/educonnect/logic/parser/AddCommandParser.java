@@ -19,7 +19,6 @@ import static educonnect.logic.parser.CliSyntax.PREFIX_TIMETABLE_WEDNESDAY;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import educonnect.logic.commands.AddCommand;
 import educonnect.logic.parser.exceptions.ParseException;
@@ -48,13 +47,14 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_STUDENT_ID, PREFIX_EMAIL,
                         PREFIX_TELEGRAM_HANDLE, PREFIX_TAG, PREFIX_LINK, PREFIX_TIMETABLE);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_STUDENT_ID, PREFIX_TELEGRAM_HANDLE, PREFIX_EMAIL)
+        if (!argMultimap.areAllPrefixesPresent(PREFIX_NAME, PREFIX_STUDENT_ID, PREFIX_TELEGRAM_HANDLE, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_STUDENT_ID,
                 PREFIX_EMAIL, PREFIX_TELEGRAM_HANDLE, PREFIX_TIMETABLE, PREFIX_LINK);
+
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         StudentId studentId = ParserUtil.parseStudentId(argMultimap.getValue(PREFIX_STUDENT_ID).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
@@ -102,13 +102,4 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         return allDays;
     }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
 }

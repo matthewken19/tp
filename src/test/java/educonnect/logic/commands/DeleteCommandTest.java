@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import educonnect.commons.core.index.Index;
 import educonnect.logic.Messages;
 import educonnect.model.Model;
 import educonnect.model.ModelManager;
@@ -176,6 +175,9 @@ public class DeleteCommandTest {
         // different types -> returns false
         assertFalse(deleteFirstCommand.equals(1));
 
+        // different commands -> returns false
+        assertFalse(deleteFirstCommand.equals(new ClearCommand()));
+
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
@@ -185,7 +187,6 @@ public class DeleteCommandTest {
 
     @Test
     public void toStringMethod() {
-        Index targetIndex = Index.fromOneBased(1);
         DeleteCommand.DeleteStudentDescriptor deleteStudentDescriptor = new DeleteCommand.DeleteStudentDescriptor();
         deleteStudentDescriptor.setStudentId(new StudentId(VALID_STUDENT_ID_AMY));
 

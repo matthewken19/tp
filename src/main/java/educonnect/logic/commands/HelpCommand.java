@@ -74,7 +74,7 @@ public class HelpCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         if (this.args == null) {
-            return new CommandResult(SHOWING_HELP_MESSAGE, true, false, false);
+            return new CommandResult(SHOWING_HELP_MESSAGE, true, false);
         } else if (this.args.equals("add")) {
             return new CommandResult(SHOWING_HELP_MESSAGE_ADD);
         } else if (this.args.equals("list")) {

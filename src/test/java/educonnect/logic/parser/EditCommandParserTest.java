@@ -1,30 +1,7 @@
 package educonnect.logic.parser;
 
 import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static educonnect.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static educonnect.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static educonnect.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static educonnect.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static educonnect.logic.commands.CommandTestUtil.INVALID_STUDENT_ID_DESC;
-import static educonnect.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static educonnect.logic.commands.CommandTestUtil.INVALID_TELEGRAM_HANDLE_DESC;
-import static educonnect.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static educonnect.logic.commands.CommandTestUtil.STUDENT_ID_DESC_AMY;
-import static educonnect.logic.commands.CommandTestUtil.STUDENT_ID_DESC_BOB;
-import static educonnect.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static educonnect.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static educonnect.logic.commands.CommandTestUtil.TELEGRAM_HANDLE_DESC_AMY;
-import static educonnect.logic.commands.CommandTestUtil.TELEGRAM_HANDLE_DESC_BOB;
-import static educonnect.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static educonnect.logic.commands.CommandTestUtil.VALID_EMAIL_PREDICATE;
-import static educonnect.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static educonnect.logic.commands.CommandTestUtil.VALID_STUDENT_ID_AMY;
-import static educonnect.logic.commands.CommandTestUtil.VALID_STUDENT_ID_BOB;
-import static educonnect.logic.commands.CommandTestUtil.VALID_STUDENT_ID_PREDICATE;
-import static educonnect.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static educonnect.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static educonnect.logic.commands.CommandTestUtil.VALID_TELEGRAM_HANDLE_AMY;
-import static educonnect.logic.commands.CommandTestUtil.VALID_TELEGRAM_HANDLE_PREDICATE;
+import static educonnect.logic.commands.CommandTestUtil.*;
 import static educonnect.logic.parser.CliSyntax.EDIT_ID_PREFIX_EMAIL;
 import static educonnect.logic.parser.CliSyntax.EDIT_ID_PREFIX_INDEX;
 import static educonnect.logic.parser.CliSyntax.EDIT_ID_PREFIX_STUDENT_ID;
@@ -226,31 +203,43 @@ public class EditCommandParserTest {
     }
 
     @Test
+    public void parse_multipleRepeatedIdentifiers_failure() {
+        String identifier = EDIT_ID_PREFIX_STUDENT_ID + VALID_STUDENT_ID_AMY + " "
+                + EDIT_ID_PREFIX_TELEGRAM_HANDLE + VALID_TELEGRAM_HANDLE_AMY;
+        String userInput = identifier + NAME_DESC_BOB;
+        assertParseFailure(parser, userInput, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EditCommand.MESSAGE_INVALID_IDENTIFIER));
+    }
+
+    @Test
     public void parse_multipleRepeatedFields_failure() {
         // More extensive testing of duplicate parameter detections is done in
         // AddCommandParserTest#parse_repeatedNonTagValue_failure()
 
         // valid followed by invalid
         Index targetIndex = INDEX_FIRST_STUDENT;
-        String userInput = targetIndex.getOneBased() + INVALID_STUDENT_ID_DESC + STUDENT_ID_DESC_BOB;
+        String userInput = EDIT_ID_PREFIX_INDEX.toString() + targetIndex.getOneBased()
+                + INVALID_STUDENT_ID_DESC + STUDENT_ID_DESC_BOB;
 
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_STUDENT_ID));
 
         // invalid followed by valid
-        userInput = targetIndex.getOneBased() + STUDENT_ID_DESC_BOB + INVALID_STUDENT_ID_DESC;
+        userInput = EDIT_ID_PREFIX_INDEX.toString() + targetIndex.getOneBased()
+                + STUDENT_ID_DESC_BOB + INVALID_STUDENT_ID_DESC;
 
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_STUDENT_ID));
 
         // multiple valid fields repeated
-        userInput = targetIndex.getOneBased() + STUDENT_ID_DESC_AMY + TELEGRAM_HANDLE_DESC_AMY + EMAIL_DESC_AMY
-                + TAG_DESC_FRIEND + STUDENT_ID_DESC_AMY + TELEGRAM_HANDLE_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
+        userInput = EDIT_ID_PREFIX_INDEX.toString() + targetIndex.getOneBased() + STUDENT_ID_DESC_AMY
+                + TELEGRAM_HANDLE_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND + STUDENT_ID_DESC_AMY
+                + TELEGRAM_HANDLE_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
                 + STUDENT_ID_DESC_BOB + TELEGRAM_HANDLE_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND;
 
         assertParseFailure(parser, userInput,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_STUDENT_ID, PREFIX_EMAIL, PREFIX_TELEGRAM_HANDLE));
 
         // multiple invalid values
-        userInput = targetIndex.getOneBased() + INVALID_STUDENT_ID_DESC
+        userInput = EDIT_ID_PREFIX_INDEX.toString() + targetIndex.getOneBased() + INVALID_STUDENT_ID_DESC
                 + INVALID_TELEGRAM_HANDLE_DESC + INVALID_EMAIL_DESC
                 + INVALID_STUDENT_ID_DESC + INVALID_TELEGRAM_HANDLE_DESC + INVALID_EMAIL_DESC;
 

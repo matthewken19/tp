@@ -13,10 +13,10 @@
 ## Site Map
 
 ---
-
-* [User Guide](docs/UserGuide.md)
-* [Developer Guide](docs/DeveloperGuide.md)
-* [About Us](docs/AboutUs.md)
+* [Main page](https://ay2324s2-cs2103-t14-1.github.io/tp/)
+  * [User Guide](https://ay2324s2-cs2103-t14-1.github.io/tp/UserGuide.html)
+  * [Developer Guide](https://ay2324s2-cs2103-t14-1.github.io/tp/DeveloperGuide.html)
+  * [About Us](https://ay2324s2-cs2103-t14-1.github.io/tp/AboutUs.html)
 
 
 ## Acknowledgements

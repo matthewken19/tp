@@ -77,8 +77,8 @@ public class CopyCommandTest {
         String expectedMessage = String.format(Messages.MESSAGE_STUDENT_EMAIL_COPIED_OVERVIEW, students.size());
         CopyCommand command = new CopyCommand(List.of(predicate), false);
         CommandTestUtil.assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(TypicalStudents.BENSON,
-                TypicalStudents.FIONA), model.getFilteredStudentList());
+        assertEquals(Arrays.asList(TypicalStudents.BENSON, TypicalStudents.FIONA,
+                TypicalStudents.GEORGE), model.getFilteredStudentList());
     }
 
     @Test

@@ -13,7 +13,7 @@ public class NameContainsKeywordsPredicate implements Predicate<Student> {
     private final String keywordName;
 
     public NameContainsKeywordsPredicate(String keywordName) {
-        this.keywordName = keywordName; //replace
+        this.keywordName = keywordName;
     }
 
     @Override

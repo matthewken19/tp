@@ -156,9 +156,6 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     private void handleExit() {
-        GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
-        logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();
     }
@@ -167,14 +164,16 @@ public class MainWindow extends UiPart<Stage> {
      * Displays student timetable based on user list command.
      */
     @FXML
-    public void handleShowTimetable(boolean showTimetable) {
-        logger.info("User chooses to show timetables of students: " + showTimetable);
+    public void handleShowTimetable() {
+        boolean showTimetable = logic.getShowTimetable();
         if (showTimetable) {
+            logger.info("User chooses to show timetables of students.");
             studentListPanel.showTimetable();
         } else {
             studentListPanel.hideTimetable();
         }
     }
+
     public StudentListPanel getStudentListPanel() {
         return studentListPanel;
     }
@@ -197,7 +196,7 @@ public class MainWindow extends UiPart<Stage> {
             if (commandResult.isExit()) {
                 handleExit();
             }
-            handleShowTimetable(commandResult.isShowTimetable());
+            handleShowTimetable();
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);

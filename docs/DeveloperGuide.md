@@ -150,7 +150,7 @@ The `Storage` component,
 
 ### Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `educonnect.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -160,49 +160,78 @@ This section describes some noteworthy details on how certain features are imple
 
 ### Timetable Support
 * Each `Student` object now has a `Timetable` object as an attribute.
-* Each `Timetable` contains <u>1 to 7</u> `Day` objects.
+* Each `Timetable` contains <u>1 to 7</u> `Day` objects, by default, 5 days of the week (Monday - Friday) is used.
 * Each `Day` object can contain <u>0 to 24 1-hour</u> `Period` objects, or less if each `Period` has intervals longer
   than 1 hour.
-* Each `Period` is defined by the start time and end time, indicated by integers on a 24-hour clock, i.e. 0-23.
-* Each `Day` cannot contain overlapping `Period`, an overlap occurs when the start time of the previous `Period` is 
-  before the end time of the next `Period`. E.g. for the case of `Period` of 12-14, `Period` of 14-16 is allowed,
-  but `Period` of 13-15 is not.
+* Each `Period` is defined by the start time and end time, indicated by integers on a 24-hour clock, 
+  i.e. 0-23, which refers to 12 AM till 11 PM.
+* Each `Day` cannot contain any overlapping `Period`.
+  * An overlap occurs when the start time of the previous `Period` is before the end time of the next `Period`. 
+  * E.g. for the case of `Period` of 12-14, `Period` of 14-16 is allowed, but `Period` of 13-15 is not.
+* If not specified in the `add` command, or subsequently modified using the `edit` command, the `Timetable` is assumed
+  to be empty, indicating no occupied period.
 
 <puml src="diagrams/StudentClassDiagram.puml" width="450"/>
 
+#### Listing students with timetables option (save to user preference)
+* The `Timetable` of the `Student` shown during the `list` command, followed by a `timetable` keyword.
+
+* The `timetable` keyword is optional, and if not specified, students will be shown without timetables.
+
+* The option of displaying timetables will be saved to user preference, and will remain the same unless another `list` command with different option is received
+
+* Below shows the sequence diagram when <u>listing</u> students with timetables.
+
+<puml src="diagrams/ListSequenceDiagram.puml" width="450"/>
+
 #### Adding/Editing a Student's Timetable
-* The `Timetable` of the `Student` is specified during the `add` command, indicated with a `c/` prefix.
+* The `Timetable` of the `Student` can be specified during the `add` command, indicated with a `c/` prefix.
 * Similarly, the `Timetable` of a `Student` can be modified during the `edit` command, with the same prefix.
-* The `c/` prefix is optional, and if not specified, an empty `Timetable` object will be created as the attribute of 
-  the `Student`.
-  * The arguments for the `Timetable` object can be broken down into its respective day and the period that day contains.
+* The `c/` prefix is optional, and if not specified, 
+  an empty `Timetable` object will be created as the attribute of the `Student`.
+  * The arguments for the `Timetable` object can be broken down into its respective day and periods that day contains.
   * The day is indicated by its respective prefix as well, the format is `{DAY_3_LETTERS}:`, e.g. `"mon:"` or `"fri:"`.
-  * The period follows this format `{HOUR-HOUR}`, in a 24-hour clock, i.e. 0-23.
-  * E.g. an accepted `String` is `"mon: 13-15, 15-17 tue: 12-14 thu: 12-18"`
+  * The period follows this format `{HOUR-HOUR}`, in a 24-hour clock, e.g. "12-14", indicating 12 PM to 2 PM.
+  * E.g. an accepted `String` is `"mon: 13-15, 15-17 tue: 12-14 thu: 12-18"`.
 * Below shows the sequence diagram when <u>adding</u> a student.
 
-<puml src="diagrams/AddSequenceDiagram.puml" width="450"/>
+<puml src="diagrams/AddSequenceDiagram.puml"/>
 
-#### \[Proposed\] Finding a Common Slot
+#### Finding Common Slots from list of Students (can be filtered)
 
-##### Proposed Implementation
+The finding a common slot feature will have a portion implemented similarly to the `find` command. 
+The command consists of a mandatory specified duration, and optional arguments for higher specificity,
+and a common empty slot across all students that fulfils the duration requirement will be outputted to the user.
 
-The proposed finding a common slot feature will be relying on the `find` command. It extends the `find` command with
-a specified duration, and a common empty slot across all students that fulfils the duration requirement will be
-outputted to the user.
-
-* The command can be implemented as such: `slot [t/TAG] d/DURATION`
-  * where `d/` is the prefix for duration, and `t/` is an optional argument for a filtered list of students.
+* The command is implemented as such: `slots d/DURATION [t/TAG] [p/TIMEFRAME_PERIOD] [o/ON_WHICH_DAYS]`
+    * `d/` is the prefix for duration.
+    * `t/` is an optional argument for a filtered list of students.
+      * if not specified, defaults to looking through the entire list of students in EduConnect.
+    * `p/` is an optional argument for specifying the timeframe to look for slots.
+      * if not specified, defaults to 8 AM to 10 PM.
+    * `o/` is an optional argument for on which days specifically to look for slots.
+      * if not specified, defaults to Monday to Friday.
+      
 * Examples:
-  * `slot d/1` - EduConnect will look through the current list of students, i.e. can be the full list, or a filtered
-    list if ran after the `find` command, then returns the earliest 1-hour slot available for the week.
-  * `slot t/TUT-1 d/2` - EduConnect will first filter and return a list of students with the tag `TUT-1`, then return
-    the earliest 2-hour slot available for the week.
-* The command's execution will iterate through the selected list of students, accessing each `Timetable` object's 
+    * `slot d/1` - EduConnect will look through the current list of students, i.e. can be the full list, or a filtered
+      list if ran after the `find` command, then returns all the 1-hour slot(s) available for the week.
+    * `slot d/2 t/tutorial-1` - EduConnect will first filter and get the list of students with the tag `tutorial-1`, 
+      then return all the 2-hour slot(s) available for the week.
+    * `slot d/3 p/12-18 o/tue, wed, thu t/tutorial-2` - EduConnect will first filter and get the list of students
+      with the tag `tutorial-2`, then returns all the 3-hour slot(s) available,
+      between 12 PM to 6 PM, on Tuesdays, Wednesdays, and Thursdays only.
+  
+* The command's execution will iterate through the selected list of students, accessing each `Timetable` object's
   list of `Day` objects.
-  * Each `Day` object will look for valid `Period` that does not overlap with its own list of `Period` objects.
-  * The series of valid `Period` and `Day` will be collected from each `Timetable` of each `Student`.
-  * Common slots across all `Timetable` will then be filtered out and returned.
+    * Each `Day` object will look for valid `Period` that does not overlap with its own list of `Period` objects.
+    * The series of valid `Period` and `Day` will be collected from each `Timetable` of each `Student`, 
+      and returned as an `AvailableSlots` objects, which is collected in a `List`. 
+    * Common slots across all `AvailableSlots` will then be filtered out 
+      and returned as a singular `AvailableSlots` object.
+
+* The diagram below shows the sequence diagram for an example execution of finding common slots.
+
+<puml src="diagrams/FindingAvailableSlotsSequenceDiagram.puml"/>
 
 _{more functionality to be implemented in later versions}_
 

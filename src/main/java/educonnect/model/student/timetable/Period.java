@@ -15,6 +15,8 @@ public class Period implements Comparable<Period> {
             "Periods should be in the format of time-time, "
             + "where time can be any digit between 0 - 23. \n"
             + "This means that all Period objects are tracked with a 24-hour clock.";
+    public static final String DEFAULT_PERIOD_NAME = "period";
+    @SuppressWarnings("unused")
     private final String periodName;
     private final LocalTime timeStart;
     private final LocalTime timeEnd;
@@ -62,12 +64,54 @@ public class Period implements Comparable<Period> {
     }
 
     /**
+     * Constructor for this class, accepts {@code String} as inputs.
+     *
+     * @param periodName the name of this {@code Period}
+     * @param startTime {@code int} representing the start hour (0-23) of the {@code Period}.
+     * @param endTime {@code int} representing the end hour (0-23) of the {@code Period}.
+     * @throws InvalidPeriodException if the name is invalid or if the end timing is before the start timing.
+     */
+    Period(String periodName, int startTime, int endTime) {
+        requireAllNonNull(periodName, startTime, endTime);
+
+        LocalTime timeStart = LocalTime.of(startTime, 0, 0);
+        LocalTime timeEnd = LocalTime.of(endTime, 0, 0);
+
+        if (timeEnd.isBefore(timeStart) || periodName.isBlank()) {
+            throw new InvalidPeriodException();
+        }
+
+        this.periodName = periodName.trim();
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+    }
+
+    /**
      * Constructor for JSON Serialisation, included only for JSON to work, not intended as a constructor to be used!
      */
+    @SuppressWarnings("unused")
     private Period() {
         this.periodName = "";
         this.timeStart = null;
         this.timeEnd = null;
+    }
+
+    /**
+     * Gets the {@code int} hour for the start time.
+     *
+     * @return {@code int} hour.
+     */
+    public int getStartTimeHour() {
+        return timeStart.getHour();
+    }
+
+    /**
+     * Gets the {@code int} hour for the end time.
+     *
+     * @return {@code int} hour.
+     */
+    public int getEndTimeHour() {
+        return timeEnd.getHour();
     }
 
     /**
@@ -94,13 +138,23 @@ public class Period implements Comparable<Period> {
      *
      * @return {@code String} command, e.g. "13-15"
      */
-    public String convertToCommandString() {
+    String convertToCommandString() {
         return timeStart.getHour() + "-" + timeEnd.getHour();
     }
 
     @Override
     public int compareTo(Period period) {
         return this.timeStart.compareTo(period.timeStart);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+
+        result = prime * result + this.timeStart.hashCode();
+        result = prime * result + timeEnd.hashCode();
+        return result;
     }
 
     @Override

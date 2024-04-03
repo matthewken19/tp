@@ -1,0 +1,122 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":Logic" as LogicManager LOGIC_COLOR
+
+box Model MODEL_COLOR_T1
+participant ":ModelManager" as ModelManager MODEL_COLOR
+participant ":ObservableList" as ObservableList MODEL_COLOR
+participant "<<class>>\n AvailableSlots" as AsClass MODEL_COLOR
+participant "<<class>>\n Day" as DayClass MODEL_COLOR
+participant ":Student" as Student MODEL_COLOR
+participant ":Timetable" as Timetable MODEL_COLOR
+participant ":AvailableSlots" as AvailableSlots MODEL_COLOR
+participant ":Day" as Day MODEL_COLOR
+participant ":Period" as Period MODEL_COLOR
+end box
+
+[-> LogicManager : slots d/1 p/12-18 \
+\n o/tue, wed, thu t/tutorial-1
+activate LogicManager
+
+LogicManager -> ModelManager : findAllCommonSlots()
+activate ModelManager
+
+<style>
+group {
+  BackgroundColor MODEL_COLOR_T1
+}
+</style>
+opt has tags in command
+    ModelManager -> ModelManager : updateFilteredStudentList()
+end
+
+ModelManager -> ObservableList : getFilteredStudentList()
+activate ObservableList
+
+ObservableList --> ModelManager
+deactivate ObservableList
+
+<style>
+group {
+    BackgroundColor MODEL_COLOR_T1
+}
+</style>
+loop all Students (tutorial-1)
+    ModelManager -> Student : getTimetable()
+    activate Student
+
+    Student --> ModelManager
+    deactivate Student
+end
+
+ModelManager -> Timetable : findSlots(1, Period(12-18), \n[TUESDAY, WEDNESDAY, THURSDAY])
+activate Timetable
+
+<style>
+group {
+    BackgroundColor MODEL_COLOR_T1
+}
+</style>
+loop all Timetables
+    Timetable -> Day : findSlots(1, Period(12-18))
+    activate Day
+
+    loop all Days
+        Day -> Period : findSlots(1, Period(12-18))
+        activate Period
+
+        loop all Periods
+            Period --> Day : available Period
+            deactivate Period
+        end
+
+        Day --> Timetable : all available Periods in each Day
+        deactivate Day
+    end
+
+    create AvailableSlots
+    Timetable -> AvailableSlots
+    activate AvailableSlots
+
+    AvailableSlots --> Timetable : availableSlots
+    deactivate AvailableSlots
+end
+
+Timetable --> ModelManager : allAvailableSlots
+deactivate Timetable
+
+ModelManager -> AsClass : findAllCommonSlots()
+activate AsClass
+
+<style>
+group {
+    BackgroundColor MODEL_COLOR_T1
+}
+</style>
+loop all AvailableSlots
+    AsClass -> DayClass : findAllCommonSlots()
+    activate DayClass
+
+    loop all Days
+        DayClass -> DayClass : findAllCommonSlots()
+        activate DayClass
+        DayClass --> DayClass : all common periods
+        deactivate DayClass
+    end
+
+    DayClass --> AsClass : all common days
+    deactivate DayClass
+end
+
+AsClass --> ModelManager : all common available slots
+deactivate AsClass
+
+ModelManager --> LogicManager : all common available slots
+deactivate ModelManager
+
+[<-- LogicManager : CommandResult
+
+@enduml

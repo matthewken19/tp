@@ -111,6 +111,7 @@ public class SampleDataUtil {
             timetable1.addPeriodsToDay(4, new ArrayList<>(
                     List.of(new Period("period1", "16-18"),
                             new Period("period2", "13-15"))));
+
             timetable2.addPeriodsToDay(2, new ArrayList<>(
                     List.of(new Period("period1", "11-13"),
                             new Period("period2", "14-17"))));
@@ -118,6 +119,7 @@ public class SampleDataUtil {
                     List.of(new Period("period1", "12-14"),
                             new Period("period2", "14-16"),
                             new Period("period3", "16-18"))));
+
             timetable3.addPeriodsToDay(1, new ArrayList<>(
                     List.of(new Period("period1", "13-15"),
                             new Period("period2", "16-18"))));
@@ -127,8 +129,10 @@ public class SampleDataUtil {
             timetable3.addPeriodsToDay(3, new ArrayList<>(
                     List.of(new Period("period1", "18-20"),
                             new Period("period2", "15-17"))));
+
             timetable4.addPeriodsToDay(5, new ArrayList<>(
                     List.of(new Period("period1", "12-18"))));
+
             return new Timetable[]{timetable1, emptyTimetable, timetable2, timetable3, emptyTimetable, timetable4};
         } catch (OverlapPeriodException e) {
             throw new RuntimeException(e);

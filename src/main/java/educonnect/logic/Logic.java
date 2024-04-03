@@ -45,6 +45,15 @@ public interface Logic {
     GuiSettings getGuiSettings();
 
     /**
+     * Returns the user prefs' show timetable option.
+     */
+    boolean getShowTimetable();
+    /**
+     * Sets the user prefs' show timetable option.
+     */
+    void setShowTimetable(boolean showTimetable);
+
+    /**
      * Set the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);

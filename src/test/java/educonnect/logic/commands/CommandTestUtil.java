@@ -69,7 +69,7 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_TELEGRAM_HANDLE_DESC =
         " " + PREFIX_TELEGRAM_HANDLE; // empty string not allowed for addresses
-    public static final String INVALID_LINK = "dhello";
+    public static final String INVALID_LINK_DESC = " " + PREFIX_LINK + "www.helloworld";
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_TIMETABLE_DESC = " " + PREFIX_TIMETABLE
                                                         + "mon: 13 to 15" // 'to' is not allowed, use '-'

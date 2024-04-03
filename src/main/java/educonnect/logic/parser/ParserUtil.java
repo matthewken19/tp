@@ -241,8 +241,10 @@ public class ParserUtil {
         requireNonNull(s);
         String trimmedLink = s.trim();
         if (!Link.isValidLink(trimmedLink)) {
+            System.out.println("Invalid link");
             throw new ParseException(Link.MESSAGE_CONSTRAINTS);
         }
+        System.out.println("Valid link");
         return new Link(trimmedLink);
     }
 }

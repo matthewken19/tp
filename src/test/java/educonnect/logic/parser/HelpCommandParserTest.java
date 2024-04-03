@@ -3,7 +3,6 @@ package educonnect.logic.parser;
 import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static educonnect.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static educonnect.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static educonnect.logic.parser.HelpCommandParser.VALID_COMMANDS;
 
 import educonnect.logic.commands.HelpCommand;
 import org.junit.jupiter.api.Test;
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.Test;
 public class HelpCommandParserTest {
 
     private final HelpCommandParser parser = new HelpCommandParser();
+    private final static String[] VALID_COMMANDS = {"add", "clear", "delete", "edit", "find", "list"};
     private final String INVALID_ARGS = "pin";
 
     @Test

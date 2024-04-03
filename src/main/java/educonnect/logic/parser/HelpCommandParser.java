@@ -1,18 +1,24 @@
 package educonnect.logic.parser;
 
-import educonnect.logic.commands.HelpCommand;
-import educonnect.logic.parser.exceptions.ParseException;
+import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
 
-import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import educonnect.logic.commands.HelpCommand;
+import educonnect.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new HelpCommand object
  */
-public class HelpCommandParser implements Parser<HelpCommand>{
+public class HelpCommandParser implements Parser<HelpCommand> {
 
-    public static String[] VALID_COMMANDS = {"add", "clear", "delete", "edit", "find", "list"};
+    private static final String[] VALID_COMMANDS = {"add", "clear", "delete", "edit", "find", "list"};
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the HelpCommand
+     * and returns a HelpCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
     public HelpCommand parse(String args) throws ParseException {
         args = args.trim();
         if (args.isEmpty()) {

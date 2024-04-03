@@ -1,8 +1,8 @@
 package educonnect.logic.commands;
 
-import educonnect.model.Model;
-
 import java.util.Objects;
+
+import educonnect.model.Model;
 
 /**
  * Format full help instructions for every command for display.
@@ -67,8 +67,6 @@ public class HelpCommand extends Command {
         this.args = null;
     }
 
-    ;
-
     public HelpCommand(String args) {
         this.args = args;
     }
@@ -87,8 +85,7 @@ public class HelpCommand extends Command {
             return new CommandResult(SHOWING_HELP_MESSAGE_EDIT);
         } else if (this.args.equals("delete")) {
             return new CommandResult(SHOWING_HELP_MESSAGE_DELETE);
-            // All other invalid arguments are already removed at the parsing stage
-        } else {
+        } else { // All other invalid arguments are already removed at the parsing stage
             return new CommandResult(SHOWING_HELP_MESSAGE_CLEAR);
         }
     }

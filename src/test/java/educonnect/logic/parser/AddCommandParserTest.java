@@ -1,8 +1,41 @@
 package educonnect.logic.parser;
 
 import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static educonnect.logic.commands.CommandTestUtil.*;
-import static educonnect.logic.parser.CliSyntax.*;
+import static educonnect.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static educonnect.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static educonnect.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static educonnect.logic.commands.CommandTestUtil.INVALID_LINK_DESC;
+import static educonnect.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static educonnect.logic.commands.CommandTestUtil.INVALID_STUDENT_ID_DESC;
+import static educonnect.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static educonnect.logic.commands.CommandTestUtil.INVALID_TELEGRAM_HANDLE_DESC;
+import static educonnect.logic.commands.CommandTestUtil.INVALID_TIMETABLE_DESC;
+import static educonnect.logic.commands.CommandTestUtil.LINK_DESC_AMY;
+import static educonnect.logic.commands.CommandTestUtil.LINK_DESC_BOB;
+import static educonnect.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static educonnect.logic.commands.CommandTestUtil.NAME_DESC_BOB;
+import static educonnect.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
+import static educonnect.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
+import static educonnect.logic.commands.CommandTestUtil.STUDENT_ID_DESC_AMY;
+import static educonnect.logic.commands.CommandTestUtil.STUDENT_ID_DESC_BOB;
+import static educonnect.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
+import static educonnect.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static educonnect.logic.commands.CommandTestUtil.TELEGRAM_HANDLE_DESC_AMY;
+import static educonnect.logic.commands.CommandTestUtil.TELEGRAM_HANDLE_DESC_BOB;
+import static educonnect.logic.commands.CommandTestUtil.TIMETABLE_DESC_VALID1;
+import static educonnect.logic.commands.CommandTestUtil.TIMETABLE_DESC_VALID2;
+import static educonnect.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static educonnect.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static educonnect.logic.commands.CommandTestUtil.VALID_STUDENT_ID_BOB;
+import static educonnect.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static educonnect.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static educonnect.logic.commands.CommandTestUtil.VALID_TELEGRAM_HANDLE_BOB;
+import static educonnect.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static educonnect.logic.parser.CliSyntax.PREFIX_LINK;
+import static educonnect.logic.parser.CliSyntax.PREFIX_NAME;
+import static educonnect.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static educonnect.logic.parser.CliSyntax.PREFIX_TELEGRAM_HANDLE;
+import static educonnect.logic.parser.CliSyntax.PREFIX_TIMETABLE;
 import static educonnect.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static educonnect.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static educonnect.testutil.TypicalStudents.AMY;
@@ -15,14 +48,21 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import educonnect.model.student.*;
 import org.junit.jupiter.api.Test;
 
 import educonnect.logic.Messages;
 import educonnect.logic.commands.AddCommand;
+import educonnect.model.student.Email;
+import educonnect.model.student.Link;
+import educonnect.model.student.Name;
+import educonnect.model.student.Student;
+import educonnect.model.student.StudentId;
+import educonnect.model.student.Tag;
+import educonnect.model.student.TelegramHandle;
 import educonnect.model.student.timetable.Timetable;
 import educonnect.testutil.StudentBuilder;
 import educonnect.testutil.TypicalTimetableAndValues;
+
 
 public class AddCommandParserTest {
     private final AddCommandParser parser = new AddCommandParser();
@@ -62,7 +102,7 @@ public class AddCommandParserTest {
                 .withTimetable(DEFAULT_EMPTY_TIMETABLE).buildNoLink();
         assertParseSuccess(parser,
                 NAME_DESC_AMY + STUDENT_ID_DESC_AMY + EMAIL_DESC_AMY
-                        + TELEGRAM_HANDLE_DESC_AMY  + TAG_DESC_FRIEND,
+                        + TELEGRAM_HANDLE_DESC_AMY + TAG_DESC_FRIEND,
                 new AddCommand(expectedStudentWithNoLink));
 
     }
@@ -153,7 +193,7 @@ public class AddCommandParserTest {
                 new AddCommand(expectedStudent));
 
         // no link
-        Student expectedNoLinkStudent =  new StudentBuilder(AMY).withTags().buildNoLink();
+        Student expectedNoLinkStudent = new StudentBuilder(AMY).withTags().buildNoLink();
         assertParseSuccess(parser, NAME_DESC_AMY + STUDENT_ID_DESC_AMY + EMAIL_DESC_AMY + TELEGRAM_HANDLE_DESC_AMY,
                 new AddCommand(expectedNoLinkStudent));
     }
@@ -223,8 +263,8 @@ public class AddCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         // invalid link
-        assertParseFailure(parser, NAME_DESC_BOB + STUDENT_ID_DESC_BOB + EMAIL_DESC_BOB + TELEGRAM_HANDLE_DESC_BOB + INVALID_LINK_DESC +
-                TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Link.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, NAME_DESC_BOB + STUDENT_ID_DESC_BOB + EMAIL_DESC_BOB + TELEGRAM_HANDLE_DESC_BOB
+                + INVALID_LINK_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Link.MESSAGE_CONSTRAINTS);
     }
 
     @Test

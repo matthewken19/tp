@@ -4,14 +4,14 @@ import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static educonnect.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static educonnect.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
-import educonnect.logic.commands.HelpCommand;
 import org.junit.jupiter.api.Test;
 
-public class HelpCommandParserTest {
+import educonnect.logic.commands.HelpCommand;
 
+public class HelpCommandParserTest {
+    private static final String[] VALID_COMMANDS = {"add", "clear", "delete", "edit", "find", "list"};
+    private static final String INVALID_ARGS = "pin";
     private final HelpCommandParser parser = new HelpCommandParser();
-    private final static String[] VALID_COMMANDS = {"add", "clear", "delete", "edit", "find", "list"};
-    private final String INVALID_ARGS = "pin";
 
     @Test
     public void parse_noArguments_success() {
@@ -20,8 +20,8 @@ public class HelpCommandParserTest {
 
     @Test
     public void parse_withArguments_success() {
-        String valid_args = VALID_COMMANDS[1];
-        assertParseSuccess(parser, valid_args, new HelpCommand(valid_args));
+        String validArgs = VALID_COMMANDS[1];
+        assertParseSuccess(parser, validArgs, new HelpCommand(validArgs));
     }
 
     @Test

@@ -114,7 +114,7 @@ class JsonAdaptedStudent {
         if (link == null) {
             modelLink = Optional.empty();
         } else {
-            if (Link.isValidLink(link)) {
+            if (!Link.isValidLink(link)) {
                 throw new IllegalValueException(Link.MESSAGE_CONSTRAINTS);
             }
             modelLink = Optional.of(new Link(link));

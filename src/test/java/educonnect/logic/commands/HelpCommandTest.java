@@ -1,11 +1,8 @@
 package educonnect.logic.commands;
 
-import static educonnect.logic.commands.CommandTestUtil.assertCommandFailure;
 import static educonnect.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static educonnect.logic.commands.HelpCommand.SHOWING_HELP_MESSAGE;
-import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static educonnect.logic.commands.HelpCommand.SHOWING_HELP_MESSAGE_EDIT;
-
 
 import org.junit.jupiter.api.Test;
 
@@ -27,8 +24,8 @@ public class HelpCommandTest {
 
     @Test
     public void execute_helpValidArgs_success() {
-        String valid_arg = VALID_COMMANDS[3];
+        String validArg = VALID_COMMANDS[3];
         CommandResult expectedCommandResult = new CommandResult(SHOWING_HELP_MESSAGE_EDIT);
-        assertCommandSuccess(new HelpCommand(valid_arg), model, expectedCommandResult, expectedModel);
+        assertCommandSuccess(new HelpCommand(validArg), model, expectedCommandResult, expectedModel);
     }
 }

@@ -186,6 +186,10 @@ public class ModelManager implements Model {
     public ObservableList<Student> getFilteredStudentList() {
         return filteredStudents;
     }
+    @Override
+    public void updateWithAllStudents() {
+        updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
+    }
 
     @Override
     public void updateFilteredStudentList(Collection<Predicate<Student>> predicates) {

@@ -32,7 +32,7 @@ public class ListCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         String outputMessage = showTimetable ? MESSAGE_SUCCESS_TIMETABLE : MESSAGE_SUCCESS;
-        model.updateFilteredStudentList(Model.PREDICATE_SHOW_ALL_STUDENTS);
+        model.updateWithAllStudents();
         model.setShowTimetable(showTimetable);
         return new CommandResult(outputMessage, false, false);
     }

@@ -129,7 +129,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredStudentList(Model.PREDICATE_SHOW_ALL_STUDENTS);
+        modelManager.updateWithAllStudents();
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();

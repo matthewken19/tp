@@ -54,7 +54,7 @@ deactivate AddressBookParser
 LogicManager -> ListCommand : execute(m)
 activate ListCommand
 
-ListCommand -> Model : updateFilteredStudentList(Model.PREDICATE_SHOW_ALL_STUDENTS)
+ListCommand -> Model : updateWithAllStudents()
 activate Model
 
 Model --> ListCommand

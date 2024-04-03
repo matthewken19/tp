@@ -63,12 +63,16 @@ public class EditCommand extends Command {
             "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED =
             "At least one field to edit must be provided.";
+    public static final String MESSAGE_INVALID_IDENTIFIER =
+            "One identifier must be provided.";
     public static final String MESSAGE_DUPLICATE_STUDENT_ID =
             "This student Id already exists in the address book";
     public static final String MESSAGE_DUPLICATE_EMAIL =
             "This email already exists in the address book";
     public static final String MESSAGE_DUPLICATE_TELEGRAM_HANDLE =
             "This telegram handle already exists in the address book";
+    public static final String MESSAGE_INDEX_OUT_OF_BOUNDS =
+            "Index provided must be an integer between 1 and %d, inclusive";
 
     private final Index index;
     private final List<Predicate<Student>> predicates;
@@ -94,9 +98,13 @@ public class EditCommand extends Command {
             model.updateFilteredStudentList(predicates);
         }
         List<Student> lastShownList = model.getFilteredStudentList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
+        // no student matches the unique identifier
+        if (lastShownList.isEmpty()) {
             throw new CommandException(MESSAGE_NO_STUDENT_FOUND);
+        }
+        // index out of bound
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(String.format(MESSAGE_INDEX_OUT_OF_BOUNDS, lastShownList.size()));
         }
 
         Student studentToEdit = lastShownList.get(index.getZeroBased());

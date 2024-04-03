@@ -24,7 +24,8 @@ public class ModelManagerTest {
     @Test
     public void constructor() {
         assertEquals(new UserPrefs(), modelManager.getUserPrefs());
-        Assertions.assertEquals(new GuiSettings(), modelManager.getGuiSettings());
+        assertEquals(new GuiSettings(), modelManager.getGuiSettings());
+        assertFalse(modelManager.getShowTimetable());
         assertEquals(new AddressBook(), new AddressBook(modelManager.getAddressBook()));
     }
 
@@ -69,6 +70,12 @@ public class ModelManagerTest {
         Path path = Paths.get("address/book/file/path");
         modelManager.setAddressBookFilePath(path);
         assertEquals(path, modelManager.getAddressBookFilePath());
+    }
+
+    @Test
+    public void setShowTimetable_showTimetable_setsShowTimetable() {
+        modelManager.setShowTimetable(true);
+        assertTrue(modelManager.getShowTimetable());
     }
 
     @Test
@@ -122,7 +129,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredStudentList(Model.PREDICATE_SHOW_ALL_STUDENTS);
+        modelManager.updateWithAllStudents();
 
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();

@@ -59,7 +59,7 @@ public class CopyCommandTest {
 
     @Test
     public void execute_zeroKeywords_allEmailsCopied() {
-        expectedModel.updateFilteredStudentList(Model.PREDICATE_SHOW_ALL_STUDENTS);
+        expectedModel.updateWithAllStudents();
         ObservableList<Student> students = expectedModel.getFilteredStudentList();
 
         String expectedMessage = String.format(Messages.MESSAGE_STUDENT_EMAIL_COPIED_OVERVIEW,

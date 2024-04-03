@@ -55,6 +55,15 @@ public interface Model {
     void setAddressBookFilePath(Path addressBookFilePath);
 
     /**
+     * Returns the user prefs' show timetable option.
+     */
+    boolean getShowTimetable();
+
+    /**
+     * Sets the user prefs' show timetable option.
+     */
+    void setShowTimetable(boolean showTimetable);
+    /**
      * Replaces address book data with the data in {@code addressBook}.
      */
     void setAddressBook(ReadOnlyAddressBook addressBook);
@@ -112,6 +121,10 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered student list */
     ObservableList<Student> getFilteredStudentList();
 
+    /**
+     * Updates the filter of the filtered student list to show all students.
+     */
+    void updateWithAllStudents();
     /**
      * Updates the filter of the filtered student list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

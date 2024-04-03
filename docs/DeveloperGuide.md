@@ -173,6 +173,17 @@ This section describes some noteworthy details on how certain features are imple
 
 <puml src="diagrams/StudentClassDiagram.puml" width="450"/>
 
+#### Listing students with timetables option (save to user preference)
+* The `Timetable` of the `Student` shown during the `list` command, followed by a `timetable` keyword.
+
+* The `timetable` keyword is optional, and if not specified, students will be shown without timetables.
+
+* The option of displaying timetables will be saved to user preference, and will remain the same unless another `list` command with different option is received
+
+* Below shows the sequence diagram when <u>listing</u> students with timetables.
+
+<puml src="diagrams/ListSequenceDiagram.puml" width="450"/>
+
 #### Adding/Editing a Student's Timetable
 * The `Timetable` of the `Student` can be specified during the `add` command, indicated with a `c/` prefix.
 * Similarly, the `Timetable` of a `Student` can be modified during the `edit` command, with the same prefix.
@@ -184,7 +195,7 @@ This section describes some noteworthy details on how certain features are imple
   * E.g. an accepted `String` is `"mon: 13-15, 15-17 tue: 12-14 thu: 12-18"`.
 * Below shows the sequence diagram when <u>adding</u> a student.
 
-<puml src="diagrams/AddSequenceDiagram.puml" width="450"/>
+<puml src="diagrams/AddSequenceDiagram.puml"/>
 
 #### Finding Common Slots from list of Students (can be filtered)
 
@@ -220,7 +231,7 @@ and a common empty slot across all students that fulfils the duration requiremen
 
 * The diagram below shows the sequence diagram for an example execution of finding common slots.
 
-<puml src="diagrams/FindingAvailableSlotsSequenceDiagram.puml" width="450"/>
+<puml src="diagrams/FindingAvailableSlotsSequenceDiagram.puml"/>
 
 _{more functionality to be implemented in later versions}_
 

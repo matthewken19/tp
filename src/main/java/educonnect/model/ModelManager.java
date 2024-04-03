@@ -86,6 +86,15 @@ public class ModelManager implements Model {
         requireNonNull(addressBookFilePath);
         userPrefs.setAddressBookFilePath(addressBookFilePath);
     }
+    @Override
+    public boolean getShowTimetable() {
+        return userPrefs.getShowTimetable();
+    }
+
+    @Override
+    public void setShowTimetable(boolean showTimetable) {
+        userPrefs.setShowTimetable(showTimetable);
+    }
 
     //=========== AddressBook ================================================================================
 
@@ -198,6 +207,10 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Student> getFilteredStudentList() {
         return filteredStudents;
+    }
+    @Override
+    public void updateWithAllStudents() {
+        updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
     }
 
     @Override

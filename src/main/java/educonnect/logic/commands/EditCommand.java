@@ -1,13 +1,7 @@
 package educonnect.logic.commands;
 
 import static educonnect.logic.Messages.MESSAGE_NO_STUDENT_FOUND;
-import static educonnect.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static educonnect.logic.parser.CliSyntax.PREFIX_LINK;
-import static educonnect.logic.parser.CliSyntax.PREFIX_NAME;
-import static educonnect.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
-import static educonnect.logic.parser.CliSyntax.PREFIX_TAG;
-import static educonnect.logic.parser.CliSyntax.PREFIX_TELEGRAM_HANDLE;
-import static educonnect.logic.parser.CliSyntax.PREFIX_TIMETABLE;
+import static educonnect.logic.parser.CliSyntax.*;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collections;
@@ -44,7 +38,11 @@ public class EditCommand extends Command {
             + "by the index number used in the displayed student list. "
             + "Existing values will be overwritten by the input values.\n\n"
 
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: <choose onl 1>"
+            + "[" + EDIT_ID_PREFIX_STUDENT_ID + "STUDENT_ID] "
+            + "[" + EDIT_ID_PREFIX_EMAIL + "EMAIL] "
+            + "[" + EDIT_ID_PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE] "
+            + "[" + EDIT_ID_PREFIX_INDEX + "INDEX] (must be a positive integer)\n"
             + "<choose 1 or more> "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_STUDENT_ID + "STUDENT_ID] "

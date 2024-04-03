@@ -1,5 +1,10 @@
 package educonnect.logic.commands;
 
+import static educonnect.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static educonnect.logic.parser.CliSyntax.PREFIX_NAME;
+import static educonnect.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static educonnect.logic.parser.CliSyntax.PREFIX_TAG;
+import static educonnect.logic.parser.CliSyntax.PREFIX_TELEGRAM_HANDLE;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
@@ -21,9 +26,21 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all students whose attributes match "
-            + "the specified attributed keywords (case-insensitive) and displays them as a list.\n"
-            + "Parameters: [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]...\n"
-            + "Example: " + COMMAND_WORD + " n/alice t/tutorial-1";
+            + "the specified attributed keywords (case-insensitive) and displays them as a list. "
+            + "Finding by tags need to match the whole tag but finding by other attributes can match partially. "
+            + "Finding by multiple prefixes will find students that satisfies all prefixes used.\n\n"
+
+            + "Parameters: "
+            + "<choose 1 or more>"
+            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_STUDENT_ID + "STUDENT_ID] "
+            + "[" + PREFIX_EMAIL + " EMAIL] "
+            + "[" + PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE] "
+            + "[" + PREFIX_TAG + "TAG]...\n\n"
+
+            + "Example 1: " + COMMAND_WORD + " " + PREFIX_NAME + "alice " + PREFIX_TAG + "tutorial-1\n"
+            + "Example 2: " + COMMAND_WORD + " " + PREFIX_NAME + "alex\n"
+            + "Example 3: " + COMMAND_WORD + " " + PREFIX_STUDENT_ID + "A1";
 
     private final Collection<Predicate<Student>> predicates;
 

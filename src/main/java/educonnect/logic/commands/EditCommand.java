@@ -48,7 +48,7 @@ public class EditCommand extends Command {
             + "by the identifier used in the displayed student list. "
             + "Existing values will be overwritten by the input values.\n\n"
 
-            + "Parameters: <choose onl 1>"
+            + "Parameters: <choose only 1>"
             + "[" + EDIT_ID_PREFIX_STUDENT_ID + "STUDENT_ID] "
             + "[" + EDIT_ID_PREFIX_EMAIL + "EMAIL] "
             + "[" + EDIT_ID_PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE] "

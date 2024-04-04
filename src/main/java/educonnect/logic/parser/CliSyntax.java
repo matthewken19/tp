@@ -27,4 +27,8 @@ public class CliSyntax {
         PREFIX_TIMETABLE_MONDAY, PREFIX_TIMETABLE_TUESDAY, PREFIX_TIMETABLE_WEDNESDAY,
         PREFIX_TIMETABLE_THURSDAY, PREFIX_TIMETABLE_FRIDAY, PREFIX_TIMETABLE_SATURDAY, PREFIX_TIMETABLE_SUNDAY
     };
+    public static final Prefix EDIT_ID_PREFIX_EMAIL = new Prefix("e:");
+    public static final Prefix EDIT_ID_PREFIX_TELEGRAM_HANDLE = new Prefix("h:");
+    public static final Prefix EDIT_ID_PREFIX_INDEX = new Prefix("i:");
+    public static final Prefix EDIT_ID_PREFIX_STUDENT_ID = new Prefix("s:");
 }

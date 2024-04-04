@@ -84,6 +84,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
+<box type="info" seamless>
 **Notes about optional prefixes:**<br>
 
 * Optional prefixes are contained in square brackets.<br>
@@ -93,12 +94,15 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 * Angular brackets `<CONDITION>` will inform the user of the optional prefix requirements that is used in the command <br>
   e.g `<choose 1 only>` `[s/STUDENT_ID]` `[e/EMAIL]` `[h/TELEGRAM_HANDLE]` indicates that only one of these optional prefix must be present in the command
+</box>
 
+<box type="info" seamless>
 **Notes about unique identifiers:**<br>
 
 * Unique identifiers are `e/EMAIL`, `s/STUDENT_ID` and `h/TELEGRAM_HANDLE`
 
 * There can only be one unique identifier at each time. Which means no two students can share the same unique identifiers above.
+</box>
 
 ### Viewing help : `help`
 
@@ -189,7 +193,7 @@ Format: `delete <choose only 1> [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE]`
 
 * Deletes a student with the specified `STUDENT_ID` or `EMAIL` or `TELEGRAM_HANDLE`.
 * Only one field may be used for each delete command.
-* `NAME` or `TAG` may not be used.
+* `NAME` or `TAG` or `TIMETABLE` may not be used.
 
 Examples:
 * `delete e/royb@gmail.com` deletes a student with an email of `royb@gmail.com` in the address book.

@@ -20,6 +20,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
     - [Copying student emails: `copy`](#copying-student-emails-copy)
     - [Deleting a student: `delete`](#deleting-a-student-delete)
     - [Clearing all students: `clear`](#clearing-all-students-clear)
+    - [Finding a common slot time among students: `slots`](#finding-common-timeslot-slots)
     - [Exiting EduConnect: `exit`](#exiting-educonnect-exit)
     - [Saving the data](#saving-the-data)
     - [Editing the data file](#editing-the-data-file)
@@ -85,6 +86,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
+<box type="info" seamless>
 **Notes about optional prefixes:**<br>
 
 * Optional prefixes are contained in square brackets.<br>
@@ -94,12 +96,15 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 * Angular brackets `<CONDITION>` will inform the user of the optional prefix requirements that is used in the command <br>
   e.g `<choose 1 only>` `[s/STUDENT_ID]` `[e/EMAIL]` `[h/TELEGRAM_HANDLE]` indicates that only one of these optional prefix must be present in the command
+</box>
 
+<box type="info" seamless>
 **Notes about unique identifiers:**<br>
 
 * Unique identifiers are `e/EMAIL`, `s/STUDENT_ID` and `h/TELEGRAM_HANDLE`
 
 * There can only be one unique identifier at each time. Which means no two students can share the same unique identifiers above.
+</box>
 
 **Notes about displaying timetables of students:**<br>
 
@@ -229,7 +234,7 @@ Format: `delete <choose only 1> [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE]`
 
 * Deletes a student with the specified `STUDENT_ID` or `EMAIL` or `TELEGRAM_HANDLE`.
 * Only one field may be used for each delete command.
-* `NAME` or `TAG` may not be used.
+* `NAME` or `TAG` or `TIMETABLE` may not be used.
 
 Examples:
 * `delete e/royb@gmail.com` deletes a student with an email of `royb@gmail.com` in the address book.
@@ -243,6 +248,20 @@ Clears all students.
 Format: `clear`
 ![result for 'clear'](images/clear.png)
 
+### Finding a common time slot among students: `slots`
+
+Format : `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]` 
+
+* Finds a common slot of time amongst a list of students.
+* The list of students can be narrowed down by tag(s).
+* The period of time to look for the common slot can be specified, otherwise, the default period is between 8 AM to 10 PM.
+* The search on which days can be specified, otherwise, the default will be from Monday to Friday.
+
+Examples:
+* `slots d/1` finds a common 1-hour time slot among listed students.
+* `slots d/2 p/10-6 o/mon, tue, fri` finds a common 2-hour time slot on monday, tuesday and wednesday among listed students.
+* `slots d/1 t/tutorial-1 p/10-16` finds a common 1-hour time slot for students tagged with `tutorial-1` from 10am to 6pm.
+    ![result of slot command](images/slotsCommand.png)
 ### Exiting EduConnect : `exit`
 
 Exits EduConnect.
@@ -295,5 +314,6 @@ Action     | Format, Examples
 **List**   | `list`<br> `list timetable`
 **Help**   | `help [COMMAND]`
 **Clear**  | `clear`
+**Slots**  | `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]`
 **Exit**   | `exit`
 

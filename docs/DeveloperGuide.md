@@ -177,7 +177,7 @@ This section describes some noteworthy details on how certain features are imple
 
 * Below shows the sequence diagram when <u>listing</u> students with timetables.
 
-<puml src="diagrams/ListSequenceDiagram.puml" width="450"/>
+<puml src="diagrams/ListSequenceDiagram.puml"/>
 
 #### Adding/Editing a Student's Timetable
 * The `Timetable` of the `Student` can be specified during the `add` command, indicated with a `c/` prefix.

@@ -12,19 +12,19 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 - [EduConnect User Guide](#educonnect-user-guide)
   - [Quick start](#quick-start)
   - [Features](#features)
-    - [Viewing help : `help`](#viewing-help--help)
+    - [Viewing help: `help`](#viewing-help-help)
     - [Adding a student: `add`](#adding-a-student-add)
-    - [Listing all students : `list`](#listing-all-students--list)
-    - [Editing a student : `edit`](#editing-a-student--edit)
+    - [Listing all students: `list`](#listing-all-students-list)
+    - [Editing a student: `edit`](#editing-a-student-edit)
     - [Locating students by name: `find`](#locating-students-by-name-find)
     - [Copying student emails: `copy`](#copying-student-emails-copy)
-    - [Deleting a student : `delete`](#deleting-a-student--delete)
-    - [Clearing all students : `clear`](#clearing-all-students--clear)
-    - [Finding a common slot time among students: `slots`](#finding-common-timeslot--slots)
-    - [Exiting EduConnect : `exit`](#exiting-educonnect--exit)
+    - [Deleting a student: `delete`](#deleting-a-student-delete)
+    - [Clearing all students: `clear`](#clearing-all-students-clear)
+    - [Finding a common slot time among students: `slots`](#finding-common-timeslot-slots)
+    - [Exiting EduConnect: `exit`](#exiting-educonnect-exit)
     - [Saving the data](#saving-the-data)
     - [Editing the data file](#editing-the-data-file)
-    - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
+    - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v2-0)
   - [FAQ](#faq)
   - [Known issues](#known-issues)
   - [Command summary](#command-summary)
@@ -52,7 +52,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
    * `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com t/tutorial-1 t/high-ability` : Adds a contact named `John Doe` to the Address Book.
 
-   * `delete s/A1654327X` : Deletes the person with the `s/STUDENT_ID` unique identifier
+   * `delete s/A0001234A` : Deletes the person with the `s/STUDENT_ID` unique identifier
 
    * `clear` : Deletes all contacts.
 
@@ -112,7 +112,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 * To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results.
 
-### Viewing help : `help `
+### Viewing help: `help`
 
 Shows a message explaining how to access the help page. This feature ensures that users can easily understand the functionality and syntax of commands without referring to external documentation.
 
@@ -127,7 +127,7 @@ Format: `help [COMMAND]`
 
   Examples:
 * `help add`
-![help_add_message](images/helpAddMessage.png)
+![result for 'help_add'](images/helpAdd.png)
 ### Adding a student: `add`
 
 Adds a student.
@@ -147,6 +147,7 @@ Examples:
 * `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue:
   11-13 thu: 12-15, 15-17`
 * `add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U`
+  ![result for 'add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U'](images/add.png)
 
 ### Listing all students : `list`
 
@@ -154,6 +155,11 @@ Shows a list of all students with the option to show timetables.
 
 Format: `list [timetable]`
 
+**Tip:** The option of displaying timetables will be saved to user preference, and will remain the same unless another `list` command with different option is received
+
+Examples:
+* `list timetable` 
+![result for 'list timetable'](images/listTimetable.png)
 ### Editing a student : `edit`
 
 Edits an existing student.
@@ -173,12 +179,13 @@ Format: `edit <choose only 1> [i:INDEX] [s:STUDENT_ID] [e:EMAIL] [h:TELEGRAM_HAN
 
 Examples:
 *  `edit i:1 s/A0001234A e/johndoe@example.com` Edits the student id and email address of the 1st student to be `A0001234A` and `johndoe@example.com` respectively.
+  ![result for 'edit 1 s/A1654327X e/johndoe@example.com'](images/edit.png)
 *  `edit s:A1234567X n/Betsy Crower t/` Edits the name of the student with a student ID of `A1234567X` to be `Betsy Crower` and clears all existing tags.
 *  `edit e:christian@nus.com h/@christan c/` Edits the telegram handle and clears the timetable of the student with an email of `christian@nus.com`.
 *  `edit h:@christan c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17` Replaces the timetable of the student with a telegram handle of `@christan` with this new one according to
    the specifications in the command
 
-### Locating students by name: `find`
+### Locating students by name : `find`
 
 Finds students whose criteria match any of the given keywords.
 
@@ -198,9 +205,9 @@ Examples:
 * `find e/yahoo` returns Alex Yeoh and David Li (both uses yahoo email)
 * `find h/john` returns John Doe and John Lee (telegram handle @johnd and @johnlee respectively)
 * `find t/tutorial-1 t/high-ability` returns Samantha (is tagged with BOTH tutorial-1 and high-ability)
-* `find n/john t/tutorial-1` returns John Doe (name contains john and is tagged with tutorial-1)
+* `find n/john t/tutorial-2` returns John Doe (name contains john and is tagged with tutorial-1)
   <br>
-  ![result for 'find John'](images/findJohn.png)
+  ![result for 'find John'](images/find.png)
 
 ### Copying student emails: `copy`
 
@@ -233,14 +240,15 @@ Format: `delete <choose only 1> [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE]`
 
 Examples:
 * `delete e/royb@gmail.com` deletes a student with an email of `royb@gmail.com` in the address book.
-* `delete s/A1654327X` deletes a student with a student id of `A1654327X` in the address book.
-  ![result for 'find alex', followed by 'delete s/A1654327X'](images/findAndDelete.png)
+* `delete s/A0001234A` deletes a student with a student id of `A0001234A` in the address book.
+  ![result for 'find alex', followed by 'delete s/A0001234A'](images/delete.png)
 
 ### Clearing all students : `clear`
 
 Clears all students.
 
 Format: `clear`
+![result for 'clear'](images/clear.png)
 
 ### Finding a common time slot among students: `slots`
 
@@ -301,9 +309,9 @@ _Details coming soon ..._
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add**    | `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​` <br> e.g., `add n/James Ho s/A2222444X e/jamesho@example.com h/@hohoho t/struggling t/3rd year c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
-**Delete** | `delete <choose only 1> [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE]`<br> e.g., `delete s/A1654327X`
+**Delete** | `delete <choose only 1> [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE]`<br> e.g., `delete s/A0001234A`
 **Edit**   | `edit INDEX <choose 1 or more> [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
-**Find**   | `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`<br> e.g., `find n/john t/tutorial-1`
+**Find**   | `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`<br> e.g., `find n/john t/tutorial-2`
 **Copy**   | `copy [t/TAG]…`<br> e.g. `copy t/tutorial-2`
 **List**   | `list`<br> `list timetable`
 **Help**   | `help [COMMAND]`

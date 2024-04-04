@@ -19,7 +19,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
     - [Locating students by name: `find`](#locating-students-by-name-find)
     - [Copying student emails: `copy`](#copying-student-emails-copy)
     - [Deleting a student: `delete`](#deleting-a-student-delete)
-    - [Finding a common slot time among students: `slots`](#finding-a-common-time-slot-among-students-slots)
+    - [Finding a common time slot among students: `slots`](#finding-a-common-time-slot-among-students-slots)
     - [Clearing all students: `clear`](#clearing-all-students-clear)
     - [Exiting EduConnect: `exit`](#exiting-educonnect-exit)
     - [Saving the data](#saving-the-data)

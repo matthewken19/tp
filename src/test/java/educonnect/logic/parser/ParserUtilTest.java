@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import educonnect.logic.parser.exceptions.ParseException;
 import educonnect.model.student.Email;
+import educonnect.model.student.Link;
 import educonnect.model.student.Name;
 import educonnect.model.student.StudentId;
 import educonnect.model.student.Tag;
@@ -35,6 +36,7 @@ public class ParserUtilTest {
     private static final String INVALID_TELEGRAM_HANDLE = "johndoe";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_LINK = "www.";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_STUDENT_ID = "A1234567U";
@@ -42,6 +44,7 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_LINK = "https://nus-cs2103-ay2324s2.github.io/website/";
 
     @Test
     public void parseIndex_invalidInput_throwsParseException() {
@@ -320,6 +323,28 @@ public class ParserUtilTest {
                 ParserUtil.parseTimetable(TypicalTimetableAndValues.VALID_TIMETABLE_INPUT_1).toString());
         assertEquals(TypicalTimetableAndValues.VALID_TIMETABLE_2.toString(),
                 ParserUtil.parseTimetable(TypicalTimetableAndValues.VALID_TIMETABLE_INPUT_2).toString());
+    }
+    @Test
+    public void parseLink_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseLink((String) null));
+    }
+
+    @Test
+    public void parseLink_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseLink(INVALID_LINK));
+    }
+
+    @Test
+    public void parseLink_validValueWithoutWhitespace_returnsLink() throws Exception {
+        Link expectedLink = new Link(VALID_LINK);
+        assertEquals(expectedLink, ParserUtil.parseLink(VALID_LINK));
+    }
+
+    @Test
+    public void parseLink_validValueWithWhitespace_returnsTrimmedLink() throws Exception {
+        String linkWithWhitespace = WHITESPACE + VALID_LINK + WHITESPACE;
+        Link expectedLink = new Link(VALID_LINK);
+        assertEquals(expectedLink, ParserUtil.parseLink(linkWithWhitespace));
     }
 
     @Test

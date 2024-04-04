@@ -79,8 +79,8 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME s/STUDENT_ID`, `s/STUDENT_ID n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (i.e. `help`,`exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+* Extraneous parameters for commands that do not take in parameters (i.e. `exit` and `clear`) will be ignored.<br>
+  e.g. if the command specifies `clear 123`, it will be interpreted as `clear`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
@@ -107,15 +107,22 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 * To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results.
 
-### Viewing help : `help`
+### Viewing help : `help `
 
-Shows a message explaining how to access the help page.
+Shows a message explaining how to access the help page. This feature ensures that users can easily understand the functionality and syntax of commands without referring to external documentation.
 
-![help message](images/helpMessage.png)
+Format: `help [COMMAND]`
 
-Format: `help`
+**Notes about valid commands:**<br>
 
+* Valid commands are: `add`, `list`, `find`, `edit`, `clear`, `delete`.
+* Other commands will not be accepted and will lead to a parse error. <br/>
+* If no command is given, a pop-up window showing a brief outline of the commands and a link to the user guide will be given
+  ![help message](images/helpMessage.png)
 
+  Examples:
+* `help add`
+![help_add_message](images/helpAddMessage.png)
 ### Adding a student: `add`
 
 Adds a student.
@@ -272,12 +279,13 @@ _Details coming soon ..._
 
 Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Help**   | `help`
 **Add**    | `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​` <br> e.g., `add n/James Ho s/A2222444X e/jamesho@example.com h/@hohoho t/struggling t/3rd year c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
 **Delete** | `delete <choose only 1> [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE]`<br> e.g., `delete s/A1654327X`
 **Edit**   | `edit INDEX <choose 1 or more> [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
 **Find**   | `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`<br> e.g., `find n/john t/tutorial-1`
 **Copy**   | `copy [t/TAG]…`<br> e.g. `copy t/tutorial-2`
 **List**   | `list`<br> `list timetable`
+**Help**   | `help [COMMAND]`
 **Clear**  | `clear`
 **Exit**   | `exit`
+

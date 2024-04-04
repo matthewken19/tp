@@ -33,9 +33,11 @@ public class DeleteCommand extends Command {
             + "[" + PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE] "
             + "[" + PREFIX_STUDENT_ID + "STUDENT_ID]\n\n"
 
-            + "Example 1: " + COMMAND_WORD + " " + PREFIX_EMAIL + "example@email.com\n"
+            + "Example 1: " + COMMAND_WORD + " " + PREFIX_EMAIL + "royb@gmail.com\n"
+            + "Deletes a student with an email of royb@gmail.com in the address book\n\n"
+
             + "Example 2: " + COMMAND_WORD + " " + PREFIX_STUDENT_ID + "A1234567X\n"
-            + "Example 3: " + COMMAND_WORD + " " + PREFIX_TELEGRAM_HANDLE + "@john.doe";
+            + "Deletes a student with a student id of A1654327X in the address book.";
 
     public static final String MULTIPLE_UNIQUE_IDENTIFIER_MESSAGE =
             "Multiple unique identifier prefixes used, only use one unique identifier prefix.\n" + MESSAGE_USAGE;

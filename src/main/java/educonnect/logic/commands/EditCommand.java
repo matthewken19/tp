@@ -1,6 +1,10 @@
 package educonnect.logic.commands;
 
-
+import static educonnect.logic.Messages.MESSAGE_NO_STUDENT_FOUND;
+import static educonnect.logic.parser.CliSyntax.EDIT_ID_PREFIX_EMAIL;
+import static educonnect.logic.parser.CliSyntax.EDIT_ID_PREFIX_INDEX;
+import static educonnect.logic.parser.CliSyntax.EDIT_ID_PREFIX_STUDENT_ID;
+import static educonnect.logic.parser.CliSyntax.EDIT_ID_PREFIX_TELEGRAM_HANDLE;
 import static educonnect.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static educonnect.logic.parser.CliSyntax.PREFIX_LINK;
 import static educonnect.logic.parser.CliSyntax.PREFIX_NAME;
@@ -16,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import educonnect.commons.core.index.Index;
 import educonnect.commons.util.CollectionUtil;
@@ -40,10 +45,14 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the student identified "
-            + "by the index number used in the displayed student list. "
+            + "by the identifier used in the displayed student list. "
             + "Existing values will be overwritten by the input values.\n\n"
 
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Parameters: <choose only 1>"
+            + "[" + EDIT_ID_PREFIX_STUDENT_ID + "STUDENT_ID] "
+            + "[" + EDIT_ID_PREFIX_EMAIL + "EMAIL] "
+            + "[" + EDIT_ID_PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE] "
+            + "[" + EDIT_ID_PREFIX_INDEX + "INDEX] (must be a positive integer)\n"
             + "<choose 1 or more> "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_STUDENT_ID + "STUDENT_ID] "
@@ -68,24 +77,30 @@ public class EditCommand extends Command {
             "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED =
             "At least one field to edit must be provided.";
+    public static final String MESSAGE_INVALID_IDENTIFIER =
+            "One identifier must be provided.";
     public static final String MESSAGE_DUPLICATE_STUDENT_ID =
             "This student Id already exists in the address book";
     public static final String MESSAGE_DUPLICATE_EMAIL =
             "This email already exists in the address book";
     public static final String MESSAGE_DUPLICATE_TELEGRAM_HANDLE =
             "This telegram handle already exists in the address book";
+    public static final String MESSAGE_INDEX_OUT_OF_BOUNDS =
+            "Index provided must be an integer between 1 and %d, inclusive";
 
     private final Index index;
+    private final List<Predicate<Student>> predicates;
     private final EditStudentDescriptor editStudentDescriptor;
 
     /**
      * @param index of the student in the filtered student list to edit
      * @param editStudentDescriptor details to edit the student with
      */
-    public EditCommand(Index index, EditStudentDescriptor editStudentDescriptor) {
+    public EditCommand(Index index, List<Predicate<Student>> predicates, EditStudentDescriptor editStudentDescriptor) {
         requireNonNull(index);
         requireNonNull(editStudentDescriptor);
-
+        requireNonNull(predicates);
+        this.predicates = predicates;
         this.index = index;
         this.editStudentDescriptor = new EditStudentDescriptor(editStudentDescriptor);
     }
@@ -93,10 +108,17 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        if (!predicates.isEmpty()) {
+            model.updateFilteredStudentList(predicates);
+        }
         List<Student> lastShownList = model.getFilteredStudentList();
-
+        // no student matches the unique identifier
+        if (lastShownList.isEmpty()) {
+            throw new CommandException(MESSAGE_NO_STUDENT_FOUND);
+        }
+        // index out of bound
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+            throw new CommandException(String.format(MESSAGE_INDEX_OUT_OF_BOUNDS, lastShownList.size()));
         }
 
         Student studentToEdit = lastShownList.get(index.getZeroBased());

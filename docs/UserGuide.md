@@ -158,9 +158,11 @@ Format: `list [timetable]`
 
 Edits an existing student.
 
-Format: `edit INDEX <choose 1 or more> [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`
+Format: `edit <choose only 1> [i:INDEX] [s:STUDENT_ID] [e:EMAIL] [h:TELEGRAM_HANDLE] <choose 1 or more> [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`
 
-* Edits the student at the specified `INDEX`. The index refers to the index number shown in the displayed student list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the student based on the unique identifier of the student.
+* Only one of the identifiers should be provided.
+* The index `i:INDEX` refers to the index number shown in the displayed student list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the student will be removed i.e. adding of tags is not cumulative.
@@ -170,11 +172,11 @@ Format: `edit INDEX <choose 1 or more> [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELE
 * You can reset the timetable to be empty by typing `c/` without specifying anything after it.
 
 Examples:
-*  `edit 1 s/A0001234A e/johndoe@example.com` Edits the student id and email address of the 1st student to be `A0001234A` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
-*  `edit 3 h/@christan c/` Edits the telegram handle and clears the timetable.
-*  `edit 4 c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17` Replaces the timetable with this new one according to
-   the specifications in the command.
+*  `edit i:1 s/A0001234A e/johndoe@example.com` Edits the student id and email address of the 1st student to be `A0001234A` and `johndoe@example.com` respectively.
+*  `edit s:A1234567X n/Betsy Crower t/` Edits the name of the student with a student ID of `A1234567X` to be `Betsy Crower` and clears all existing tags.
+*  `edit e:christian@nus.com h/@christan c/` Edits the telegram handle and clears the timetable of the student with an email of `christian@nus.com`.
+*  `edit h:@christan c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17` Replaces the timetable of the student with a telegram handle of `@christan` with this new one according to
+   the specifications in the command
 
 ### Locating students by name: `find`
 

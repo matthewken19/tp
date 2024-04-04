@@ -302,5 +302,6 @@ Action     | Format, Examples
 **List**   | `list`<br> `list timetable`
 **Help**   | `help [COMMAND]`
 **Clear**  | `clear`
+**Slots**  | `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]`
 **Exit**   | `exit`
 

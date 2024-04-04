@@ -42,7 +42,7 @@ public class SlotsCommand extends Command {
             + "Example 2: " + COMMAND_WORD + " " + PREFIX_DURATION + "2 "
             + PREFIX_PERIOD + "10-6 " + PREFIX_ON_DAYS + "mon, tue, fri\n\n"
             + "Example 3: " + COMMAND_WORD + " " + PREFIX_DURATION + "1 "
-            + PREFIX_TAG + "tutorial-1 " + PREFIX_PERIOD + "10-6 \n\n";
+            + PREFIX_TAG + "tutorial-1 " + PREFIX_PERIOD + "10-16 \n\n";
 
     public static final String MESSAGE_FOUND_SLOTS_SUCCESS = "Found a few slots, they are displayed below.\n\n%1$s";
     public static final String MESSAGE_NO_SLOTS_FOUND = "No slots found.";

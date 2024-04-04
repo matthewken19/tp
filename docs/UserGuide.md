@@ -19,12 +19,11 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
     - [Locating students by name: `find`](#locating-students-by-name-find)
     - [Copying student emails: `copy`](#copying-student-emails-copy)
     - [Deleting a student: `delete`](#deleting-a-student-delete)
+    - [Finding a common slot time among students: `slots`](#finding-a-common-time-slot-among-students-slots)
     - [Clearing all students: `clear`](#clearing-all-students-clear)
-    - [Finding a common slot time among students: `slots`](#finding-common-timeslot-slots)
     - [Exiting EduConnect: `exit`](#exiting-educonnect-exit)
     - [Saving the data](#saving-the-data)
     - [Editing the data file](#editing-the-data-file)
-    - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v2-0)
   - [FAQ](#faq)
   - [Known issues](#known-issues)
   - [Command summary](#command-summary)
@@ -149,7 +148,7 @@ Examples:
 * `add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U`
   ![result for 'add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U'](images/add.png)
 
-### Listing all students : `list`
+### Listing all students: `list`
 
 Shows a list of all students with the option to show timetables.
 
@@ -160,7 +159,7 @@ Format: `list [timetable]`
 Examples:
 * `list timetable` 
 ![result for 'list timetable'](images/listTimetable.png)
-### Editing a student : `edit`
+### Editing a student: `edit`
 
 Edits an existing student.
 
@@ -185,7 +184,7 @@ Examples:
 *  `edit h:@christan c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17` Replaces the timetable of the student with a telegram handle of `@christan` with this new one according to
    the specifications in the command
 
-### Locating students by name : `find`
+### Locating students by name: `find`
 
 Finds students whose criteria match any of the given keywords.
 
@@ -228,7 +227,7 @@ Examples:
 * `copy t/tutorial-2` copies 3 emails (`johnsmith@example.com, irfan@example.com, royb@example.com` all with `tutorial-2` tag)
 * `copy t/tutorial-2 t/strong-student` copies 1 email (`royb@example.com` with both `tutorial-2` and `strong-student` tag) 
 
-### Deleting a student : `delete`
+### Deleting a student: `delete`
 
 Deletes a specified student.
 
@@ -243,16 +242,9 @@ Examples:
 * `delete s/A0001234A` deletes a student with a student id of `A0001234A` in the address book.
   ![result for 'find alex', followed by 'delete s/A0001234A'](images/delete.png)
 
-### Clearing all students : `clear`
-
-Clears all students.
-
-Format: `clear`
-![result for 'clear'](images/clear.png)
-
 ### Finding a common time slot among students: `slots`
 
-Format : `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]` 
+Format : `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]`
 
 * Finds a common slot of time amongst a list of students.
 * The list of students can be narrowed down by tag(s).
@@ -263,8 +255,16 @@ Examples:
 * `slots d/1` finds a common 1-hour time slot among listed students.
 * `slots d/2 p/10-6 o/mon, tue, fri` finds a common 2-hour time slot on monday, tuesday and wednesday among listed students.
 * `slots d/1 t/tutorial-1 p/10-16` finds a common 1-hour time slot for students tagged with `tutorial-1` from 10am to 6pm.
-    ![result of slot command](images/slotsCommand.png)
-### Exiting EduConnect : `exit`
+  ![result of slot command](images/slots.png)
+
+### Clearing all students: `clear`
+
+Clears all students.
+
+Format: `clear`
+![result for 'clear'](images/clear.png)
+
+### Exiting EduConnect: `exit`
 
 Exits EduConnect.
 
@@ -284,8 +284,6 @@ EduConnect data is saved automatically as a JSON file `[JAR file location]/data/
 If changes to the data file makes its format invalid, EduConnect will discard all data and start with an empty data file at the next run.  Hence, it is recommended to create a backup of the file before editing it.<br>
 Furthermore, certain edits can cause EduConnect to behave in unexpected ways (e.g. if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
-
-### Archiving data files `[coming in v2.0]`
 
 _Details coming soon ..._
 
@@ -315,7 +313,7 @@ Action     | Format, Examples
 **Copy**   | `copy [t/TAG]…`<br> e.g. `copy t/tutorial-2`
 **List**   | `list`<br> `list timetable`
 **Help**   | `help [COMMAND]`
-**Clear**  | `clear`
 **Slots**  | `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]`
+**Clear**  | `clear`
 **Exit**   | `exit`
 

@@ -12,18 +12,18 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 - [EduConnect User Guide](#educonnect-user-guide)
   - [Quick start](#quick-start)
   - [Features](#features)
-    - [Viewing help : `help`](#viewing-help--help)
+    - [Viewing help: `help`](#viewing-help-help)
     - [Adding a student: `add`](#adding-a-student-add)
-    - [Listing all students : `list`](#listing-all-students--list)
-    - [Editing a student : `edit`](#editing-a-student--edit)
+    - [Listing all students: `list`](#listing-all-students-list)
+    - [Editing a student: `edit`](#editing-a-student-edit)
     - [Locating students by name: `find`](#locating-students-by-name-find)
     - [Copying student emails: `copy`](#copying-student-emails-copy)
-    - [Deleting a student : `delete`](#deleting-a-student--delete)
-    - [Clearing all students : `clear`](#clearing-all-students--clear)
-    - [Exiting EduConnect : `exit`](#exiting-educonnect--exit)
+    - [Deleting a student: `delete`](#deleting-a-student-delete)
+    - [Clearing all students: `clear`](#clearing-all-students-clear)
+    - [Exiting EduConnect: `exit`](#exiting-educonnect-exit)
     - [Saving the data](#saving-the-data)
     - [Editing the data file](#editing-the-data-file)
-    - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
+    - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v2-0)
   - [FAQ](#faq)
   - [Known issues](#known-issues)
   - [Command summary](#command-summary)
@@ -107,7 +107,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 * To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results.
 
-### Viewing help : `help `
+### Viewing help: `help`
 
 Shows a message explaining how to access the help page. This feature ensures that users can easily understand the functionality and syntax of commands without referring to external documentation.
 
@@ -171,7 +171,7 @@ Examples:
 *  `edit 4 c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17` Replaces the timetable with this new one according to
    the specifications in the command.
 
-### Locating students by name: `find`
+### Locating students by name : `find`
 
 Finds students whose criteria match any of the given keywords.
 

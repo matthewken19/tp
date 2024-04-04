@@ -6,12 +6,12 @@ if () then([No unique identifier])
     : Educonnect throws\n no unique identifer used;
 else ([else])
     if () then([Multiple unique identifiers])
-        : Educonnect throws\n multiple unique used;
+        : Educonnect throws\n multiple unique\n identifier used;
     else ([else])
         if () then([No student with\n unique identifier])
             : Educonnect throws\n no student found;
         else ([Student with unique\n identifier found])
-            : Educonnect deletes student\n with the unique identifier;
+            : Educonnect deletes\n student with the\n unique identifier;
         endif;
     endif;
 endif;

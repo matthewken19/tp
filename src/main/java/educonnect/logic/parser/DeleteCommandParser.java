@@ -43,9 +43,12 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                     DeleteCommand.NO_UNIQUE_IDENTIFIER_MESSAGE));
         }
 
+        // Multiple same prefixes used
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STUDENT_ID, PREFIX_TELEGRAM_HANDLE,
+                PREFIX_EMAIL);
+
         // Multiple unique identifiers present
-        if (arePrefixesPresent(argMultimap, PREFIX_STUDENT_ID, PREFIX_TELEGRAM_HANDLE, PREFIX_EMAIL)
-            || arePrefixesPresent(argMultimap, PREFIX_TELEGRAM_HANDLE, PREFIX_EMAIL)
+        if (arePrefixesPresent(argMultimap, PREFIX_TELEGRAM_HANDLE, PREFIX_EMAIL)
             || arePrefixesPresent(argMultimap, PREFIX_STUDENT_ID, PREFIX_EMAIL)
             || arePrefixesPresent(argMultimap, PREFIX_STUDENT_ID, PREFIX_TELEGRAM_HANDLE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,

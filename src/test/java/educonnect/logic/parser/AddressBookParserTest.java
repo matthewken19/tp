@@ -22,6 +22,7 @@ import educonnect.logic.commands.ExitCommand;
 import educonnect.logic.commands.FindCommand;
 import educonnect.logic.commands.HelpCommand;
 import educonnect.logic.commands.ListCommand;
+import educonnect.logic.commands.SlotsCommand;
 import educonnect.logic.parser.exceptions.ParseException;
 import educonnect.model.student.Student;
 import educonnect.model.student.StudentId;
@@ -29,7 +30,6 @@ import educonnect.model.student.predicates.NameContainsKeywordsPredicate;
 import educonnect.testutil.EditStudentDescriptorBuilder;
 import educonnect.testutil.StudentBuilder;
 import educonnect.testutil.StudentUtil;
-
 
 public class AddressBookParserTest {
 
@@ -85,7 +85,6 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
     }
 
     @Test
@@ -97,6 +96,11 @@ public class AddressBookParserTest {
     public void parseCommand_list_throwsParseException() {
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE), ()
                 -> parser.parseCommand(ListCommand.COMMAND_WORD + " 3"));
+    }
+
+    @Test
+    public void parseCommand_slots() throws Exception {
+        assertTrue(parser.parseCommand(SlotsCommand.COMMAND_WORD + " d/5 t/T01") instanceof SlotsCommand);
     }
 
     @Test

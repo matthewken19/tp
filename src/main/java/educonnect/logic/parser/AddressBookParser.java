@@ -18,6 +18,7 @@ import educonnect.logic.commands.ExitCommand;
 import educonnect.logic.commands.FindCommand;
 import educonnect.logic.commands.HelpCommand;
 import educonnect.logic.commands.ListCommand;
+import educonnect.logic.commands.SlotsCommand;
 import educonnect.logic.parser.exceptions.ParseException;
 
 /**
@@ -79,7 +80,10 @@ public class AddressBookParser {
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
+            return new HelpCommandParser().parse(arguments);
+
+        case SlotsCommand.COMMAND_WORD:
+            return new SlotsCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

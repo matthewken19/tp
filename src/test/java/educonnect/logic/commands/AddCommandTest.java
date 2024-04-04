@@ -6,9 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -25,6 +27,8 @@ import educonnect.model.student.Email;
 import educonnect.model.student.Student;
 import educonnect.model.student.StudentId;
 import educonnect.model.student.TelegramHandle;
+import educonnect.model.student.timetable.AvailableSlots;
+import educonnect.model.student.timetable.Period;
 import educonnect.testutil.Assert;
 import educonnect.testutil.StudentBuilder;
 import educonnect.testutil.TypicalStudents;
@@ -140,6 +144,15 @@ public class AddCommandTest {
         }
 
         @Override
+        public void setShowTimetable(boolean showTimetable) {
+            throw new AssertionError("This method should not be called.");
+        }
+        @Override
+        public boolean getShowTimetable() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setGuiSettings(GuiSettings guiSettings) {
             throw new AssertionError("This method should not be called.");
         }
@@ -235,7 +248,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateWithAllStudents() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredStudentList(Collection<Predicate<Student>> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public AvailableSlots findAllCommonSlots(int duration, Period timeframe, HashSet<DayOfWeek> days) {
             throw new AssertionError("This method should not be called.");
         }
     }

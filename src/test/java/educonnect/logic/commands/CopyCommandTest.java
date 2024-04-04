@@ -59,7 +59,7 @@ public class CopyCommandTest {
 
     @Test
     public void execute_zeroKeywords_allEmailsCopied() {
-        expectedModel.updateFilteredStudentList(Model.PREDICATE_SHOW_ALL_STUDENTS);
+        expectedModel.updateWithAllStudents();
         ObservableList<Student> students = expectedModel.getFilteredStudentList();
 
         String expectedMessage = String.format(Messages.MESSAGE_STUDENT_EMAIL_COPIED_OVERVIEW,
@@ -77,8 +77,8 @@ public class CopyCommandTest {
         String expectedMessage = String.format(Messages.MESSAGE_STUDENT_EMAIL_COPIED_OVERVIEW, students.size());
         CopyCommand command = new CopyCommand(List.of(predicate), false);
         CommandTestUtil.assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(TypicalStudents.BENSON,
-                TypicalStudents.FIONA), model.getFilteredStudentList());
+        assertEquals(Arrays.asList(TypicalStudents.BENSON, TypicalStudents.FIONA,
+                TypicalStudents.GEORGE), model.getFilteredStudentList());
     }
 
     @Test

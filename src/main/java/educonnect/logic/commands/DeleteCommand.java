@@ -25,13 +25,19 @@ public class DeleteCommand extends Command {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the student identified only by the unique identifier used in the displayed student list.\n"
-            + "Parameters: " + PREFIX_EMAIL + "EMAIL or "
-            + PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE or "
-            + PREFIX_STUDENT_ID + "STUDENT_ID\n"
-            + "Example 1: " + COMMAND_WORD + " " + PREFIX_EMAIL + "example@email.com\n"
+            + ": Deletes the student identified only by the unique identifier used in the displayed student list.\n\n"
+
+            + "Parameters: "
+            + "<choose only 1>"
+            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE] "
+            + "[" + PREFIX_STUDENT_ID + "STUDENT_ID]\n\n"
+
+            + "Example 1: " + COMMAND_WORD + " " + PREFIX_EMAIL + "royb@gmail.com\n"
+            + "Deletes a student with an email of royb@gmail.com in the address book\n\n"
+
             + "Example 2: " + COMMAND_WORD + " " + PREFIX_STUDENT_ID + "A1234567X\n"
-            + "Example 3: " + COMMAND_WORD + " " + PREFIX_TELEGRAM_HANDLE + "@john.doe";
+            + "Deletes a student with a student id of A1654327X in the address book.";
 
     public static final String MULTIPLE_UNIQUE_IDENTIFIER_MESSAGE =
             "Multiple unique identifier prefixes used, only use one unique identifier prefix.\n" + MESSAGE_USAGE;

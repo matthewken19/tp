@@ -41,19 +41,28 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the student identified "
             + "by the index number used in the displayed student list. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Existing values will be overwritten by the input values.\n\n"
+
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "<choose 1 or more> "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_STUDENT_ID + "STUDENT_ID] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_TELEGRAM_HANDLE + "TELEGRAM_HANDLE] "
             + "[" + PREFIX_LINK + "WEBLINK] "
             + "[" + PREFIX_TIMETABLE + "TIMETABLE] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "[" + PREFIX_TAG + "TAG]...\n\n"
+
+            + "Example 1: " + COMMAND_WORD + " 1 "
             + PREFIX_TELEGRAM_HANDLE + "@john.doe "
             + PREFIX_STUDENT_ID + "A1234567X "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_EMAIL + "johndoe@example.com  \n\nEdits the student id and email address "
+            + "of the 1st student to be A0001234A and johndoe@example.com respectively.\n\n"
+
+            + "Example 2: " + COMMAND_WORD + " 2 "
+            + PREFIX_NAME + "Betsy Crower " + PREFIX_TAG + "\n\nEdits the name of the 2nd student "
+            + "to be Betsy Crower and clears all existing tags.\n\n";
+
 
     public static final String MESSAGE_EDIT_STUDENT_SUCCESS =
             "Edited Student: %1$s";
@@ -104,7 +113,7 @@ public class EditCommand extends Command {
         }
 
         model.setStudent(studentToEdit, editedStudent);
-        model.updateFilteredStudentList(Model.PREDICATE_SHOW_ALL_STUDENTS);
+        model.updateWithAllStudents();
         return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, Messages.format(editedStudent)));
     }
 

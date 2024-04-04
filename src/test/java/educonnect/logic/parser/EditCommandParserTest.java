@@ -4,10 +4,12 @@ import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static educonnect.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static educonnect.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static educonnect.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
+import static educonnect.logic.commands.CommandTestUtil.INVALID_LINK_DESC;
 import static educonnect.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static educonnect.logic.commands.CommandTestUtil.INVALID_STUDENT_ID_DESC;
 import static educonnect.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static educonnect.logic.commands.CommandTestUtil.INVALID_TELEGRAM_HANDLE_DESC;
+import static educonnect.logic.commands.CommandTestUtil.LINK_DESC_BOB;
 import static educonnect.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static educonnect.logic.commands.CommandTestUtil.STUDENT_ID_DESC_AMY;
 import static educonnect.logic.commands.CommandTestUtil.STUDENT_ID_DESC_BOB;
@@ -16,6 +18,7 @@ import static educonnect.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static educonnect.logic.commands.CommandTestUtil.TELEGRAM_HANDLE_DESC_AMY;
 import static educonnect.logic.commands.CommandTestUtil.TELEGRAM_HANDLE_DESC_BOB;
 import static educonnect.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static educonnect.logic.commands.CommandTestUtil.VALID_LINK_BOB;
 import static educonnect.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static educonnect.logic.commands.CommandTestUtil.VALID_STUDENT_ID_AMY;
 import static educonnect.logic.commands.CommandTestUtil.VALID_STUDENT_ID_BOB;
@@ -39,6 +42,7 @@ import educonnect.logic.Messages;
 import educonnect.logic.commands.EditCommand;
 import educonnect.logic.commands.EditCommand.EditStudentDescriptor;
 import educonnect.model.student.Email;
+import educonnect.model.student.Link;
 import educonnect.model.student.Name;
 import educonnect.model.student.StudentId;
 import educonnect.model.student.Tag;
@@ -83,13 +87,19 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS); // invalid name
-        assertParseFailure(parser, "1" + INVALID_STUDENT_ID_DESC, StudentId.MESSAGE_CONSTRAINTS); // invalid student id
-        assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
+        // invalid name
+        assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS);
+        // invalid student id
+        assertParseFailure(parser, "1" + INVALID_STUDENT_ID_DESC, StudentId.MESSAGE_CONSTRAINTS);
+        // invalid email
+        assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS);
+        // invalid telegram handle
         assertParseFailure(parser, "1" + INVALID_TELEGRAM_HANDLE_DESC,
-            TelegramHandle.MESSAGE_CONSTRAINTS); // invalid telegram handle
-        assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
-
+            TelegramHandle.MESSAGE_CONSTRAINTS);
+        // invalid tag
+        assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS);
+        // invalid link
+        assertParseFailure(parser, "1" + INVALID_LINK_DESC, Link.MESSAGE_CONSTRAINTS);
         // invalid student id followed by valid email
         assertParseFailure(parser, "1" + INVALID_STUDENT_ID_DESC + EMAIL_DESC_AMY, StudentId.MESSAGE_CONSTRAINTS);
 
@@ -163,6 +173,12 @@ public class EditCommandParserTest {
         // tags
         userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;
         descriptor = new EditStudentDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
+        expectedCommand = new EditCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        //link
+        userInput = targetIndex.getOneBased() + LINK_DESC_BOB;
+        descriptor = new EditStudentDescriptorBuilder().withLink(VALID_LINK_BOB).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }

@@ -9,8 +9,13 @@ import static java.util.Objects.requireNonNull;
 public class Link {
 
     public static final String MESSAGE_CONSTRAINTS = "Please provide a valid website.";
+    //    @@author tanjiajiajun-reused
+    //    Reused from https://stackoverflow.com/questions/42618872/regex-for-website-or-url-validation,
+    //    under Mustofa Rizwan's response
     public static final String VALIDATION_REGEX =
-            "\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+            "^((ftp|http|https):\\/\\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\\.[a-zA-Z]+)+((\\/)[\\w#]+)"
+            + "*(\\/\\w+\\?[a-zA-Z0-9_]+=\\w+(&[a-zA-Z0-9_]+=\\w+)*)?\\/?$";
+    //@@author
     public final String url;
 
     /**

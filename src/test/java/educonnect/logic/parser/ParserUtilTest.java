@@ -6,6 +6,7 @@ import static educonnect.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import educonnect.logic.parser.exceptions.ParseException;
 import educonnect.model.student.Email;
+import educonnect.model.student.Link;
 import educonnect.model.student.Name;
 import educonnect.model.student.StudentId;
 import educonnect.model.student.Tag;
@@ -34,6 +36,7 @@ public class ParserUtilTest {
     private static final String INVALID_TELEGRAM_HANDLE = "johndoe";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_LINK = "www.";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_STUDENT_ID = "A1234567U";
@@ -41,6 +44,7 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_LINK = "https://nus-cs2103-ay2324s2.github.io/website/";
 
     @Test
     public void parseIndex_invalidInput_throwsParseException() {
@@ -133,7 +137,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseEmail_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((String) null));
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail(null));
     }
 
     @Test
@@ -195,7 +199,7 @@ public class ParserUtilTest {
     @Test
     public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
         Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+        Set<Tag> expectedTagSet = new HashSet<>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
     }
@@ -213,22 +217,22 @@ public class ParserUtilTest {
 
     @Test
     public void parsePeriod_validValueWithoutWhitespace_returnsPeriod() throws Exception {
-        Period actualPeriod1 = ParserUtil.parsePeriod(TypicalTimetableAndValues.VALID_PERIOD1);
-        Period actualPeriod2 = ParserUtil.parsePeriod(TypicalTimetableAndValues.VALID_PERIOD3);
+        Period actualPeriod1 = ParserUtil.parsePeriod(TypicalTimetableAndValues.VALID_PERIOD1_STRING);
+        Period actualPeriod2 = ParserUtil.parsePeriod(TypicalTimetableAndValues.VALID_PERIOD3_STRING);
 
-        assertEquals(TypicalTimetableAndValues.EXPECTED_PERIOD_1, actualPeriod1);
-        assertEquals(TypicalTimetableAndValues.EXPECTED_PERIOD_3, actualPeriod2);
+        assertEquals(TypicalTimetableAndValues.VALID_PERIOD_1, actualPeriod1);
+        assertEquals(TypicalTimetableAndValues.VALID_PERIOD_3, actualPeriod2);
     }
 
     @Test
     public void parsePeriod_validValueWithWhitespace_returnsPeriodWithTrimmedName() throws Exception {
         Period actualPeriod1 = ParserUtil.parsePeriod(
-                WHITESPACE + TypicalTimetableAndValues.VALID_PERIOD1 + WHITESPACE);
+                WHITESPACE + TypicalTimetableAndValues.VALID_PERIOD1_STRING + WHITESPACE);
         Period actualPeriod2 = ParserUtil.parsePeriod(
-                WHITESPACE + TypicalTimetableAndValues.VALID_PERIOD2 + WHITESPACE);
+                WHITESPACE + TypicalTimetableAndValues.VALID_PERIOD2_STRING + WHITESPACE);
 
-        assertEquals(TypicalTimetableAndValues.EXPECTED_PERIOD_1, actualPeriod1);
-        assertEquals(TypicalTimetableAndValues.EXPECTED_PERIOD_2, actualPeriod2);
+        assertEquals(TypicalTimetableAndValues.VALID_PERIOD_1, actualPeriod1);
+        assertEquals(TypicalTimetableAndValues.VALID_PERIOD_2, actualPeriod2);
     }
 
     @Test
@@ -244,22 +248,22 @@ public class ParserUtilTest {
         assertEquals(Optional.empty(), ParserUtil.parsePeriods(WHITESPACE));
     }
     @Test
-    public void parsePeriods_stringWithInvalidValues_throwsParseException() throws Exception {
+    public void parsePeriods_stringWithInvalidValues_throwsParseException() {
         assertThrows(ParseException.class, () ->
-                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_STRING_WITH_INVALID_INPUT));
+                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_PERIODS_STRING_WITH_INVALID_INPUT));
     }
 
     @Test
     public void parsePeriods_stringWithValidValuesWithoutWhitespace_returnsOptionalArrayList() throws Exception {
         assertEquals(TypicalTimetableAndValues.VALID_PERIOD_OPTIONAL_ARRAYLIST,
-                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_STRING_VALID_INPUT));
+                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_PERIODS_STRING_VALID_INPUT));
     }
 
     @Test
     public void parsePeriods_stringWithValidValuesWithWhitespace_returnsOptionalArrayListWithTrimmedPeriods()
             throws Exception {
         assertEquals(TypicalTimetableAndValues.VALID_PERIOD_OPTIONAL_ARRAYLIST,
-                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_STRING_WITH_WHITESPACE_VALID_INPUT));
+                ParserUtil.parsePeriods(TypicalTimetableAndValues.FULL_PERIODS_STRING_WITH_WHITESPACE_VALID_INPUT));
     }
 
     @Test
@@ -268,7 +272,7 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseDay_invalidInputs() throws OverlapPeriodException {
+    public void parseDay_invalidInputs() {
         Timetable timetable = new Timetable();
 
         // invalid inputs, day cannot be 0 -> returns false
@@ -286,20 +290,20 @@ public class ParserUtilTest {
     public void parseDay_validInputs_returnsTimetableWithUpdatedDay() throws OverlapPeriodException {
         Timetable timetable = new Timetable();
 
-        String expectedTimetable = "Timetable\n"
+        String expectedTimetable = "Timetable:\n"
                                    + "For MONDAY, schedule is:\n"
                                    + "Period: (13:00 to 15:00)\n"
                                    + "Period: (16:00 to 18:00)\n\n"
-                                   + "For TUESDAY, schedule is:\n\n"
-                                   + "For WEDNESDAY, schedule is:\n\n"
-                                   + "For THURSDAY, schedule is:\n\n"
+                                   + "For TUESDAY, no periods.\n\n"
+                                   + "For WEDNESDAY, no periods.\n\n"
+                                   + "For THURSDAY, no periods.\n\n"
                                    + "For FRIDAY, schedule is:\n"
                                    + "Period: (13:00 to 15:00)\n"
                                    + "Period: (16:00 to 18:00)\n\n";
 
         if (Timetable.is7Days()) {
-            expectedTimetable += "For SATURDAY, schedule is:\n\n"
-                                 + "For SUNDAY, schedule is:\n\n";
+            expectedTimetable += "For SATURDAY, no periods.\n\n"
+                                 + "For SUNDAY, no periods.\n\n";
         }
 
         // valid inputs, successfully added -> returns true
@@ -319,5 +323,56 @@ public class ParserUtilTest {
                 ParserUtil.parseTimetable(TypicalTimetableAndValues.VALID_TIMETABLE_INPUT_1).toString());
         assertEquals(TypicalTimetableAndValues.VALID_TIMETABLE_2.toString(),
                 ParserUtil.parseTimetable(TypicalTimetableAndValues.VALID_TIMETABLE_INPUT_2).toString());
+    }
+    @Test
+    public void parseLink_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseLink((String) null));
+    }
+
+    @Test
+    public void parseLink_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseLink(INVALID_LINK));
+    }
+
+    @Test
+    public void parseLink_validValueWithoutWhitespace_returnsLink() throws Exception {
+        Link expectedLink = new Link(VALID_LINK);
+        assertEquals(expectedLink, ParserUtil.parseLink(VALID_LINK));
+    }
+
+    @Test
+    public void parseLink_validValueWithWhitespace_returnsTrimmedLink() throws Exception {
+        String linkWithWhitespace = WHITESPACE + VALID_LINK + WHITESPACE;
+        Link expectedLink = new Link(VALID_LINK);
+        assertEquals(expectedLink, ParserUtil.parseLink(linkWithWhitespace));
+    }
+
+    @Test
+    public void parseDuration_invalidInputs_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseDuration("abc"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseDuration("-1"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseDuration("24"));
+    }
+
+    @Test
+    public void parseDuration_validInputs() throws ParseException {
+        assertEquals(1, ParserUtil.parseDuration("1"));
+        assertEquals(23, ParserUtil.parseDuration("23"));
+    }
+
+    @Test
+    public void parseDaysSpecified_invalidInputs_throwsParseException() {
+        // no days specified
+        assertThrows(ParseException.class, () -> ParserUtil.parseDaysSpecified(""));
+
+        // wrong days format specified
+        assertThrows(ParseException.class, () -> ParserUtil.parseDaysSpecified("not, a, valid, day"));
+    }
+
+    @Test
+    public void parseDaysSpecified_validInputs() throws ParseException {
+        HashSet<DayOfWeek> expectedDays = new HashSet<>(
+                Set.of(DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY));
+        assertEquals(expectedDays, ParserUtil.parseDaysSpecified("mon, wed, thu"));
     }
 }

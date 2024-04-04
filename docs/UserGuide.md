@@ -20,6 +20,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
     - [Copying student emails: `copy`](#copying-student-emails-copy)
     - [Deleting a student : `delete`](#deleting-a-student--delete)
     - [Clearing all students : `clear`](#clearing-all-students--clear)
+    - [Finding a common slot time among students: `slots`](#finding-common-timeslot--slots)
     - [Exiting EduConnect : `exit`](#exiting-educonnect--exit)
     - [Saving the data](#saving-the-data)
     - [Editing the data file](#editing-the-data-file)
@@ -235,6 +236,20 @@ Clears all students.
 
 Format: `clear`
 
+### Finding a common time slot among students: `slots`
+
+Format : `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]` 
+
+* Finds a common slot of time amongst a list of students.
+* The list of students can be narrowed down by tag(s).
+* The period of time to look for the common slot can be specified, otherwise, the default period is between 8 AM to 10 PM.
+* The search on which days can be specified, otherwise, the default will be from Monday to Friday.
+
+Examples:
+* `slots d/1` finds a common 1-hour time slot among listed students.
+* `slots d/2 p/10-6 o/mon, tue, fri` finds a common 2-hour time slot on monday, tuesday and wednesday among listed students.
+* `slots d/1 t/tutorial-1 p/10-16` finds a common 1-hour time slot for students tagged with `tutorial-1` from 10am to 6pm.
+    ![result of slot command](images/slotsCommand.png)
 ### Exiting EduConnect : `exit`
 
 Exits EduConnect.
@@ -287,5 +302,6 @@ Action     | Format, Examples
 **List**   | `list`<br> `list timetable`
 **Help**   | `help [COMMAND]`
 **Clear**  | `clear`
+**Slots**  | `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]`
 **Exit**   | `exit`
 

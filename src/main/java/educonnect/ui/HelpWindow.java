@@ -19,16 +19,16 @@ public class HelpWindow extends UiPart<Stage> {
     public static final String HELP_MESSAGE = "Refer to the user guide: " + USER_GUIDE_URL;
     public static final String HELP_MESSAGE_EXTENDED = // Update as necessary (when more features/commands are added)
             "\n\nFor a quick reference: \n"
+            + "'help' - Brings up the help page\n"
             + "'add' - Adds a student to EduConnect\n"
-            + "'clear' - Clears all entries from EduConnect\n"
-            + "'delete' - Deletes the specified person from EduConnect\n"
+            + "'list' - Shows a list of all students in EduConnect\n"
             + "'edit' - Edits an existing student in EduConnect\n"
             + "'find' - Finds students whose names contain any of the given keywords\n"
-            + "'help' - Brings up the help page\n"
-            + "'list' - Shows a list of all students in EduConnect\n"
-            + "'exit' - Exits the program\n"
-            + "'copy' - Copies all student emails in the list\n"
-            + "'slots' - Finds a common slot of time amongst a list of students\n";
+            + "'copy' - Copies student emails in the list\n"
+            + "'delete' - Deletes the specified person from EduConnect\n"
+            + "'slots' - Finds a common slot of time amongst a list of students\n"
+            + "'clear' - Clears all entries from EduConnect\n"
+            + "'exit' - Exits the program\n";
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String FXML = "HelpWindow.fxml";
 

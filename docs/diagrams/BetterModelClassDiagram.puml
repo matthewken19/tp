@@ -20,6 +20,6 @@ Student *--> "1" TelegramHandle
 Student *--> "1" Email
 Student *--> "0..1" Link
 Student *--> "1" Timetable
-Timetable *--> "*" Day
-Day *--> "*" Period
+Timetable *--> "1..7" Day
+Day *--> "0..24" Period
 @enduml

@@ -13,7 +13,9 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+Project is based off of the AddressBook3 [(AB3 Source Code)](https://se-education.org/addressbook-level3/)
+
+URL Regex Validation - Adapted solution from [Mustofa Rizwan](https://stackoverflow.com/questions/42618872/regex-for-website-or-url-validation)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -154,9 +156,10 @@ Classes used by multiple components are in the `educonnect.commons` package.
 This section describes some noteworthy details on how certain features are implemented.
 
 ### Timetable Support
+
 * Each `Student` object now has a `Timetable` object as an attribute.
 * Each `Timetable` contains <u>1 to 7</u> `Day` objects, by default, 5 days of the week (Monday - Friday) is used.
-* Each `Day` object can contain <u>0 to 24 1-hour</u> `Period` objects, or less if each `Period` has intervals longer
+* Each `Day` object can contain <u>0 to 24</u> 1-hour `Period` objects, or less if each `Period` has intervals longer
   than 1 hour.
 * Each `Period` is defined by the start time and end time, indicated by integers on a 24-hour clock, 
   i.e. 0-23, which refers to 12 AM till 11 PM.
@@ -169,6 +172,7 @@ This section describes some noteworthy details on how certain features are imple
 <puml src="diagrams/StudentClassDiagram.puml" width="450"/>
 
 #### Listing students with timetables option (save to user preference)
+
 * The `Timetable` of the `Student` shown during the `list` command, followed by a `timetable` keyword.
 
 * The `timetable` keyword is optional, and if not specified, students will be shown without timetables.
@@ -180,6 +184,7 @@ This section describes some noteworthy details on how certain features are imple
 <puml src="diagrams/ListSequenceDiagram.puml"/>
 
 #### Adding/Editing a Student's Timetable
+
 * The `Timetable` of the `Student` can be specified during the `add` command, indicated with a `c/` prefix.
 * Similarly, the `Timetable` of a `Student` can be modified during the `edit` command, with the same prefix.
 * The `c/` prefix is optional, and if not specified, 
@@ -240,12 +245,14 @@ The inclusion of the `Link` attribute enhances the versatility of EduConnect, en
 * In scenarios involving group projects, the `Link` attribute need not be unique as group members will share the same project link. Therefore, enforcing uniqueness for the `Link` attribute could lead to unnecessary constraints and complexity.
 
 #### UI implementation
+
 * A student's weblink will be displayed using the JavaFX `Hyperlink` class at `StudentCard.java`. 
 * Due to potential UI issues arising from excessively long URLs, a clickable embedded text labeled "Project Link" will be displayed instead of the actual URL.
 * If the student has a valid Link, the Hyperlink will be visible and clickable, allowing users to access the weblink directly.
 * If the student does not have a Link attribute or if the Link is not specified, the Hyperlink will be toggled to be invisible, ensuring a clean and uncluttered user interface.
 
 #### Adding/Editing a student's Link
+
 * Just like any other attribute of `Student`, `Link` can be specified during the `add` command, indicated with a `l/` prefix.
 * When creating a new `Student` using the add command, the `l/` prefix is optional.
 * `Link` can also be modified using the `edit` command with the `l/` prefix.
@@ -349,7 +356,6 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -380,14 +386,18 @@ classes. Keep track of student progress, access links to their projects, or simp
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-|----------|--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | new user                                   | see usage instructions       | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new student             |                                                                        |
-| `* * *`  | user                                       | delete a student              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a student by name        | locate details of students without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many students in the address book | sort students by name         | locate a student easily                                                 |
+| Priority | As a …​                                     | I want to …​                                          | So that I can…​                                                                 |
+|----------|---------------------------------------------|-------------------------------------------------------|---------------------------------------------------------------------------------|
+| `* * *`  | new user                                    | see usage instructions                                | refer to instructions when I forget how to use the App                          |
+| `* * *`  | user                                        | add a new student                                     |                                                                                 |
+| `* * *`  | user                                        | delete a student                                      | remove entries that I no longer need                                            |
+| `* * *`  | user                                        | find a student by name / email / student ID           | locate details of students without having to go through the entire list         |
+| `* *`    | user                                        | filter students by their class / skill group          | view details belonging to sub-group of student instead of the full list         |
+| `* *`    | user                                        | edit an existing student                              | not have to delete and add a <br/>new student if I want to change one attribute |
+| `* *`    | user                                        | find a common available time slot amongst my students | set up a consultation / meeting / additional session(s)                         |
+| `*`      | user with many students in the address book | filter students by their tag (class or skill group)   | locate a student easily                                                         |
+| `*`      | user who uses this long-term                | purge all existing data                               | reset this application for each new semester                                    |
+| `*`      | user                                        | have quick access for help on specific commands       | get reminders / assistance on commands directly from the application            |
 
 *{More to be added}*
 
@@ -395,22 +405,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **System: EduConnect**
 
-**Use Case: UC1 - Import students from local file**
-
-Actor: TA
-
-**MSS:**
-
-1. TA enters import command with the specified file location
-2. EduConnect imports all student contact info from the file
-
-**Extensions:**
-* 1a. EduConnect cannot find the file with specified location
-* 1a1. EduConnect outputs error message to user
-
-**System: EduConnect**
-
-**Use Case: UC2 - Adding a class of students (tagged by class)**
+**Use Case: UC1 - Adding a class of students (tagged by class)**
 
 **Actor: TA**
 
@@ -429,30 +424,9 @@ Use case ends.
 * 1a3. Steps 1a1-1a2 are repeated until the student is added successfully.
 * 1a4. Use case resumes from step 3.
 
-
 **System: EduConnect**
 
-**Use Case: UC3 - Giving reminders for an assignment due**
-
-**Actor: TA**
-
-**MSS:**
-
-1. TA enters a command to filter addresses by tags
-2. EduConnect returns addresses with the filtered tags
-3. TA copies the returned addresses, paste the addresses in the email and sends the reminder for assignment submission
-
-**Extensions:**
-* 2a. EduConnect detects no known tags
-* 2a1. EduConnect outputs no known tags error message to user
-* 2a2. User enters new tags.
-* Steps 2a1-2a2 are repeated until the tags entered are correct or the user decides to stop.
-
-Use Case ends
-
-**System: EduConnect**
-
-**Use Case: UC4 - List all student contacts in a tutorial class**
+**Use Case: UC2 - List all student contacts in a tutorial class**
 
 **Actor: TA**
 
@@ -471,24 +445,24 @@ Use Case ends
 
 **System: EduConnect**
 
-**Use Case: UC5 - Delete students from existing contacts in a tutorial class**
+**Use Case: UC3 - Delete students from existing contacts in a tutorial class**
 
 **Actor: TA**
 
 **MSS:**
 
 1. TA enters the remove command to delete an existing student info in a tutorial class
-2. EduConnect returns the deleted student name and id
+2. EduConnect deletes the specified student
 
 **Extensions:**
-* 1a. The student is not in the tutorial class
+* 1a. The student does not exist
 * 1a1. EduConnect outputs error message to user
 * 1b. EduConnect detects an error in the command format
 * 1b1. EduConnect outputs error message to user
 
 **System: EduConnect**
 
-**Use Case: UC6 - Find students from existing contacts by their name**
+**Use Case: UC4 - Find students from existing contacts by their name**
 
 **Actor: TA**
 
@@ -507,7 +481,7 @@ Use Case ends
 
 **System: EduConnect**
 
-**Use Case: UC7 - TA finds a common time slot amongst one class of students**
+**Use Case: UC5 - TA finds a common time slot amongst one class of students**
 
 **Actor: TA**
 
@@ -525,7 +499,7 @@ Use case ends.
 
 **System: EduConnect**
 
-**Use Case: UC8 - Exploring the application for the first time**
+**Use Case: UC6 - Exploring the application for the first time**
 
 **Actor: TA (First-time user of the product)**
 

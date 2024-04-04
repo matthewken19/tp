@@ -69,10 +69,10 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g. `n/NAME [t/TAG]` can be used as `n/John Doe t/tutorial-1` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/tutorial-1`, `t/tutorial-1 t/strong` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME s/STUDENT_ID`, `s/STUDENT_ID n/NAME` is also acceptable.
@@ -84,6 +84,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 </box>
 
 <box type="info" seamless>
+
 **Notes about optional prefixes:**<br>
 
 * Optional prefixes are contained in square brackets.<br>
@@ -96,6 +97,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 </box>
 
 <box type="info" seamless>
+
 **Notes about unique identifiers:**<br>
 
 * Unique identifiers are `e/EMAIL`, `s/STUDENT_ID` and `h/TELEGRAM_HANDLE`
@@ -125,6 +127,7 @@ Format: `help [COMMAND]`
   Examples:
 * `help add`
 ![result for 'help_add'](images/helpAdd.png)
+
 ### Adding a student: `add`
 
 Adds a student.
@@ -133,7 +136,7 @@ Format: `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETA
 
 <box type="tip" seamless>
 
-**Tip:** A student can have any number of tags (including 0)
+**Tip:** A student can have any number of tags (including 0).
 
 **Tip:** A student can have its project page linked to its contact.
 
@@ -189,14 +192,15 @@ Finds students whose criteria match any of the given keywords.
 
 Format: `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`
 
-* The search is case-insensitive. e.g. `find n/hans` will match Hans
-* The order of the keywords do not matter. e.g. `find n/hans t/tutorial-1` will return the same result as `find t/tutorial-1 n/hans`
-* Name and other criteria are searched using fuzzy matching
+* The search is case-insensitive. e.g. `find n/hans` will match Hans.
+* The order of the keywords do not matter. e.g. `find n/hans t/tutorial-1` will return the same result as `find 
+  t/tutorial-1 n/hans`.
+* Name and other criteria are searched using fuzzy matching.
   * Students with any part of the names matching the keyword will be returned.
 * Tag is searched as complete tag names. e.g. `find t/tutorial-1` will only return those with a tag 'tutorial-1'
-(tag 'tutorial-10', 'tutorial-11', etc. will NOT appear in the results)
-  * This is different from the fuzzy matching used in name and other criteria
-* When multiple criteria are used, searched students must match **ALL** criteria specified
+(tag 'tutorial-10', 'tutorial-11', etc. will NOT appear in the results).
+  * This is different from the fuzzy matching used in name and other criteria.
+* When multiple criteria are used, searched students must match **ALL** criteria specified.
 
 Examples:
 * `find n/John` returns john and John Doe

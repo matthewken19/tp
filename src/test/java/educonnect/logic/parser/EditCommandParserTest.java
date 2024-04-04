@@ -227,7 +227,7 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         //link
-        userInput = targetIndex.getOneBased() + LINK_DESC_BOB;
+        userInput = EDIT_ID_PREFIX_INDEX.toString() + targetIndex.getOneBased() + LINK_DESC_BOB;
         descriptor = new EditStudentDescriptorBuilder().withLink(VALID_LINK_BOB).build();
         expectedCommand = new EditCommand(targetIndex, List.of(), descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);

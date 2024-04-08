@@ -105,12 +105,6 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * There can only be one unique identifier at each time. Which means no two students can share the same unique identifiers above.
 </box>
 
-**Notes about displaying timetables of students:**<br>
-
-* By default, timetables of students are not shown.
-
-* To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results.
-
 ### Viewing help: `help`
 
 Shows a message explaining how to access the help page. This feature ensures that users can easily understand the functionality and syntax of commands without referring to external documentation.
@@ -155,7 +149,10 @@ Shows a list of all students with the option to show timetables.
 
 Format: `list [timetable]`
 
-**Tip:** The option of displaying timetables will be saved to user preference, and will remain the same unless another `list` command with different option is received
+**Notes about displaying timetables of students:**<br>
+
+* By default, timetables of students are not shown.
+* To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results.
 
 Examples:
 * `list`

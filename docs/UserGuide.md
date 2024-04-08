@@ -218,6 +218,7 @@ Copy student emails to the clipboard.
 Format: `copy [t/TAG]…`
 
 * When no tags are supplied, copies all student emails.
+* When multiple tags are used, copies emails of all students that has **ALL** the tags specified.
 * Tag is searched as complete tag names. e.g. `copy t/tutorial-1` will only return those with a tag 'tutorial-1'
 (tag 'tutorial-10', 'tutorial-11', etc. will NOT be copied)
 * Copied emails are in the form of `example1@email.com, example2@email.com, example3@email.com` and adheres to the format specified in [section 3.4 of RFC5322](https://tools.ietf.org/html/rfc5322#section-3.4).

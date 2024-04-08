@@ -143,7 +143,7 @@ public class ParserUtil {
 
     /**
      * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Leading and trail    ing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code email} is invalid.
      */
@@ -313,6 +313,7 @@ public class ParserUtil {
     public static Link parseLink(String s) throws ParseException {
         requireNonNull(s);
         String trimmedLink = s.trim();
+
         if (!Link.isValidLink(trimmedLink)) {
             System.out.println("Invalid link");
             throw new ParseException(Link.MESSAGE_CONSTRAINTS);

@@ -3,7 +3,7 @@
     "name": "Bob Dexter",
     "studentId": "A1234567B",
     "email": "dexter@example.com",
-    "telegramHandle": "@bobDexter",
+    "telegramHandle": "@bobdexter",
     "link": "https://github.com/tanjiajiajun/tp",
     "tags": [ "friends" ],
     "timetable" : {

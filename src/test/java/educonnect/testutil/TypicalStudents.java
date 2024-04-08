@@ -89,7 +89,7 @@ public class TypicalStudents {
             .withStudentId("A8482424W")
             .withLink("https://en.wikipedia.org/wiki/LeBron_James")
             .withEmail("stefan@example.com")
-            .withTelegramHandle("@hoon").build();
+            .withTelegramHandle("@hoon123").build();
 
     public static final Student IDA = new StudentBuilder()
             .withName("Ida Mueller")

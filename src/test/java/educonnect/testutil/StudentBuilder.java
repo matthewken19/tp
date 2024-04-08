@@ -22,7 +22,7 @@ public class StudentBuilder {
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_STUDENT_ID = "A1234567X";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
-    public static final String DEFAULT_TELEGRAM_HANDLE = "@Beeam";
+    public static final String DEFAULT_TELEGRAM_HANDLE = "@Beeasm";
     public static final Timetable DEFAULT_TIMETABLE = TypicalTimetableAndValues.DEFAULT_EMPTY_TIMETABLE;
     public static final String DEFAULT_LINK = "https://www.google.com/";
     public static final String ALTERNATE_NAME = "Bob Builder";

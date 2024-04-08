@@ -20,9 +20,10 @@ public class TelegramHandle {
      * @param handle a valid {@code String} representing the telegram handle.
      */
     public TelegramHandle(String handle) {
+        String lowerHandle = handle.toLowerCase();
         requireNonNull(handle);
-        checkArgument(isValidTelegramHandle(handle), MESSAGE_CONSTRAINTS);
-        value = handle;
+        checkArgument(isValidTelegramHandle(lowerHandle), MESSAGE_CONSTRAINTS);
+        value = lowerHandle;
     }
 
     /**

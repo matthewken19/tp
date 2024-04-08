@@ -4,7 +4,6 @@ import static educonnect.commons.util.CollectionUtil.requireAllNonNull;
 import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static java.util.Objects.requireNonNull;
 
-import educonnect.model.student.timetable.exceptions.InvalidPeriodException;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +23,7 @@ import educonnect.model.student.Tag;
 import educonnect.model.student.TelegramHandle;
 import educonnect.model.student.timetable.Period;
 import educonnect.model.student.timetable.Timetable;
+import educonnect.model.student.timetable.exceptions.InvalidPeriodException;
 import educonnect.model.student.timetable.exceptions.NumberOfDaysException;
 import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 

@@ -100,7 +100,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 **Notes about unique identifiers:**<br>
 
-* Unique identifiers are `e/EMAIL`, `s/STUDENT_ID` and `h/TELEGRAM_HANDLE`
+* Unique identifiers are `EMAIL`, `STUDENT_ID` and `TELEGRAM_HANDLE`
 
 * There can only be one unique identifier at each time. Which means no two students can share the same unique identifiers above.
 </box>
@@ -180,7 +180,7 @@ Format: `edit <choose only 1> [i:INDEX] [s:STUDENT_ID] [e:EMAIL] [h:TELEGRAM_HAN
 
 Examples:
 *  `edit i:1 s/A0001234A e/johndoe@example.com` Edits the student id and email address of the 1st student to be `A0001234A` and `johndoe@example.com` respectively.
-  ![result for 'edit 1 s/A1654327X e/johndoe@example.com'](images/edit.png)
+  ![result for 'edit i:1 s/A1654327X e/johndoe@example.com'](images/edit.png)
 *  `edit s:A1234567X n/Betsy Crower t/` Edits the name of the student with a student ID of `A1234567X` to be `Betsy Crower` and clears all existing tags.
 *  `edit e:christian@nus.com h/@christan c/` Edits the telegram handle and clears the timetable of the student with an email of `christian@nus.com`.
 *  `edit h:@christan c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17` Replaces the timetable of the student with a telegram handle of `@christan` with this new one according to
@@ -188,7 +188,7 @@ Examples:
 
 ### Locating students by name: `find`
 
-Finds students whose criteria match any of the given keywords.
+Finds students whose criteria match the given keywords.
 
 Format: `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`
 

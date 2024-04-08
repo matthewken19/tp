@@ -313,7 +313,10 @@ public class ParserUtil {
     public static Link parseLink(String s) throws ParseException {
         requireNonNull(s);
         String trimmedLink = s.trim();
-
+        // If it does not start with a https, add it to the start of the string
+        if (!trimmedLink.startsWith("https://")){
+            trimmedLink = "https://" + trimmedLink;
+        }
         if (!Link.isValidLink(trimmedLink)) {
             System.out.println("Invalid link");
             throw new ParseException(Link.MESSAGE_CONSTRAINTS);

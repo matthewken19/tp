@@ -34,9 +34,9 @@ import educonnect.logic.commands.EditCommand;
 import educonnect.logic.parser.exceptions.ParseException;
 import educonnect.model.student.Student;
 import educonnect.model.student.Tag;
-import educonnect.model.student.predicates.EmailContainsKeywordsPredicate;
-import educonnect.model.student.predicates.IdContainsKeywordsPredicate;
-import educonnect.model.student.predicates.TelegramContainsKeywordsPredicate;
+import educonnect.model.student.predicates.EmailMatchesKeywordsPredicate;
+import educonnect.model.student.predicates.IdMatchesKeywordsPredicate;
+import educonnect.model.student.predicates.TelegramMatchesKeywordsPredicate;
 import educonnect.model.student.timetable.Timetable;
 
 /**
@@ -83,13 +83,13 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         List<Predicate<Student>> predicates = new ArrayList<>();
         identifierArgMultimap.getValue(EDIT_ID_PREFIX_EMAIL).ifPresent(keywordEmail ->
-            predicates.add(new EmailContainsKeywordsPredicate(keywordEmail))
+            predicates.add(new EmailMatchesKeywordsPredicate(keywordEmail))
         );
         identifierArgMultimap.getValue(EDIT_ID_PREFIX_STUDENT_ID).ifPresent(keywordId ->
-            predicates.add(new IdContainsKeywordsPredicate(keywordId))
+            predicates.add(new IdMatchesKeywordsPredicate(keywordId))
         );
         identifierArgMultimap.getValue(EDIT_ID_PREFIX_TELEGRAM_HANDLE).ifPresent(keywordTeleHandle ->
-            predicates.add(new TelegramContainsKeywordsPredicate(keywordTeleHandle))
+            predicates.add(new TelegramMatchesKeywordsPredicate(keywordTeleHandle))
         );
         Index index;
         try {

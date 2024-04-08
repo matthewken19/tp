@@ -66,7 +66,7 @@ public class EditCommand extends Command {
             + PREFIX_TELEGRAM_HANDLE + "@john.doe "
             + PREFIX_STUDENT_ID + "A1234567X "
             + PREFIX_EMAIL + "johndoe@example.com  \n\nEdits the student id and email address "
-            + "of the 1st student to be A0001234A and johndoe@example.com respectively.\n\n"
+            + "of the 1st student to be A1234567X and johndoe@example.com respectively.\n\n"
 
             + "Example 2: " + COMMAND_WORD + " " + EDIT_ID_PREFIX_INDEX + "2 "
             + PREFIX_NAME + "Betsy Crower " + PREFIX_TAG + "\n\nEdits the name of the 2nd student "

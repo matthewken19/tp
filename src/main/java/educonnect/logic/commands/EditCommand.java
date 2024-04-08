@@ -112,6 +112,7 @@ public class EditCommand extends Command {
             model.updateFilteredStudentList(predicates);
         }
         List<Student> lastShownList = model.getFilteredStudentList();
+        assert lastShownList.size() <= 1; // unique identifier should only show 0/1 contact
         // no student matches the unique identifier
         if (lastShownList.isEmpty()) {
             throw new CommandException(MESSAGE_NO_STUDENT_FOUND);

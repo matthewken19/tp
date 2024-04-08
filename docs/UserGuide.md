@@ -315,7 +315,7 @@ Action     | Format, Examples
 **Find**   | `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`<br> e.g., `find n/john t/tutorial-2`
 **Copy**   | `copy [t/TAG]…`<br> e.g., `copy t/tutorial-2`
 **List**   | `list [timetable]`<br> e.g., `list` `list timetable`
-**Help**   | `help [COMMAND]`
+**Help**   | `help [COMMAND]`<br> e.g., `help` `help add`
 **Slots**  | `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]`<br> e.g., `slots d/1 t/tutorial-1 p/10-16`
 **Clear**  | `clear`
 **Exit**   | `exit`

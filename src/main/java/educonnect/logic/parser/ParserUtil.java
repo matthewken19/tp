@@ -4,6 +4,7 @@ import static educonnect.commons.util.CollectionUtil.requireAllNonNull;
 import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static java.util.Objects.requireNonNull;
 
+import educonnect.model.student.timetable.exceptions.InvalidPeriodException;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -234,7 +235,11 @@ public class ParserUtil {
         if (!Period.isValidPeriod(trimmedPeriod)) {
             throw new ParseException(Period.PERIOD_CONSTRAINTS);
         }
-        return new Period(Period.DEFAULT_PERIOD_NAME, trimmedPeriod);
+        try {
+            return new Period(Period.DEFAULT_PERIOD_NAME, trimmedPeriod);
+        } catch (InvalidPeriodException e) {
+            throw new ParseException(e.getMessage());
+        }
     }
 
     /**

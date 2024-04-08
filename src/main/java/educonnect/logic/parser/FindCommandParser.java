@@ -14,8 +14,12 @@ import java.util.function.Predicate;
 
 import educonnect.logic.commands.FindCommand;
 import educonnect.logic.parser.exceptions.ParseException;
+import educonnect.model.student.Email;
+import educonnect.model.student.Name;
 import educonnect.model.student.Student;
+import educonnect.model.student.StudentId;
 import educonnect.model.student.Tag;
+import educonnect.model.student.TelegramHandle;
 import educonnect.model.student.predicates.EmailContainsKeywordsPredicate;
 import educonnect.model.student.predicates.IdContainsKeywordsPredicate;
 import educonnect.model.student.predicates.NameContainsKeywordsPredicate;
@@ -48,18 +52,23 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         Set<Predicate<Student>> predicates = new HashSet<>();
-        argMultimap.getValue(PREFIX_NAME).ifPresent(keywordName ->
-                predicates.add(new NameContainsKeywordsPredicate(keywordName))
-        );
-        argMultimap.getValue(PREFIX_STUDENT_ID).ifPresent(keywordId ->
-                predicates.add(new IdContainsKeywordsPredicate(keywordId))
-        );
-        argMultimap.getValue(PREFIX_EMAIL).ifPresent(keywordEmail ->
-                predicates.add(new EmailContainsKeywordsPredicate(keywordEmail))
-        );
-        argMultimap.getValue(PREFIX_TELEGRAM_HANDLE).ifPresent(keywordTeleHandle ->
-                predicates.add(new TelegramContainsKeywordsPredicate(keywordTeleHandle))
-        );
+        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+            predicates.add(new NameContainsKeywordsPredicate(name.toString()));
+        }
+        if (argMultimap.getValue(PREFIX_STUDENT_ID).isPresent()) {
+            StudentId studentId = ParserUtil.parseStudentId(argMultimap.getValue(PREFIX_STUDENT_ID).get());
+            predicates.add(new IdContainsKeywordsPredicate(studentId.toString()));
+        }
+        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+            predicates.add(new EmailContainsKeywordsPredicate(email.toString()));
+        }
+        if (argMultimap.getValue(PREFIX_TELEGRAM_HANDLE).isPresent()) {
+            TelegramHandle telegramHandle = ParserUtil.parseTelegramHandle(
+                    argMultimap.getValue(PREFIX_TELEGRAM_HANDLE).get());
+            predicates.add(new TelegramContainsKeywordsPredicate(telegramHandle.toString()));
+        }
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         for (Tag keywordTag: tagList) {
             predicates.add(new TagContainsKeywordsPredicate(keywordTag));

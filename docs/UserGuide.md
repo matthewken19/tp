@@ -311,7 +311,7 @@ Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add**    | `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​` <br> e.g., `add n/James Ho s/A2222444X e/jamesho@example.com h/@hohoho t/struggling t/3rd year c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
 **Delete** | `delete <choose only 1> [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE]`<br> e.g., `delete s/A0001234A`
-**Edit**   | `edit INDEX <choose 1 or more> [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
+**Edit**   | `edit <choose only 1> [i:INDEX] [s:STUDENT_ID] [e:EMAIL] [h:TELEGRAM_HANDLE] <choose 1 or more> [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`<br> e.g., `edit i:2 n/James Lee e/jameslee@example.com c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
 **Find**   | `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`<br> e.g., `find n/john t/tutorial-2`
 **Copy**   | `copy [t/TAG]…`<br> e.g., `copy t/tutorial-2`
 **List**   | `list [timetable]`<br> e.g., `list` `list timetable`

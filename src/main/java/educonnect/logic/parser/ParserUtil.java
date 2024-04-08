@@ -133,7 +133,8 @@ public class ParserUtil {
      */
     public static TelegramHandle parseTelegramHandle(String telegramHandle) throws ParseException {
         requireNonNull(telegramHandle);
-        String trimmedHandle = telegramHandle.trim();
+        String lowerHandle = telegramHandle.toLowerCase();
+        String trimmedHandle = lowerHandle.trim();
         if (!TelegramHandle.isValidTelegramHandle(trimmedHandle)) {
             throw new ParseException(TelegramHandle.MESSAGE_CONSTRAINTS);
         }

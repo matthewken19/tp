@@ -23,6 +23,7 @@ import educonnect.model.student.Tag;
 import educonnect.model.student.TelegramHandle;
 import educonnect.model.student.timetable.Period;
 import educonnect.model.student.timetable.Timetable;
+import educonnect.model.student.timetable.exceptions.InvalidPeriodException;
 import educonnect.model.student.timetable.exceptions.NumberOfDaysException;
 import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
 
@@ -234,7 +235,11 @@ public class ParserUtil {
         if (!Period.isValidPeriod(trimmedPeriod)) {
             throw new ParseException(Period.PERIOD_CONSTRAINTS);
         }
-        return new Period(Period.DEFAULT_PERIOD_NAME, trimmedPeriod);
+        try {
+            return new Period(Period.DEFAULT_PERIOD_NAME, trimmedPeriod);
+        } catch (InvalidPeriodException e) {
+            throw new ParseException(e.getMessage());
+        }
     }
 
     /**

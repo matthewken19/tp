@@ -84,7 +84,7 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public static ArrayList<String> tokenizeForTimetable(String fullTimetableString) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(fullTimetableString.toLowerCase(), PREFIX_TIMETABLE_MONDAY,
+                ArgumentTokenizer.tokenize(" " + fullTimetableString.toLowerCase(), PREFIX_TIMETABLE_MONDAY,
                         PREFIX_TIMETABLE_TUESDAY, PREFIX_TIMETABLE_WEDNESDAY,
                         PREFIX_TIMETABLE_THURSDAY, PREFIX_TIMETABLE_FRIDAY,
                         PREFIX_TIMETABLE_SATURDAY, PREFIX_TIMETABLE_SUNDAY);

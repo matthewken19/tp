@@ -13,7 +13,7 @@ public class Period implements Comparable<Period> {
     public static final String VALIDATION_REGEX = "([0-9]|1[0-9]|2[0-3])-([0-9]|1[0-9]|2[0-3])";
     public static final String PERIOD_CONSTRAINTS =
             "Periods should be in the format of time-time, "
-            + "where time can be any digit between 0 - 23. \n"
+            + "where time can be any integer between 0 - 23. \n"
             + "This means that all Period objects are tracked with a 24-hour clock.";
     public static final String DEFAULT_PERIOD_NAME = "period";
     @SuppressWarnings("unused")

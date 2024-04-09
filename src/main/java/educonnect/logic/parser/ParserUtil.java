@@ -33,7 +33,7 @@ import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
-    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_DURATION =
             "Invalid duration specified! "
@@ -42,7 +42,7 @@ public class ParserUtil {
             "Invalid day specified! "
             + "Each day is indicated by their 3-letter identifier, e.g. 'mon', or 'fri'.\n"
             + "(Hint: by default Saturdays and Sundays are not included.)";
-
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -317,7 +317,7 @@ public class ParserUtil {
         requireNonNull(s);
         String trimmedLink = s.trim();
         // If it does not start with a https, add it to the start of the string
-        if (!trimmedLink.startsWith("https://")){
+        if (!trimmedLink.startsWith("https://")) {
             trimmedLink = "https://" + trimmedLink;
         }
         if (!Link.isValidLink(trimmedLink)) {

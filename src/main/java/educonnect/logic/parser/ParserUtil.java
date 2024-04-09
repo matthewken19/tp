@@ -10,7 +10,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import educonnect.MainApp;
+import educonnect.commons.core.LogsCenter;
 import educonnect.commons.core.index.Index;
 import educonnect.commons.util.StringUtil;
 import educonnect.logic.commands.SlotsCommand;
@@ -30,7 +33,7 @@ import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
-
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_DURATION =
             "Invalid duration specified! "
@@ -318,10 +321,11 @@ public class ParserUtil {
             trimmedLink = "https://" + trimmedLink;
         }
         if (!Link.isValidLink(trimmedLink)) {
-            System.out.println("Invalid link");
+            System.out.println(trimmedLink);
+            logger.info(trimmedLink + " is an invalid link!");
             throw new ParseException(Link.MESSAGE_CONSTRAINTS);
         }
-        System.out.println("Valid link");
+        logger.info(trimmedLink + " is a valid link!");
         return new Link(trimmedLink);
     }
 }

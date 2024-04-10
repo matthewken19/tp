@@ -34,11 +34,11 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `educonnect.jar` from [here](https://github.com/AY2324S2-CS2103-T14-1/tp/releases).
+1. Download the latest `educonnect-1.4.jar` from [here](https://github.com/AY2324S2-CS2103-T14-1/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for EduConnect.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar educonnect.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar educonnect-1.4.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. <br>
    ![Ui](images/defaultUi.png)
 

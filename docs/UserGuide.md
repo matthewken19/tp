@@ -19,7 +19,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
     - [Locating students by name: `find`](#locating-students-by-name-find)
     - [Copying student emails: `copy`](#copying-student-emails-copy)
     - [Deleting a student: `delete`](#deleting-a-student-delete)
-    - [Finding a common time slot among students: `slots`](#finding-a-common-available-time-slot-among-students-slots)
+    - [Finding a common available time slot among students: `slots`](#finding-a-common-available-time-slot-among-students-slots)
     - [Clearing all students: `clear`](#clearing-all-students-clear)
     - [Exiting EduConnect: `exit`](#exiting-educonnect-exit)
     - [Saving the data](#saving-the-data)
@@ -118,23 +118,21 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * `PERIOD` are timings in the day numbered from (1-23), which represents the 24-hour clock.<br>
   e.g `1-10` or `10-16`
 
-* `DAYS` and only their corresponding three lettered **uncapitalised** prefixes are accepted.
+* `DAYS` and only their corresponding three lettered **uncapitalised** prefixes are accepted (Weekends are not used).
   * Monday: `mon`
   * Tuesday: `tue`
   * Wednesday: `wed`
   * Thursday: `thu`
   * Friday: `fri`
-  * Saturday: `sat`
-  * Sunday: `sun`
 
 * A valid `TIMETABLE` format is written with the three lettered day prefixes followed by a colon and the periods. Separate multiple periods in a day with a comma.<br>
-  e.g `mon: 8-10, 10-12 tue: 8-10 thu: 12-14 sat 16-18, 18-20`
+  e.g `mon: 8-10, 10-12 tue: 8-10 thu: 12-14 fri 16-18, 18-20`
 
 * `add` and `edit` commands allow for adding multiple `PERIOD` while `slot` command does not (go to individual commands for more information).<br>
   e.g `mon: 8-12, 14-16`
 
 * An overlapping `PERIOD` means that multiple `PERIOD` are added for the same day and there is a timing conflict.<br>
-  e.g `tue: 10-12, 11-13` (11-12 is the overlapping period)
+  e.g `wed: 10-12, 11-13` (11-12 is the overlapping period)
 
 </box>
 

@@ -82,11 +82,16 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @param fullTimetableString a full {@code String} containing the arguments. E.g. "mon: 1-4, 12-14 tue: 14-16 ..."
      * @return an {@code ArrayList<String>}, with each entry containing arguments for each day of the Timetable week.
      */
-    public static ArrayList<String> tokenizeForTimetable(String fullTimetableString) {
+    public static ArrayList<String> tokenizeForTimetable(String fullTimetableString) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(fullTimetableString, PREFIX_TIMETABLE_MONDAY, PREFIX_TIMETABLE_TUESDAY,
-                        PREFIX_TIMETABLE_WEDNESDAY, PREFIX_TIMETABLE_THURSDAY, PREFIX_TIMETABLE_FRIDAY,
+                ArgumentTokenizer.tokenize(" " + fullTimetableString.toLowerCase(), PREFIX_TIMETABLE_MONDAY,
+                        PREFIX_TIMETABLE_TUESDAY, PREFIX_TIMETABLE_WEDNESDAY,
+                        PREFIX_TIMETABLE_THURSDAY, PREFIX_TIMETABLE_FRIDAY,
                         PREFIX_TIMETABLE_SATURDAY, PREFIX_TIMETABLE_SUNDAY);
+
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TIMETABLE_MONDAY, PREFIX_TIMETABLE_TUESDAY,
+                PREFIX_TIMETABLE_WEDNESDAY, PREFIX_TIMETABLE_THURSDAY, PREFIX_TIMETABLE_FRIDAY,
+                PREFIX_TIMETABLE_SATURDAY, PREFIX_TIMETABLE_SUNDAY);
 
         ArrayList<String> allDays = new ArrayList<>();
         allDays.add(argMultimap.getValue(PREFIX_TIMETABLE_MONDAY).orElse(""));

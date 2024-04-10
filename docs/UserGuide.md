@@ -19,7 +19,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
     - [Locating students by name: `find`](#locating-students-by-name-find)
     - [Copying student emails: `copy`](#copying-student-emails-copy)
     - [Deleting a student: `delete`](#deleting-a-student-delete)
-    - [Finding a common time slot among students: `slots`](#finding-a-common-time-slot-among-students-slots)
+    - [Finding a common time slot among students: `slots`](#finding-a-common-available-time-slot-among-students-slots)
     - [Clearing all students: `clear`](#clearing-all-students-clear)
     - [Exiting EduConnect: `exit`](#exiting-educonnect-exit)
     - [Saving the data](#saving-the-data)
@@ -39,6 +39,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 1. Copy the file to the folder you want to use as the _home folder_ for EduConnect.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar educonnect.jar` command to run the application.<br>
+
    A GUI similar to the below should appear in a few seconds. <br>
    ![Ui](images/defaultUi.png)
 
@@ -245,19 +246,19 @@ Examples:
 * `delete s/A0001234A` deletes a student with a student id of `A0001234A` in the address book.
   ![result for 'find alex', followed by 'delete s/A0001234A'](images/delete.png)
 
-### Finding a common time slot among students: `slots`
+### Finding a common available time slot among students: `slots`
 
 Format : `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]`
 
-* Finds a common slot of time amongst a list of students.
+* Finds a common available slot of time amongst a list of students.
 * The list of students can be narrowed down by tag(s).
-* The period of time to look for the common slot can be specified, otherwise, the default period is between 8 AM to 10 PM.
+* The period of time to look for the available common slot can be specified, otherwise, the default period is between 8 AM to 10 PM.
 * The search on which days can be specified, otherwise, the default will be from Monday to Friday.
 
 Examples:
-* `slots d/1` finds a common 1-hour time slot among listed students.
-* `slots d/2 p/10-6 o/mon, tue, fri` finds a common 2-hour time slot on monday, tuesday and wednesday among listed students.
-* `slots d/1 t/tutorial-1 p/10-16` finds a common 1-hour time slot for students tagged with `tutorial-1` from 10am to 6pm.
+* `slots d/1` finds a common available 1-hour time slot among listed students.
+* `slots d/2 p/10-18 o/mon, tue, fri` finds a common available 2-hour time slot on monday, tuesday and wednesday among listed students.
+* `slots d/1 t/tutorial-1 p/10-16` finds a common available 1-hour time slot for students tagged with `tutorial-1` from 10am to 6pm.
   ![result of slot command](images/slots.png)
 
 ### Clearing all students: `clear`

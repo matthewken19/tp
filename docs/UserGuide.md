@@ -197,7 +197,7 @@ Format: `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/
 * Tag is searched as complete tag names. e.g. `find t/tutorial-1` will only return those with a tag 'tutorial-1'
 (tag 'tutorial-10', 'tutorial-11', etc. will NOT appear in the results).
   * This is different from the fuzzy matching used in name and other criteria.
-* When multiple criteria are used, searched students must match **ALL** criteria specified.
+* When multiple criteria are used, searched students must match **ALL** criteria specified (Fuzzy matching for non-tags full matching for tags).
 
 Examples:
 * `find n/John` returns john and John Doe

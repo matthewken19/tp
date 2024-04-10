@@ -115,7 +115,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 * Commands that involve `DAYS` and `PERIODS` are `add`, `edit` and `slot` (go to individual commands to see how they are used).
 
-* `PERIOD` are timings in the day numbered from (1-23), which represents the 24-hour clock.<br>
+* `PERIOD` are timings in the day numbered from (0-23), which represents the 24-hour clock.<br>
   e.g `1-10` or `10-16`
 
 * `DAYS` and only their corresponding three lettered **uncapitalised** prefixes are accepted (Weekends are not used).
@@ -294,8 +294,14 @@ Format : `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]`
 
 * Finds a common available slot of time amongst a list of students.
 * The list of students can be narrowed down by tag(s).
-* The period of time to look for the available common slot can be specified, otherwise, the default period is between 8 AM to 10 PM.
+* The period of time to look for the common available slot can be specified, otherwise, the default period is between 8 AM to 10 PM.
 * The search on which days can be specified, otherwise, the default will be from Monday to Friday.
+* The duration must be specified.
+* Duration is specified with an `int`, it can be between 1 - 23, indicating 1-hour to 23-hours, although typically one would use values 1-4.
+* The period of time to look for the available common slot can be specified, otherwise, the default period is between 8 AM to 10 PM.
+* The period is specified using 2 `int`s, separated by a `-` (see above).
+* The search on which days can be specified, otherwise, the default will be from Monday to Friday.
+* The days are specified with the lowercase three-letter representation of the day, e.g. `"tue"` or `"wed"`.
 
 Examples:
 * `slots d/1` finds a common available 1-hour time slot among listed students.

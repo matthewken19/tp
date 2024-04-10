@@ -1,7 +1,7 @@
 package educonnect.logic.parser;
 
-import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static educonnect.logic.Messages.MESSAGE_EMPTY_PREFIX_ARGUMENT;
+import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static educonnect.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static educonnect.logic.parser.CliSyntax.PREFIX_NAME;
 import static educonnect.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
@@ -15,12 +15,8 @@ import java.util.function.Predicate;
 
 import educonnect.logic.commands.FindCommand;
 import educonnect.logic.parser.exceptions.ParseException;
-import educonnect.model.student.Email;
-import educonnect.model.student.Name;
 import educonnect.model.student.Student;
-import educonnect.model.student.StudentId;
 import educonnect.model.student.Tag;
-import educonnect.model.student.TelegramHandle;
 import educonnect.model.student.predicates.EmailContainsKeywordsPredicate;
 import educonnect.model.student.predicates.IdContainsKeywordsPredicate;
 import educonnect.model.student.predicates.NameContainsKeywordsPredicate;

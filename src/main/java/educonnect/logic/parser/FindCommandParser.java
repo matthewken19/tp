@@ -1,6 +1,7 @@
 package educonnect.logic.parser;
 
 import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static educonnect.logic.Messages.MESSAGE_EMPTY_PREFIX_ARGUMENT;
 import static educonnect.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static educonnect.logic.parser.CliSyntax.PREFIX_NAME;
 import static educonnect.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
@@ -37,13 +38,14 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
+        // check for empty argument for the find input
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_STUDENT_ID,
                 PREFIX_EMAIL, PREFIX_TELEGRAM_HANDLE, PREFIX_TAG, PREFIX_TIMETABLE);
-
+        // check for duplicate prefixes in the argument
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_STUDENT_ID,
                 PREFIX_EMAIL, PREFIX_TELEGRAM_HANDLE);
 
@@ -53,21 +55,33 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         Set<Predicate<Student>> predicates = new HashSet<>();
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-            predicates.add(new NameContainsKeywordsPredicate(name.toString()));
+            String name = argMultimap.getValue(PREFIX_NAME).get().trim();
+            if (name.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_EMPTY_PREFIX_ARGUMENT, "NAME", "NAME"));
+            }
+            predicates.add(new NameContainsKeywordsPredicate(name));
         }
         if (argMultimap.getValue(PREFIX_STUDENT_ID).isPresent()) {
-            StudentId studentId = ParserUtil.parseStudentId(argMultimap.getValue(PREFIX_STUDENT_ID).get());
-            predicates.add(new IdContainsKeywordsPredicate(studentId.toString()));
+            String studentId = argMultimap.getValue(PREFIX_STUDENT_ID).get().trim();
+            if (studentId.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_EMPTY_PREFIX_ARGUMENT, "STUDENT_ID", "STUDENT_ID"));
+            }
+            predicates.add(new IdContainsKeywordsPredicate(studentId));
         }
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-            predicates.add(new EmailContainsKeywordsPredicate(email.toString()));
+            String email = argMultimap.getValue(PREFIX_EMAIL).get().trim();
+            if (email.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_EMPTY_PREFIX_ARGUMENT, "EMAIL", "EMAIL"));
+            }
+            predicates.add(new EmailContainsKeywordsPredicate(email));
         }
         if (argMultimap.getValue(PREFIX_TELEGRAM_HANDLE).isPresent()) {
-            TelegramHandle telegramHandle = ParserUtil.parseTelegramHandle(
-                    argMultimap.getValue(PREFIX_TELEGRAM_HANDLE).get());
-            predicates.add(new TelegramContainsKeywordsPredicate(telegramHandle.toString()));
+            String telegramHandle = argMultimap.getValue(PREFIX_TELEGRAM_HANDLE).get().trim();
+            if (telegramHandle.isEmpty()) {
+                throw new ParseException(
+                        String.format(MESSAGE_EMPTY_PREFIX_ARGUMENT, "TELEGRAM_HANDLE", "TELEGRAM_HANDLE"));
+            }
+            predicates.add(new TelegramContainsKeywordsPredicate(telegramHandle));
         }
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         for (Tag keywordTag: tagList) {

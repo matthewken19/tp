@@ -20,6 +20,7 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_NO_STUDENT_FOUND = "No student found.";
+    public static final String MESSAGE_EMPTY_PREFIX_ARGUMENT = " The [%s] argument cannot be empty! Please provide a valid value for [%s].\"";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

@@ -106,6 +106,50 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * There can only be one unique identifier at each time. Which means no two students can share the same unique identifiers above.
 </box>
 
+<box type="info" seamless>
+
+**Notes about timetable, days and periods:**<br>
+
+* Student's timetables are used for tracking student's unavailable periods.<br>
+  e.g For MONDAY, schedule is: Period (13:00 to 1500) it means that the student is unavailable on monday 1pm to 3pm.
+
+* Commands that involve `DAYS` and `PERIODS` are `add`, `edit` and `slot` (go to individual commands to see how they are used).
+
+* `PERIOD` are timings in the day numbered from (1-23), which represents the 24-hour clock.<br>
+  e.g `1-10` or `10-16`
+
+* `DAYS` and only their corresponding three lettered **uncapitalised** prefixes are accepted.
+  * Monday: `mon`
+  * Tuesday: `tue`
+  * Wednesday: `wed`
+  * Thursday: `thu`
+  * Friday: `fri`
+  * Saturday: `sat`
+  * Sunday: `sun`
+
+* A valid `TIMETABLE` format is written with the three lettered day prefixes followed by a colon and the periods. Separate multiple periods in a day with a comma.<br>
+  e.g `mon: 8-10, 10-12 tue: 8-10 thu: 12-14 sat 16-18, 18-20`
+
+* `add` and `edit` commands allow for adding multiple `PERIOD` while `slot` command does not (go to individual commands for more information).<br>
+  e.g `mon: 8-12, 14-16`
+
+* An overlapping `PERIOD` means that multiple `PERIOD` are added for the same day and there is a timing conflict.<br>
+  e.g `tue: 10-12, 11-13` (11-12 is the overlapping period)
+
+</box>
+
+<box type="info" seamless>
+
+**Additional notes about other parameters:**<br>
+
+* `NAME` allows for dashes numbers and spaces. However, there cannot be 2 consecutive dashes, spaces or a combination of both.<br>
+  e.g `John Doe`, `Anne-Marie`, `William-The 3rd`
+
+* `WEBLINK` is used for attaching a student's project in Educonnect. However, the parameter currently accepts any valid website links.<br>
+  e.g `https://github.com/johndoe/tp`
+
+</box>
+
 **Notes about displaying timetables of students:**<br>
 
 * By default, timetables of students are not shown.
@@ -145,8 +189,7 @@ Format: `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETA
 </box>
 
 Examples:
-* `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue:
-  11-13 thu: 12-15, 15-17`
+* `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com l/https://github.com/johndoe/tp t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
 * `add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U`
   ![result for 'add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U'](images/add.png)
 
@@ -186,6 +229,7 @@ Examples:
 *  `edit e:christian@nus.com h/@christan c/` Edits the telegram handle and clears the timetable of the student with an email of `christian@nus.com`.
 *  `edit h:@christan c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17` Replaces the timetable of the student with a telegram handle of `@christan` with this new one according to
    the specifications in the command
+*  `edit i:2 l/https://github.com/annemarie/tp` Edits the weblink of the 2nd student to be `https://github.com/johndoe/tp`.
 
 ### Locating students by name: `find`
 

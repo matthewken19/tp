@@ -44,8 +44,8 @@ public class SlotsCommand extends Command {
             + "Example 3: " + COMMAND_WORD + " " + PREFIX_DURATION + "1 "
             + PREFIX_TAG + "tutorial-1 " + PREFIX_PERIOD + "10-16 \n\n";
 
-    public static final String MESSAGE_FOUND_SLOTS_SUCCESS = "Found a few available slots," +
-            "they are displayed below.\n\n%1$s";
+    public static final String MESSAGE_FOUND_SLOTS_SUCCESS =
+            "Found a few available slots, they are displayed below.\n\n%1$s";
     public static final String MESSAGE_NO_SLOTS_FOUND = "No available slots found.";
     private final SlotsFinderDescriptor slotsFinderDescriptor;
 

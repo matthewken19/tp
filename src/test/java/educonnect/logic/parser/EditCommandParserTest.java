@@ -83,43 +83,59 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidIdentifier_failure() {
         // negative index
-        assertParseFailure(parser, "i:-5" + NAME_DESC_AMY, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-            EditCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, EDIT_ID_PREFIX_INDEX + "-5" + NAME_DESC_AMY,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         // zero index
-        assertParseFailure(parser, "i:0" + NAME_DESC_AMY, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-            EditCommand.MESSAGE_USAGE));
-        // multiple identifier
-        assertParseFailure(parser, "i:1 e:" + VALID_STUDENT_ID_AMY + NAME_DESC_AMY,
+        assertParseFailure(parser, EDIT_ID_PREFIX_INDEX + "0" + NAME_DESC_AMY,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        // multiple identifier (index and email)
+        assertParseFailure(parser, EDIT_ID_PREFIX_INDEX + "1"
+                        + EDIT_ID_PREFIX_EMAIL + VALID_EMAIL_AMY + NAME_DESC_AMY,
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_INVALID_IDENTIFIER));
+        // multiple identifier (student id and telegram handle)
+        assertParseFailure(parser, EDIT_ID_PREFIX_STUDENT_ID + VALID_STUDENT_ID_AMY
+                        + EDIT_ID_PREFIX_TELEGRAM_HANDLE + VALID_TELEGRAM_HANDLE_AMY + NAME_DESC_AMY,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_INVALID_IDENTIFIER));
         // invalid prefix for identifier
-        assertParseFailure(parser, "x:1" + NAME_DESC_AMY,
+        assertParseFailure(parser, "x:" + VALID_STUDENT_ID_AMY + NAME_DESC_AMY,
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_INVALID_IDENTIFIER));
         // no prefix for identifier
-        assertParseFailure(parser, "1" + NAME_DESC_AMY,
+        assertParseFailure(parser, VALID_EMAIL_AMY + NAME_DESC_AMY,
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_INVALID_IDENTIFIER));
     }
 
     @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "i:1" + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS); // invalid name
+        // invalid name
+        assertParseFailure(parser, EDIT_ID_PREFIX_TELEGRAM_HANDLE + VALID_TELEGRAM_HANDLE_AMY
+                + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS);
         // invalid student id
-        assertParseFailure(parser, "i:1" + INVALID_STUDENT_ID_DESC, StudentId.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "i:1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, "i:1" + INVALID_TELEGRAM_HANDLE_DESC,
-            TelegramHandle.MESSAGE_CONSTRAINTS); // invalid telegram handle
-        assertParseFailure(parser, "i:1" + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
+        assertParseFailure(parser, EDIT_ID_PREFIX_INDEX + "1" + INVALID_STUDENT_ID_DESC,
+                StudentId.MESSAGE_CONSTRAINTS);
+        // invalid email
+        assertParseFailure(parser, EDIT_ID_PREFIX_STUDENT_ID + VALID_STUDENT_ID_AMY + INVALID_EMAIL_DESC,
+                Email.MESSAGE_CONSTRAINTS);
+        // invalid telegram handle
+        assertParseFailure(parser, EDIT_ID_PREFIX_EMAIL + VALID_EMAIL_AMY + INVALID_TELEGRAM_HANDLE_DESC,
+                TelegramHandle.MESSAGE_CONSTRAINTS);
+        // invalid tag
+        assertParseFailure(parser, EDIT_ID_PREFIX_INDEX + "1" + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS);
         // invalid student id followed by valid email
-        assertParseFailure(parser, "i:1" + INVALID_STUDENT_ID_DESC + EMAIL_DESC_AMY, StudentId.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, EDIT_ID_PREFIX_INDEX + "1" + INVALID_STUDENT_ID_DESC + EMAIL_DESC_AMY,
+                StudentId.MESSAGE_CONSTRAINTS);
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Student} being edited,
         // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "i:1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "i:1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "i:1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, EDIT_ID_PREFIX_INDEX + "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY,
+                Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, EDIT_ID_PREFIX_INDEX + "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND,
+                Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, EDIT_ID_PREFIX_INDEX + "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND,
+                Tag.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "i:1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC
-                + VALID_TELEGRAM_HANDLE_AMY + VALID_STUDENT_ID_AMY, Name.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, EDIT_ID_PREFIX_EMAIL + VALID_EMAIL_AMY + INVALID_NAME_DESC
+                + INVALID_EMAIL_DESC + VALID_TELEGRAM_HANDLE_AMY + VALID_STUDENT_ID_AMY, Name.MESSAGE_CONSTRAINTS);
     }
 
     @Test

@@ -171,15 +171,17 @@ This section describes some noteworthy details on how certain features are imple
 
 <puml src="diagrams/StudentClassDiagram.puml" width="450"/>
 
-#### Listing students with timetables option (save to user preference)
+#### Listing students with timetables option
 
 * The `Timetable` of the `Student` shown during the `list` command, followed by a `timetable` keyword.
 
-* The `timetable` keyword is optional, and if not specified, students will be shown without timetables.
+* The `timetable` keyword is optional, and if the command is used without the `timetable` keyword, students will be shown without timetables.
 
-* The option of displaying timetables will be saved to user preference, and will remain the same unless another `list` command with different option is received
+* The option of displaying timetables will be saved and will remain the same for subsequent commands, unless another `list` command with different option is received.
 
-* Below shows the sequence diagram when <u>listing</u> students with timetables.
+* Each time the application is launched, the timetable will be hided in default.
+
+* Below shows the sequence diagram when <u>listing</u> stud**ents with timetables.**
 
 <puml src="diagrams/ListSequenceDiagram.puml"/>
 

@@ -149,10 +149,11 @@ Shows a list of all students with the option to show timetables.
 
 Format: `list [timetable]`
 
-**Notes about displaying timetables of students:**<br>
+<box type="tip" seamless>
 
-* By default, timetables of students are not shown.
-* To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results.
+**Tip:** By default, timetables of students are not shown.
+
+**Tip:** To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results. However, the choice will be restored to hiding timetable each time application is relaunched.
 
 Examples:
 * `list`

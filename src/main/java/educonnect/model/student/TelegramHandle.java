@@ -10,8 +10,9 @@ import static java.util.Objects.requireNonNull;
 public class TelegramHandle {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Telegram handles should start with @";
-    public static final String VALIDATION_REGEX = "^@.*";
+            "Telegram handles should start with '@' and "
+                    + "contains at least 1 alphanumeric characters and/or underscores after it.";
+    public static final String VALIDATION_REGEX = "^@[a-zA-Z0-9_]+$";
     public final String value;
 
     /**

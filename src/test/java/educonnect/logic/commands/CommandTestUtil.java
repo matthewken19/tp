@@ -44,7 +44,7 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_JOHN = "johndoedoejohn@example.com";
     public static final String VALID_TELEGRAM_HANDLE_AMY = "@amyb";
     public static final String VALID_TELEGRAM_HANDLE_BOB = "@choobobco";
-    public static final String VALID_TELEGRAM_HANDLE_JOHN = "@doedoejohnjohn.joe";
+    public static final String VALID_TELEGRAM_HANDLE_JOHN = "@doedoejohnjohn_joe";
     public static final String VALID_LINK_AMY = "https://www.youtube.com/";
     public static final String VALID_LINK_BOB = "https://en.wikipedia.org/wiki/Wiki";
     public static final String VALID_LINK_JOHN = "https://www.google.com/";

@@ -34,7 +34,7 @@ public class SlotsCommand extends Command {
             + "The search on which days can be specified, "
             + "otherwise, the default will be from Monday to Friday.\n"
             + "Parameters: "
-            + PREFIX_DURATION + "DURATION (0-23) "
+            + PREFIX_DURATION + "DURATION (1-23) "
             + "[" + PREFIX_TAG + "TAG]"
             + "[" + PREFIX_PERIOD + "PERIOD]"
             + "[" + PREFIX_ON_DAYS + "DAYS]\n\n"

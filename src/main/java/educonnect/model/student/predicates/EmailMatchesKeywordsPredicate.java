@@ -1,9 +1,9 @@
 package educonnect.model.student.predicates;
 
+import java.util.function.Predicate;
+
 import educonnect.commons.util.ToStringBuilder;
 import educonnect.model.student.Student;
-
-import java.util.function.Predicate;
 
 /**
  * Tests that a {@code Student}'s {@code Email} matches exactly the keywords given.

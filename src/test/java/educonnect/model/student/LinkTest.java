@@ -22,6 +22,7 @@ public class LinkTest {
         assertFalse(Link.isValidLink("www.murikhao.www.sample.com"));
         assertFalse(Link.isValidLink("www."));
         assertFalse(Link.isValidLink(".com"));
+
         assertFalse(Link.isValidLink("iamnotmentallysane"));
         assertFalse(Link.isValidLink("https://www..com"));
         assertFalse(Link.isValidLink("https://www.sda."));

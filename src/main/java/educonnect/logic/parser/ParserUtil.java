@@ -35,7 +35,7 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INVALID_DURATION =
             "Invalid duration specified! "
-            + "Duration should be between 0-23 hours, more typically 1-4 hours.";
+            + "Duration should be between 1-23 hours, more typically 1-4 hours.";
     public static final String MESSAGE_INVALID_DAY =
             "Invalid day specified! "
             + "Each day is indicated by their 3-letter identifier, e.g. 'mon', or 'fri'.\n"

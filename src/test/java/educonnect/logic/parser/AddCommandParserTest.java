@@ -52,6 +52,7 @@ import org.junit.jupiter.api.Test;
 
 import educonnect.logic.Messages;
 import educonnect.logic.commands.AddCommand;
+import educonnect.logic.parser.exceptions.ParseException;
 import educonnect.model.student.Email;
 import educonnect.model.student.Link;
 import educonnect.model.student.Name;
@@ -62,7 +63,6 @@ import educonnect.model.student.TelegramHandle;
 import educonnect.model.student.timetable.Timetable;
 import educonnect.testutil.StudentBuilder;
 import educonnect.testutil.TypicalTimetableAndValues;
-
 
 public class AddCommandParserTest {
     private final AddCommandParser parser = new AddCommandParser();
@@ -268,14 +268,14 @@ public class AddCommandParserTest {
     }
 
     @Test
-    public void tokenizeForTimetable_emptyInput_returnsEmptyArrayList() {
+    public void tokenizeForTimetable_emptyInput_returnsEmptyArrayList() throws ParseException {
         assertEquals(Stream.generate(() -> "")
                         .limit(Timetable.is7Days() ? 7 : 5)
                         .collect(Collectors.toCollection(ArrayList::new)),
                 AddCommandParser.tokenizeForTimetable(""));
     }
     @Test
-    public void tokenizeForTimetable_validInputs_returnsArrayList() {
+    public void tokenizeForTimetable_validInputs_returnsArrayList() throws ParseException {
         assertEquals(TypicalTimetableAndValues.VALID_TIMETABLE_INPUT_1,
                 AddCommandParser.tokenizeForTimetable(
                         TypicalTimetableAndValues.VALID_ADD_COMMAND_TIMETABLE_ARGUMENTS_1));

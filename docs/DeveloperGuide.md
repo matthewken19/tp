@@ -171,15 +171,17 @@ This section describes some noteworthy details on how certain features are imple
 
 <puml src="diagrams/StudentClassDiagram.puml" width="450"/>
 
-#### Listing students with timetables option (save to user preference)
+#### Listing students with timetables option
 
 * The `Timetable` of the `Student` shown during the `list` command, followed by a `timetable` keyword.
 
-* The `timetable` keyword is optional, and if not specified, students will be shown without timetables.
+* The `timetable` keyword is optional, and if the command is used without the `timetable` keyword, students will be shown without timetables.
 
-* The option of displaying timetables will be saved to user preference, and will remain the same unless another `list` command with different option is received
+* The option of displaying timetables will be saved and will remain the same for subsequent commands, unless another `list` command with different option is received.
 
-* Below shows the sequence diagram when <u>listing</u> students with timetables.
+* Each time the application is launched, the timetable will be hided in default.
+
+* Below shows the sequence diagram when <u>listing</u> stud**ents with timetables.**
 
 <puml src="diagrams/ListSequenceDiagram.puml"/>
 
@@ -368,7 +370,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Requirements**
+## **Appendix A: Requirements**
 
 ### Product scope
 
@@ -534,7 +536,7 @@ Use case ends.
 * **Telegram**: Preferred online messaging application used amongst students and TAs.
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## **Appendix B: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
 
@@ -593,3 +595,36 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+## **Appendix C: Effort**
+
+#### Overview
+- Our team aims at creating an application that is easy to use and helpful for TAs to manage courses. We mainly focused on features that are optimized for CLI users. 
+- In addition to the existing basic features of AB3 (Address Book 3), we implement additional features including finding students, copying emails, and finding common slots for our target users - TAs.
+
+#### Difficulty Level and Challenges Faced
+- Build the application upon AB3 was a challenge for us during the starting stage of development. We took some time to get familiar with the AB3 code base, while also deciding features to adapt/remove to develop EduConnect.
+
+- In version 1.4, the debugging stage required strategies to address several challenging issues, such as regex validation and parser support for multiple timetables. Through effective teamwork and collaborative discussions, we successfully resolved these issues.
+
+#### Effort Required
+
+- Efforts were allocated across various project phases, including requirement analysis, design, development, testing, deployment, and debugging. 
+
+- We also emphasized considerable efforct on team collaboration to make the development process smooth.
+
+#### Achievements
+- Successful implementation of core functionalities, including 
+finding common slots and copying student emails, which showcases our goal of creating an application with user-centric features.
+
+- Implementation of GUI(Graphic User Interface) which aligns with the UI design as outlined in the project planning phase.
+
+- Adherence to project timelines and deliver the milestones on time.
+
+## **Appendix D: Planner Enhancements**
+
+Team Size: 6
+1. **Use a better font:** User experience is greatly influenced by font, and choosing the right font can significantly enhance readability, Especially for EduConnect with numeric details of students displayed, the current font causes confusion sometimes. TWe plan to adapt a new font which not only improve the overall appearance of the platform but also contribute to a smoother reading experience for users.
+2. **Hover over ‘Project Link’ shows the full link:** Currently, when hovering over the project link, nothing is showing. We plan to provide users with the convenience of viewing the full link by simply hovering over it. We aim to allow users to quickly verify or copy the complete URL without having to click on it.
+3. **Better timetable display:** The current timetable of each student is displayed in text with little formatting. We plan to enhance the timetable display by incorporating a standardized graphical format, such as calendar or grid layout. This would allow users to quickly grasp their schedules at a glance and navigate through different time slots more efficiently.
+4. **View student details:** The ability to view comprehensive details of each student in text, including their project link and timetable, is essential for effective management and communication within EduConnect. We plan to introduce a new "View Student" function, allowing users to access all student information conveniently. 

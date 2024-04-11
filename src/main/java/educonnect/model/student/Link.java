@@ -14,8 +14,8 @@ public class Link {
     //    under Mustofa Rizwan's response
 
     public static final String VALIDATION_REGEX =
-            "^((ftp|http|https):\\/\\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\\.[a-zA-Z]+)+((\\/)[\\w#]+)"
-            + "*(\\/\\w+\\?[a-zA-Z0-9_]+=\\w+(&[a-zA-Z0-9_]+=\\w+)*)?\\/?$";
+            "^((ftp|http|https):\\/\\/)?(www.)?(?!.*(ftp|http|https|www.))[\\w-@:]+(\\.[a-zA-Z]+(:\\w+)?)+((\\/+)"
+                  +  "[\\w-#%]+)*(\\/\\w+\\?\\w+=\\w+(&\\w+=[\\w-]+)*)?\\/?$";
     //@@author
     public final String url;
 

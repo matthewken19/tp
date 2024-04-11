@@ -47,7 +47,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
    * `list` : Lists all students.
 
-   * `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com t/tutorial-1 t/high-ability` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe s/A1234567X h/@john_doe e/johnd@example.com t/tutorial-1 t/high-ability` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete s/A0001234A` : Deletes the person with the `s/STUDENT_ID` unique identifier
 
@@ -138,7 +138,7 @@ Format: `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETA
 </box>
 
 Examples:
-* `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue:
+* `add n/John Doe s/A1234567X h/@john_doe e/johnd@example.com t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue:
   11-13 thu: 12-15, 15-17`
 * `add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U`
   ![result for 'add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U'](images/add.png)

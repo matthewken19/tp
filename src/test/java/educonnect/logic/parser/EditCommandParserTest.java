@@ -89,11 +89,11 @@ public class EditCommandParserTest {
         assertParseFailure(parser, EDIT_ID_PREFIX_INDEX + "0" + NAME_DESC_AMY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         // multiple identifier (index and email)
-        assertParseFailure(parser, EDIT_ID_PREFIX_INDEX + "1"
+        assertParseFailure(parser, " " + EDIT_ID_PREFIX_INDEX + "1 "
                         + EDIT_ID_PREFIX_EMAIL + VALID_EMAIL_AMY + NAME_DESC_AMY,
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_INVALID_IDENTIFIER));
         // multiple identifier (student id and telegram handle)
-        assertParseFailure(parser, EDIT_ID_PREFIX_STUDENT_ID + VALID_STUDENT_ID_AMY
+        assertParseFailure(parser, EDIT_ID_PREFIX_STUDENT_ID + VALID_STUDENT_ID_AMY + " "
                         + EDIT_ID_PREFIX_TELEGRAM_HANDLE + VALID_TELEGRAM_HANDLE_AMY + NAME_DESC_AMY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_INVALID_IDENTIFIER));
         // invalid prefix for identifier

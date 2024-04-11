@@ -34,11 +34,11 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `educonnect.jar` from [here](https://github.com/AY2324S2-CS2103-T14-1/tp/releases).
+1. Download the latest `educonnect-1.4.jar` from [here](https://github.com/AY2324S2-CS2103-T14-1/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for EduConnect.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar educonnect.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar educonnect-1.4.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. <br>
    ![Ui](images/defaultUi.png)
 
@@ -100,16 +100,10 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 **Notes about unique identifiers:**<br>
 
-* Unique identifiers are `e/EMAIL`, `s/STUDENT_ID` and `h/TELEGRAM_HANDLE`
+* Unique identifiers are `EMAIL`, `STUDENT_ID` and `TELEGRAM_HANDLE`
 
 * There can only be one unique identifier at each time. Which means no two students can share the same unique identifiers above.
 </box>
-
-**Notes about displaying timetables of students:**<br>
-
-* By default, timetables of students are not shown.
-
-* To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results.
 
 ### Viewing help: `help`
 
@@ -155,7 +149,10 @@ Shows a list of all students with the option to show timetables.
 
 Format: `list [timetable]`
 
-**Tip:** The option of displaying timetables will be saved to user preference, and will remain the same unless another `list` command with different option is received
+**Notes about displaying timetables of students:**<br>
+
+* By default, timetables of students are not shown.
+* To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results.
 
 Examples:
 * `list`
@@ -180,7 +177,7 @@ Format: `edit <choose only 1> [i:INDEX] [s:STUDENT_ID] [e:EMAIL] [h:TELEGRAM_HAN
 
 Examples:
 *  `edit i:1 s/A0001234A e/johndoe@example.com` Edits the student id and email address of the 1st student to be `A0001234A` and `johndoe@example.com` respectively.
-  ![result for 'edit 1 s/A1654327X e/johndoe@example.com'](images/edit.png)
+  ![result for 'edit i:1 s/A1654327X e/johndoe@example.com'](images/edit.png)
 *  `edit s:A1234567X n/Betsy Crower t/` Edits the name of the student with a student ID of `A1234567X` to be `Betsy Crower` and clears all existing tags.
 *  `edit e:christian@nus.com h/@christan c/` Edits the telegram handle and clears the timetable of the student with an email of `christian@nus.com`.
 *  `edit h:@christan c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17` Replaces the timetable of the student with a telegram handle of `@christan` with this new one according to
@@ -188,7 +185,7 @@ Examples:
 
 ### Locating students by name: `find`
 
-Finds students whose criteria match any of the given keywords.
+Finds students whose criteria match all the given keywords.
 
 Format: `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`
 
@@ -200,7 +197,7 @@ Format: `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/
 * Tag is searched as complete tag names. e.g. `find t/tutorial-1` will only return those with a tag 'tutorial-1'
 (tag 'tutorial-10', 'tutorial-11', etc. will NOT appear in the results).
   * This is different from the fuzzy matching used in name and other criteria.
-* When multiple criteria are used, searched students must match **ALL** criteria specified.
+* When multiple criteria are used, searched students must match **ALL** criteria specified (Fuzzy matching for non-tags full matching for tags).
 
 Examples:
 * `find n/John` returns john and John Doe
@@ -218,6 +215,7 @@ Copy student emails to the clipboard.
 Format: `copy [t/TAG]…`
 
 * When no tags are supplied, copies all student emails.
+* When multiple tags are used, copies emails of all students that has **ALL** the tags specified. 
 * Tag is searched as complete tag names. e.g. `copy t/tutorial-1` will only return those with a tag 'tutorial-1'
 (tag 'tutorial-10', 'tutorial-11', etc. will NOT be copied)
 * Copied emails are in the form of `example1@email.com, example2@email.com, example3@email.com` and adheres to the format specified in [section 3.4 of RFC5322](https://tools.ietf.org/html/rfc5322#section-3.4).
@@ -311,11 +309,11 @@ Action     | Format, Examples
 -----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 **Add**    | `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​` <br> e.g., `add n/James Ho s/A2222444X e/jamesho@example.com h/@hohoho t/struggling t/3rd year c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
 **Delete** | `delete <choose only 1> [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE]`<br> e.g., `delete s/A0001234A`
-**Edit**   | `edit INDEX <choose 1 or more> [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
+**Edit**   | `edit <choose only 1> [i:INDEX] [s:STUDENT_ID] [e:EMAIL] [h:TELEGRAM_HANDLE] <choose 1 or more> [n/NAME] [s/STUDENT_ID] [e/EMAIL] [h/TELEGRAM_HANDLE] [l/WEBLINK] [c/TIMETABLE] [t/TAG]…​`<br> e.g., `edit i:2 n/James Lee e/jameslee@example.com c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
 **Find**   | `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`<br> e.g., `find n/john t/tutorial-2`
 **Copy**   | `copy [t/TAG]…`<br> e.g., `copy t/tutorial-2`
 **List**   | `list [timetable]`<br> e.g., `list` `list timetable`
-**Help**   | `help [COMMAND]`
+**Help**   | `help [COMMAND]`<br> e.g., `help` `help add`
 **Slots**  | `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]`<br> e.g., `slots d/1 t/tutorial-1 p/10-16`
 **Clear**  | `clear`
 **Exit**   | `exit`

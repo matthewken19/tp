@@ -1,14 +1,17 @@
 package educonnect.logic;
 
-import java.text.ParseException;
+import static educonnect.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static educonnect.logic.parser.CliSyntax.PREFIX_LINK;
+import static educonnect.logic.parser.CliSyntax.PREFIX_NAME;
+import static educonnect.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static educonnect.logic.parser.CliSyntax.PREFIX_TELEGRAM_HANDLE;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import educonnect.logic.parser.Prefix;
 import educonnect.model.student.Student;
-
-import static educonnect.logic.parser.CliSyntax.*;
 
 /**
  * Container for user visible messages.

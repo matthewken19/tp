@@ -536,7 +536,7 @@ Use case ends.
 * **Telegram**: Preferred online messaging application used amongst students and TAs.
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix b: Instructions for manual testing**
+## **Appendix B: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
 

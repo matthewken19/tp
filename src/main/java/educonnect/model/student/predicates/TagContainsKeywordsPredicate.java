@@ -1,5 +1,6 @@
 package educonnect.model.student.predicates;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import educonnect.commons.util.ToStringBuilder;

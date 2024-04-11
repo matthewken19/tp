@@ -9,6 +9,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -66,7 +67,6 @@ public class FindCommand extends Command {
         if (!(other instanceof FindCommand)) {
             return false;
         }
-
         FindCommand otherFindCommand = (FindCommand) other;
         Set<Predicate<Student>> thisPredicates = new HashSet<>(predicates);
         Set<Predicate<Student>> otherPredicates = new HashSet<>(otherFindCommand.predicates);
@@ -78,5 +78,9 @@ public class FindCommand extends Command {
         return new ToStringBuilder(this)
                 .add("predicates", predicates)
                 .toString();
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(predicates);
     }
 }

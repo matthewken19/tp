@@ -21,31 +21,32 @@ import educonnect.model.student.timetable.Period;
 import educonnect.model.student.timetable.Timetable;
 
 /**
- * Finds a common slot amongst the list of students (a subgroup can be specified, identified using tags).
+ * Finds a common available slot amongst the list of students (a subgroup can be specified, identified using tags).
  */
 public class SlotsCommand extends Command {
     public static final String COMMAND_WORD = "slots";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Finds a common slot of time amongst a list of students.\n"
+            + ": Finds a common available slot of time amongst a list of students.\n"
             + "The list of students can be narrowed down by tag(s).\n"
-            + "The period of time to look for the common slot can be specified, "
+            + "The period of time to look for the common available slot can be specified, "
             + "otherwise, the default period is between 8 AM to 10 PM.\n"
             + "The search on which days can be specified, "
             + "otherwise, the default will be from Monday to Friday.\n"
             + "Parameters: "
             + PREFIX_DURATION + "DURATION (1-23) "
-            + "[" + PREFIX_TAG + "TAG]"
-            + "[" + PREFIX_PERIOD + "PERIOD]"
+            + "[" + PREFIX_TAG + "TAG] "
+            + "[" + PREFIX_PERIOD + "PERIOD] "
             + "[" + PREFIX_ON_DAYS + "DAYS]\n\n"
             + "Example 1: " + COMMAND_WORD + " " + PREFIX_DURATION + "1 \n\n"
             + "Example 2: " + COMMAND_WORD + " " + PREFIX_DURATION + "2 "
-            + PREFIX_PERIOD + "10-6 " + PREFIX_ON_DAYS + "mon, tue, fri\n\n"
+            + PREFIX_PERIOD + "10-18 " + PREFIX_ON_DAYS + "mon, tue, fri\n\n"
             + "Example 3: " + COMMAND_WORD + " " + PREFIX_DURATION + "1 "
             + PREFIX_TAG + "tutorial-1 " + PREFIX_PERIOD + "10-16 \n\n";
 
-    public static final String MESSAGE_FOUND_SLOTS_SUCCESS = "Found a few slots, they are displayed below.\n\n%1$s";
-    public static final String MESSAGE_NO_SLOTS_FOUND = "No slots found.";
+    public static final String MESSAGE_FOUND_SLOTS_SUCCESS =
+            "Found a few available slots, they are displayed below.\n\n%1$s";
+    public static final String MESSAGE_NO_SLOTS_FOUND = "No available slots found.";
     private final SlotsFinderDescriptor slotsFinderDescriptor;
 
     public SlotsCommand(SlotsFinderDescriptor slotsFinderDescriptor) {

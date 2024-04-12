@@ -19,7 +19,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
     - [Locating students by name: `find`](#locating-students-by-name-find)
     - [Copying student emails: `copy`](#copying-student-emails-copy)
     - [Deleting a student: `delete`](#deleting-a-student-delete)
-    - [Finding a common time slot among students: `slots`](#finding-a-common-time-slot-among-students-slots)
+    - [Finding a common available time slot among students: `slots`](#finding-a-common-available-time-slot-among-students-slots)
     - [Clearing all students: `clear`](#clearing-all-students-clear)
     - [Exiting EduConnect: `exit`](#exiting-educonnect-exit)
     - [Saving the data](#saving-the-data)
@@ -39,6 +39,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 1. Copy the file to the folder you want to use as the _home folder_ for EduConnect.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar educonnect-1.4.jar` command to run the application.<br>
+
    A GUI similar to the below should appear in a few seconds. <br>
    ![Ui](images/defaultUi.png)
 
@@ -105,6 +106,55 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * There can only be one unique identifier at each time. Which means no two students can share the same unique identifiers above.
 </box>
 
+
+<box type="info" seamless>
+
+**Notes about timetable, days and periods:**<br>
+
+* Student's timetables are used for tracking student's unavailable periods.<br>
+  e.g For MONDAY, schedule is: Period (13:00 to 1500) it means that the student is unavailable on monday 1pm to 3pm.
+
+* Commands that involve `DAYS` and `PERIODS` are `add`, `edit` and `slot` (go to individual commands to see how they are used).
+
+* `PERIOD` are timings in the day numbered from (0-23), which represents the 24-hour clock.<br>
+  e.g `1-10` or `10-16`
+
+* `DAYS` and only their corresponding three lettered **uncapitalised** prefixes are accepted (Weekends are not used).
+  * Monday: `mon`
+  * Tuesday: `tue`
+  * Wednesday: `wed`
+  * Thursday: `thu`
+  * Friday: `fri`
+
+* A valid `TIMETABLE` format is written with the three lettered day prefixes followed by a colon and the periods. Separate multiple periods in a day with a comma.<br>
+  e.g `mon: 8-10, 10-12 tue: 8-10 thu: 12-14 fri 16-18, 18-20`
+
+* `add` and `edit` commands allow for adding multiple `PERIOD` while `slot` command does not (go to individual commands for more information).<br>
+  e.g `mon: 8-12, 14-16`
+
+* An overlapping `PERIOD` means that multiple `PERIOD` are added for the same day and there is a timing conflict.<br>
+  e.g `wed: 10-12, 11-13` (11-12 is the overlapping period)
+
+</box>
+
+<box type="info" seamless>
+
+**Additional notes about other parameters:**<br>
+
+* `NAME` allows for dashes numbers and spaces. However, there cannot be 2 consecutive dashes, spaces or a combination of both.<br>
+  e.g `John Doe`, `Anne-Marie`, `William-The 3rd`
+
+* `WEBLINK` is used for attaching a student's project in Educonnect. However, the parameter currently accepts any valid website links.<br>
+  e.g `https://github.com/johndoe/tp`
+
+</box>
+
+**Notes about displaying timetables of students:**<br>
+
+* By default, timetables of students are not shown.
+
+* To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results.
+
 ### Viewing help: `help`
 
 Shows a message explaining how to access the help page. This feature ensures that users can easily understand the functionality and syntax of commands without referring to external documentation.
@@ -138,8 +188,7 @@ Format: `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETA
 </box>
 
 Examples:
-* `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue:
-  11-13 thu: 12-15, 15-17`
+* `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com l/https://github.com/johndoe/tp t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
 * `add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U`
   ![result for 'add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U'](images/add.png)
 
@@ -183,6 +232,7 @@ Examples:
 *  `edit e:christian@nus.com h/@christan c/` Edits the telegram handle and clears the timetable of the student with an email of `christian@nus.com`.
 *  `edit h:@christan c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17` Replaces the timetable of the student with a telegram handle of `@christan` with this new one according to
    the specifications in the command
+*  `edit i:2 l/https://github.com/annemarie/tp` Edits the weblink of the 2nd student to be `https://github.com/johndoe/tp`.
 
 ### Locating students by name: `find`
 
@@ -244,19 +294,25 @@ Examples:
 * `delete s/A0001234A` deletes a student with a student id of `A0001234A` in the address book.
   ![result for 'find alex', followed by 'delete s/A0001234A'](images/delete.png)
 
-### Finding a common time slot among students: `slots`
+### Finding a common available time slot among students: `slots`
 
 Format : `slots d/DURATION [t/TAG] [p/PERIOD] [o/DAYS]`
 
-* Finds a common slot of time amongst a list of students.
+* Finds a common available slot of time amongst a list of students.
 * The list of students can be narrowed down by tag(s).
-* The period of time to look for the common slot can be specified, otherwise, the default period is between 8 AM to 10 PM.
+* The period of time to look for the common available slot can be specified, otherwise, the default period is between 8 AM to 10 PM.
 * The search on which days can be specified, otherwise, the default will be from Monday to Friday.
+* The duration must be specified.
+* Duration is specified with an `int`, it can be between 1 - 23, indicating 1-hour to 23-hours, although typically one would use values 1-4.
+* The period of time to look for the available common slot can be specified, otherwise, the default period is between 8 AM to 10 PM.
+* The period is specified using 2 `int`s, separated by a `-` (see above).
+* The search on which days can be specified, otherwise, the default will be from Monday to Friday.
+* The days are specified with the lowercase three-letter representation of the day, e.g. `"tue"` or `"wed"`.
 
 Examples:
-* `slots d/1` finds a common 1-hour time slot among listed students.
-* `slots d/2 p/10-6 o/mon, tue, fri` finds a common 2-hour time slot on monday, tuesday and wednesday among listed students.
-* `slots d/1 t/tutorial-1 p/10-16` finds a common 1-hour time slot for students tagged with `tutorial-1` from 10am to 6pm.
+* `slots d/1` finds a common available 1-hour time slot among listed students.
+* `slots d/2 p/10-18 o/mon, tue, fri` finds a common available 2-hour time slot on monday, tuesday and wednesday among listed students.
+* `slots d/1 t/tutorial-1 p/10-16` finds a common available 1-hour time slot for students tagged with `tutorial-1` from 10am to 6pm.
   ![result of slot command](images/slots.png)
 
 ### Clearing all students: `clear`

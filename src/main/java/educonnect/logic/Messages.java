@@ -1,5 +1,11 @@
 package educonnect.logic;
 
+import static educonnect.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static educonnect.logic.parser.CliSyntax.PREFIX_LINK;
+import static educonnect.logic.parser.CliSyntax.PREFIX_NAME;
+import static educonnect.logic.parser.CliSyntax.PREFIX_STUDENT_ID;
+import static educonnect.logic.parser.CliSyntax.PREFIX_TELEGRAM_HANDLE;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,6 +26,8 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_NO_STUDENT_FOUND = "No student found.";
+    public static final String MESSAGE_EMPTY_PREFIX_ARGUMENT =
+            " The [%s] argument cannot be empty! Please provide a valid value for [%s].";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -31,6 +39,24 @@ public class Messages {
                 Stream.of(duplicatePrefixes).map(Prefix::toString).collect(Collectors.toSet());
 
         return MESSAGE_DUPLICATE_FIELDS + String.join(" ", duplicateFields);
+    }
+
+    public static String getErrorMessageForEmptyArguments(Prefix prefix) {
+        String prefixMessage;
+        if (prefix.equals(PREFIX_NAME)) {
+            prefixMessage = "NAME";
+        } else if (prefix.equals(PREFIX_EMAIL)) {
+            prefixMessage = "EMAIL";
+        } else if (prefix.equals(PREFIX_STUDENT_ID)) {
+            prefixMessage = "STUDENT ID";
+        } else if (prefix.equals(PREFIX_TELEGRAM_HANDLE)) {
+            prefixMessage = "TELEGRAM HANDLE";
+        } else if (prefix.equals(PREFIX_LINK)) {
+            prefixMessage = "LINK";
+        } else {
+            throw new AssertionError();
+        }
+        return String.format(MESSAGE_EMPTY_PREFIX_ARGUMENT, prefixMessage, prefixMessage);
     }
 
     /**

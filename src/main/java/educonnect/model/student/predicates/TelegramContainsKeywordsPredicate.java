@@ -1,5 +1,6 @@
 package educonnect.model.student.predicates;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import educonnect.commons.util.StringUtil;
@@ -40,5 +41,10 @@ public class TelegramContainsKeywordsPredicate implements Predicate<Student> {
     @Override
     public String toString() {
         return new ToStringBuilder(this).add("keywords", keywordTelegram).toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(keywordTelegram);
     }
 }

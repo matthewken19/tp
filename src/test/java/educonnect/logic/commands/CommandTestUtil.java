@@ -22,9 +22,11 @@ import educonnect.logic.commands.exceptions.CommandException;
 import educonnect.model.AddressBook;
 import educonnect.model.Model;
 import educonnect.model.student.Student;
+import educonnect.model.student.Tag;
 import educonnect.model.student.predicates.EmailContainsKeywordsPredicate;
 import educonnect.model.student.predicates.IdContainsKeywordsPredicate;
 import educonnect.model.student.predicates.NameContainsKeywordsPredicate;
+import educonnect.model.student.predicates.TagContainsKeywordsPredicate;
 import educonnect.model.student.predicates.TelegramContainsKeywordsPredicate;
 import educonnect.testutil.EditStudentDescriptorBuilder;
 
@@ -89,12 +91,17 @@ public class CommandTestUtil {
     public static final EditCommand.EditStudentDescriptor DESC_BOB;
     public static final EditCommand.EditStudentDescriptor DESC_JOHN;
     public static final Predicate<Student> VALID_STUDENT_ID_PREDICATE;
+    public static final Predicate<Student> VALID_TAG_PREDICATE;
     public static final Predicate<Student> VALID_TELEGRAM_HANDLE_PREDICATE;
     public static final Predicate<Student> VALID_EMAIL_PREDICATE;
+    public static final Predicate<Student> VALID_NAME_PREDICATE;
+
     static {
         VALID_STUDENT_ID_PREDICATE = new IdContainsKeywordsPredicate(VALID_STUDENT_ID_AMY);
         VALID_TELEGRAM_HANDLE_PREDICATE = new TelegramContainsKeywordsPredicate(VALID_TELEGRAM_HANDLE_AMY);
         VALID_EMAIL_PREDICATE = new EmailContainsKeywordsPredicate(VALID_EMAIL_AMY);
+        VALID_NAME_PREDICATE = new NameContainsKeywordsPredicate(VALID_NAME_AMY);
+        VALID_TAG_PREDICATE = new TagContainsKeywordsPredicate(new Tag(VALID_TAG_FRIEND));
     }
 
     static {

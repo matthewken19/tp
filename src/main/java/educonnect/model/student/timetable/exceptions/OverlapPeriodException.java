@@ -7,7 +7,7 @@ import educonnect.logic.parser.exceptions.ParseException;
  */
 public class OverlapPeriodException extends ParseException {
     private static final String MESSAGE =
-            "There cannot be overlapping Periods."
+            "There cannot be overlapping Periods. "
             + "Ensure that each Period starts at least at the end time of the previous Period.";
 
     public OverlapPeriodException() {

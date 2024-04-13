@@ -1,25 +1,23 @@
 package educonnect.model.student.predicates;
 
-import java.util.Objects;
 import java.util.function.Predicate;
 
-import educonnect.commons.util.StringUtil;
 import educonnect.commons.util.ToStringBuilder;
 import educonnect.model.student.Student;
 
 /**
  * Tests that a {@code Student}'s {@code Email} matches any of the keywords given.
  */
-public class TelegramContainsKeywordsPredicate implements Predicate<Student> {
+public class TelegramMatchesKeywordsPredicate implements Predicate<Student> {
     private final String keywordTelegram;
 
-    public TelegramContainsKeywordsPredicate(String keywordTelegram) {
+    public TelegramMatchesKeywordsPredicate(String keywordTelegram) {
         this.keywordTelegram = keywordTelegram; //replace
     }
 
     @Override
     public boolean test(Student student) {
-        return StringUtil.fuzzyMatchIgnoreCase(student.getTelegramHandle().value, keywordTelegram);
+        return student.getTelegramHandle().toString().equals(keywordTelegram);
     }
 
     @Override
@@ -29,22 +27,17 @@ public class TelegramContainsKeywordsPredicate implements Predicate<Student> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof TelegramContainsKeywordsPredicate)) {
+        if (!(other instanceof TelegramMatchesKeywordsPredicate)) {
             return false;
         }
 
-        TelegramContainsKeywordsPredicate otherTelegramContainsKeywordsPredicate =
-                (TelegramContainsKeywordsPredicate) other;
-        return keywordTelegram.equals(otherTelegramContainsKeywordsPredicate.keywordTelegram);
+        TelegramMatchesKeywordsPredicate otherTelegramMatchesKeywordsPredicate =
+                (TelegramMatchesKeywordsPredicate) other;
+        return keywordTelegram.equals(otherTelegramMatchesKeywordsPredicate.keywordTelegram);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this).add("keywords", keywordTelegram).toString();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(keywordTelegram);
     }
 }

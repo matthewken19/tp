@@ -33,7 +33,7 @@ We are a team based in the [School of Computing, National University of Singapor
 <img src="images/fy17ohhh.png" width="200px">
 
 [[github](http://github.com/fy17ohhh)]
-[[portfolio](team/feiyang.md)]
+[[portfolio](team/fy17ohhh.md)]
 
 * Role: Developer
 * Responsibilities: Team Lead + UI

@@ -75,6 +75,9 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/tutorial-1`, `t/tutorial-1 t/strong` etc.
 
+* Angular brackets `<CONDITION>` will inform the user of the optional prefix requirements that is used in the command <br>
+  e.g `<choose 1 only>` `[s/STUDENT_ID]` `[e/EMAIL]` `[h/TELEGRAM_HANDLE]` indicates that only one of these optional prefix must be present in the command
+
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME s/STUDENT_ID`, `s/STUDENT_ID n/NAME` is also acceptable.
 
@@ -82,19 +85,6 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
   e.g. if the command specifies `clear 123`, it will be interpreted as `clear`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</box>
-
-<box type="info" seamless>
-
-**Notes about optional prefixes:**<br>
-
-* Optional prefixes are contained in square brackets.<br>
-  e.g `[t/Tag]` or `[l/WEBLINK]` (go to individual commands to see which prefixes are optional)
-
-* By default optional prefix is not a required parameter when inputting commands.
-
-* Angular brackets `<CONDITION>` will inform the user of the optional prefix requirements that is used in the command <br>
-  e.g `<choose 1 only>` `[s/STUDENT_ID]` `[e/EMAIL]` `[h/TELEGRAM_HANDLE]` indicates that only one of these optional prefix must be present in the command
 </box>
 
 <box type="info" seamless>
@@ -143,18 +133,28 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 * `NAME` allows for dashes numbers and spaces. However, there cannot be 2 consecutive dashes, spaces or a combination of both.<br>
   e.g `John Doe`, `Anne-Marie`, `William-The 3rd`
-
-* `WEBLINK` is used for attaching a student's project in Educonnect. However, the parameter currently accepts any valid website links.<br>
+* `TELEGRAM_HANDLE` should start with `@`, consists of only alphanumeric characters and underscores`_`, have a minimum of 5 characters, and have a minimum of 3 alphanumeric characters.
+* `EMAIL` should be of the format `local-part@domain`, and adhere to the following constraints:
+  * The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
+  * This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
+  * The domain name must:
+    - end with a domain label at least 2 characters long
+    - have each domain label start and end with alphanumeric characters
+    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
+* `TAG` must start with an alphanumeric character, should only contain alphanumeric characters, spaces and hyphens, and it should not be blank.
+* `WEBLINK` is used for attaching a student's project in Educonnect. The parameter currently accepts any valid website (HTTP or HTTPS) or file transfer protocol (FTP) links, regardless if it is a broken link. If no protocol (`https://` or `ftp://`) is supplied, the link will default `https://`.<br>
   e.g `https://github.com/johndoe/tp`
 
 </box>
 
+<box type="info" seamless>
 **Notes about displaying timetables of students:**<br>
 
 * By default, timetables of students are not shown.
 
 * To show or hide timetables of students, use `list` command.
 
+</box>
 ### Viewing help: `help`
 
 Shows a message explaining how to access the help page. This feature ensures that users can easily understand the functionality and syntax of commands without referring to external documentation.

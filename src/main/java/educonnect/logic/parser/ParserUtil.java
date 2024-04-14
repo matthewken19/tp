@@ -190,8 +190,12 @@ public class ParserUtil {
     public static Timetable parseTimetable(ArrayList<String> allDays) throws ParseException {
         requireNonNull(allDays);
         Timetable timetable = new Timetable();
-        for (int i = 0; i < allDays.size(); i++) {
-            parseDay(i + 1, timetable, parsePeriods(allDays.get(i)));
+        try {
+            for (int i = 0; i < allDays.size(); i++) {
+                parseDay(i + 1, timetable, parsePeriods(allDays.get(i)));
+            }
+        } catch (ParseException e) {
+            throw new ParseException(e.getMessage() + "\n\n" + Timetable.MESSAGE_CONSTRAINTS);
         }
         return timetable;
     }

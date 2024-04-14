@@ -31,7 +31,7 @@ public class CopyCommand extends Command {
             + "Example 2: " + COMMAND_WORD + " t/tutorial-1";
 
     private final Collection<Predicate<Student>> predicates;
-    private final boolean copy;
+    private final boolean doCopy;
 
     /**
      * Creates a CopyCommand to copy emails to the clipboard.
@@ -39,7 +39,7 @@ public class CopyCommand extends Command {
      */
     public CopyCommand(Collection<Predicate<Student>> predicates) {
         this.predicates = predicates;
-        this.copy = true;
+        this.doCopy = true;
     }
 
     /**
@@ -55,7 +55,7 @@ public class CopyCommand extends Command {
      */
     public CopyCommand(Collection<Predicate<Student>> predicates, boolean copy) {
         this.predicates = predicates;
-        this.copy = copy;
+        this.doCopy = copy;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class CopyCommand extends Command {
             throw new CommandException(Messages.MESSAGE_NO_STUDENT_FOUND);
         }
 
-        if (copy) {
+        if (doCopy) {
             Clipboard clipboard = Clipboard.getSystemClipboard();
             ClipboardContent content = new ClipboardContent();
             StringJoiner emails = new StringJoiner(", ");

@@ -720,3 +720,5 @@ Team Size: 6
    3. Tag should be sufficiently long but not too long as they are used as groupings. We estimate around 40 characters to be more than sufficient.
 
 8. **Editing Student with the same details:** Currently, when editing a student with the same details, no error message is displayed and EduConnect updates the Student with the same data. This is may confuse users and it will result in no changes while still showing a successfuull update. We plan to add a check and display the proper error message. E.g. A student with telegram handle `@bunny`, when running the command `edit h:@bunny h/@bunny` should return an error message `Duplicate telegram handle supplied.`
+
+9. **Saturday and Sunday timetable:** Add an option to enable/disable Saturday and Sunday in the timetable. Currently, only Monday to Friday are enabled and periods can only be added within these 5 days. Extending the feature to 7 days will help for the situation where there are weekend classes.

@@ -75,6 +75,9 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/tutorial-1`, `t/tutorial-1 t/strong` etc.
 
+* Angular brackets `<CONDITION>` will inform the user of the optional prefix requirements that is used in the command <br>
+  e.g `<choose 1 only>` `[s/STUDENT_ID]` `[e/EMAIL]` `[h/TELEGRAM_HANDLE]` indicates that only one of these optional prefix must be present in the command
+
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME s/STUDENT_ID`, `s/STUDENT_ID n/NAME` is also acceptable.
 
@@ -82,19 +85,6 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
   e.g. if the command specifies `clear 123`, it will be interpreted as `clear`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</box>
-
-<box type="info" seamless>
-
-**Notes about optional prefixes:**<br>
-
-* Optional prefixes are contained in square brackets.<br>
-  e.g `[t/Tag]` or `[l/WEBLINK]` (go to individual commands to see which prefixes are optional)
-
-* By default optional prefix is not a required parameter when inputting commands.
-
-* Angular brackets `<CONDITION>` will inform the user of the optional prefix requirements that is used in the command <br>
-  e.g `<choose 1 only>` `[s/STUDENT_ID]` `[e/EMAIL]` `[h/TELEGRAM_HANDLE]` indicates that only one of these optional prefix must be present in the command
 </box>
 
 <box type="info" seamless>

@@ -2,6 +2,7 @@ package educonnect.logic.parser;
 
 import static educonnect.commons.util.CollectionUtil.requireAllNonNull;
 import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static educonnect.model.student.Link.VALIDATION_REGEX;
 import static java.util.Objects.requireNonNull;
 
 import java.time.DayOfWeek;
@@ -11,6 +12,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import educonnect.MainApp;
 import educonnect.commons.core.LogsCenter;
@@ -318,19 +321,21 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code link} is invalid.
      */
-    public static Link parseLink(String s) throws ParseException {
-        requireNonNull(s);
-        String trimmedLink = s.trim();
-        // If it does not start with a https, add it to the start of the string
-        if (!trimmedLink.startsWith("https://")) {
-            trimmedLink = "https://" + trimmedLink;
-        }
-        if (!Link.isValidLink(trimmedLink)) {
-            System.out.println(trimmedLink);
-            logger.info(trimmedLink + " is an invalid link!");
+    public static Link parseLink(String url) throws ParseException {
+        requireNonNull(url);
+        url = url.trim();
+        Pattern p = Pattern.compile(VALIDATION_REGEX);
+        Matcher m = p.matcher(url); //url is https://example.com
+        if (!m.matches()) {
             throw new ParseException(Link.MESSAGE_CONSTRAINTS);
         }
-        logger.info(trimmedLink + " is a valid link!");
-        return new Link(trimmedLink);
+
+        if (m.group("scheme") == null) {
+            logger.info("No scheme found!"); //if url does not contain ftp/http/https
+            url = "https://" + url;
+        }
+
+
+        return new Link(url);
     }
 }

@@ -13,9 +13,7 @@ public class Link {
     //    Reused from https://stackoverflow.com/questions/42618872/regex-for-website-or-url-validation,
     //    under Mustofa Rizwan's response
 
-    public static final String VALIDATION_REGEX =
-            "^((ftp|http|https):\\/\\/)?(www.)?(?!.*(ftp|http|https|www.))[\\w-@:]+(\\.[a-zA-Z]+(:\\w+)?)+((\\/+)"
-            + "[\\w-#%]+)*(\\/\\w+\\?\\w+=\\w+(&\\w+=[\\w-]+)*)?\\/?$";
+    public static final String VALIDATION_REGEX = "^(?<scheme>(?:ftp|https?):\\/\\/)?+(?:(?<username>[a-zA-Z][\\w-.]{0,31})(?::(?<password>[!-~&&[^@$\\n\\r]]{6,255}))?@)?(?<subdomain>(?:[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]?\\.){0,127})(?<domain>[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9])(?<tld>\\.[a-zA-Z]{3,63})(?<cctld>\\.[a-zA-Z]{2})?(?<portnumber>:\\d{1,5})?(?<path>(?:\\/{1,2}[\\w-@.~()%]*)*)(?<querystring>\\?(?:[\\w-%]+=[\\w-?/:@.~!$&'()*+,;=%]+(?:&[\\w-%]+=[\\w-?/:@.~!$&'()*+,;=%]+)*)?)?(?<fragment>#[\\w-?/:@.~!$&'()*+,;=%]+)?$";
     //@@author
     public final String url;
 
@@ -27,6 +25,7 @@ public class Link {
     public Link(String url) {
         requireNonNull(url);
         this.url = url;
+
     }
 
     public static boolean isValidLink(String test) {

@@ -38,7 +38,6 @@ public class LinkTest {
 
         // main domain name cannot contain @, only a-zA-Z0-9 and hyphens
         assertFalse(Link.isValidLink("www.password@.com"));
-        
         // gTLD name must only contain a-z characters
         assertFalse(Link.isValidLink("http://www.murihao.thr3e"));
 
@@ -83,8 +82,6 @@ public class LinkTest {
         assertTrue(Link.isValidLink("www.google.com/search?q=cats&oq=cats&gs_lcrp=Eg"
                 + "ZjaHJvbWUyBggAEEUYOTIHCAEQABiPAjIHCAIQABiPAjIGCAMQRRg9MgYIBBBFGD3SAQg0NjM0"
                 + "ajBqMagCALACAA&sourceid=chrome&ie=UTF-8"));
-
-
 
     }
 

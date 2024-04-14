@@ -209,7 +209,7 @@ Format: `list [timetable]`
 
 Examples:
 * `list`
-* `list timetable` 
+* `list timetable`
 ![result for 'list timetable'](images/listTimetable.png)
 ### Editing a student: `edit`
 
@@ -244,7 +244,7 @@ Finds students whose criteria match all the given keywords.
 Format: `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`
 
 * The search is case-insensitive. e.g. `find n/hans` will match Hans.
-* The order of the keywords do not matter. e.g. `find n/hans t/tutorial-1` will return the same result as `find 
+* The order of the keywords do not matter. e.g. `find n/hans t/tutorial-1` will return the same result as `find
   t/tutorial-1 n/hans`.
 * Name and other criteria are searched using fuzzy matching.
   * Students with any part of the names matching the keyword will be returned.
@@ -269,7 +269,7 @@ Copy student emails to the clipboard.
 Format: `copy [t/TAG]…`
 
 * When no tags are supplied, copies all student emails.
-* When multiple tags are used, copies emails of all students that has **ALL** the tags specified. 
+* When multiple tags are used, copies emails of all students that has **ALL** the tags specified.
 * Tag is searched as complete tag names. e.g. `copy t/tutorial-1` will only return those with a tag 'tutorial-1'
 (tag 'tutorial-10', 'tutorial-11', etc. will NOT be copied)
 * Copied emails are in the form of `example1@email.com, example2@email.com, example3@email.com` and adheres to the format specified in [section 3.4 of RFC5322](https://tools.ietf.org/html/rfc5322#section-3.4).
@@ -280,7 +280,7 @@ Format: `copy [t/TAG]…`
 Examples:
 * `copy` copies all emails
 * `copy t/tutorial-2` copies 3 emails (`johnsmith@example.com, irfan@example.com, royb@example.com` all with `tutorial-2` tag)
-* `copy t/tutorial-2 t/strong-student` copies 1 email (`royb@example.com` with both `tutorial-2` and `strong-student` tag) 
+* `copy t/tutorial-2 t/strong-student` copies 1 email (`royb@example.com` with both `tutorial-2` and `strong-student` tag)
 
 ### Deleting a student: `delete`
 

@@ -9,7 +9,7 @@ import static java.util.Objects.requireNonNull;
 public class Link {
 
     public static final String MESSAGE_CONSTRAINTS = "Please provide a valid website.";
-    // RegEx groups match plan:
+    // Regex groups match plan:
     // 1) scheme ftp/http/https
     // 2) ssh username
     // 3) ssh password

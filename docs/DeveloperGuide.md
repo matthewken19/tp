@@ -161,10 +161,10 @@ This section describes some noteworthy details on how certain features are imple
 * Each `Timetable` contains <u>1 to 7</u> `Day` objects, by default, 5 days of the week (Monday - Friday) is used.
 * Each `Day` object can contain <u>0 to 24</u> 1-hour `Period` objects, or less if each `Period` has intervals longer
   than 1 hour.
-* Each `Period` is defined by the start time and end time, indicated by integers on a 24-hour clock, 
+* Each `Period` is defined by the start time and end time, indicated by integers on a 24-hour clock,
   i.e. 0-23, which refers to 12 AM till 11 PM.
 * Each `Day` cannot contain any overlapping `Period`.
-  * An overlap occurs when the start time of the previous `Period` is before the end time of the next `Period`. 
+  * An overlap occurs when the start time of the previous `Period` is before the end time of the next `Period`.
   * E.g. for the case of `Period` of 12-14, `Period` of 14-16 is allowed, but `Period` of 13-15 is not.
 * If not specified in the `add` command, or subsequently modified using the `edit` command, the `Timetable` is assumed
   to be empty, indicating no occupied period.
@@ -189,7 +189,7 @@ This section describes some noteworthy details on how certain features are imple
 
 * The `Timetable` of the `Student` can be specified during the `add` command, indicated with a `c/` prefix.
 * Similarly, the `Timetable` of a `Student` can be modified during the `edit` command, with the same prefix.
-* The `c/` prefix is optional, and if not specified, 
+* The `c/` prefix is optional, and if not specified,
   an empty `Timetable` object will be created as the attribute of the `Student`.
   * The arguments for the `Timetable` object can be broken down into its respective day and periods that day contains.
   * The day is indicated by its respective prefix as well, the format is `{DAY_3_LETTERS}:`, e.g. `"mon:"` or `"fri:"`.
@@ -201,7 +201,7 @@ This section describes some noteworthy details on how certain features are imple
 
 #### Finding Common Slots from list of Students (can be filtered)
 
-The finding a common slot feature will have a portion implemented similarly to the `find` command. 
+The finding a common slot feature will have a portion implemented similarly to the `find` command.
 The command consists of a mandatory specified duration, and optional arguments for higher specificity,
 and a common empty slot across all students that fulfils the duration requirement will be outputted to the user.
 
@@ -213,22 +213,22 @@ and a common empty slot across all students that fulfils the duration requiremen
       * if not specified, defaults to 8 AM to 10 PM.
     * `o/` is an optional argument for on which days specifically to look for slots.
       * if not specified, defaults to Monday to Friday.
-      
+    
 * Examples:
     * `slot d/1` - EduConnect will look through the current list of students, i.e. can be the full list, or a filtered
       list if ran after the `find` command, then returns all the 1-hour slot(s) available for the week.
-    * `slot d/2 t/tutorial-1` - EduConnect will first filter and get the list of students with the tag `tutorial-1`, 
+    * `slot d/2 t/tutorial-1` - EduConnect will first filter and get the list of students with the tag `tutorial-1`,
       then return all the 2-hour slot(s) available for the week.
     * `slot d/3 p/12-18 o/tue, wed, thu t/tutorial-2` - EduConnect will first filter and get the list of students
       with the tag `tutorial-2`, then returns all the 3-hour slot(s) available,
       between 12 PM to 6 PM, on Tuesdays, Wednesdays, and Thursdays only.
-  
+
 * The command's execution will iterate through the selected list of students, accessing each `Timetable` object's
   list of `Day` objects.
     * Each `Day` object will look for valid `Period` that does not overlap with its own list of `Period` objects.
-    * The series of valid `Period` and `Day` will be collected from each `Timetable` of each `Student`, 
-      and returned as an `AvailableSlots` objects, which is collected in a `List`. 
-    * Common slots across all `AvailableSlots` will then be filtered out 
+    * The series of valid `Period` and `Day` will be collected from each `Timetable` of each `Student`,
+      and returned as an `AvailableSlots` objects, which is collected in a `List`.
+    * Common slots across all `AvailableSlots` will then be filtered out
       and returned as a singular `AvailableSlots` object.
 
 * The diagram below shows the sequence diagram for an example execution of finding common slots.
@@ -248,7 +248,7 @@ The inclusion of the `Link` attribute enhances the versatility of EduConnect, en
 
 #### UI implementation
 
-* A student's weblink will be displayed using the JavaFX `Hyperlink` class at `StudentCard.java`. 
+* A student's weblink will be displayed using the JavaFX `Hyperlink` class at `StudentCard.java`.
 * Due to potential UI issues arising from excessively long URLs, a clickable embedded text labeled "Project Link" will be displayed instead of the actual URL.
 * If the student has a valid Link, the Hyperlink will be visible and clickable, allowing users to access the weblink directly.
 * If the student does not have a Link attribute or if the Link is not specified, the Hyperlink will be toggled to be invisible, ensuring a clean and uncluttered user interface.
@@ -599,7 +599,7 @@ testers are expected to do more *exploratory* testing.
 ## **Appendix C: Effort**
 
 #### Overview
-- Our team aims at creating an application that is easy to use and helpful for TAs to manage courses. We mainly focused on features that are optimized for CLI users. 
+- Our team aims at creating an application that is easy to use and helpful for TAs to manage courses. We mainly focused on features that are optimized for CLI users.
 - In addition to the existing basic features of AB3 (Address Book 3), we implement additional features including finding students, copying emails, and finding common slots for our target users - TAs.
 
 #### Difficulty Level and Challenges Faced
@@ -609,12 +609,12 @@ testers are expected to do more *exploratory* testing.
 
 #### Effort Required
 
-- Efforts were allocated across various project phases, including requirement analysis, design, development, testing, deployment, and debugging. 
+- Efforts were allocated across various project phases, including requirement analysis, design, development, testing, deployment, and debugging.
 
 - We also emphasized considerable efforct on team collaboration to make the development process smooth.
 
 #### Achievements
-- Successful implementation of core functionalities, including 
+- Successful implementation of core functionalities, including
 finding common slots and copying student emails, which showcases our goal of creating an application with user-centric features.
 
 - Implementation of GUI(Graphic User Interface) which aligns with the UI design as outlined in the project planning phase.
@@ -627,4 +627,4 @@ Team Size: 6
 1. **Use a better font:** User experience is greatly influenced by font, and choosing the right font can significantly enhance readability, Especially for EduConnect with numeric details of students displayed, the current font causes confusion sometimes. TWe plan to adapt a new font which not only improve the overall appearance of the platform but also contribute to a smoother reading experience for users.
 2. **Hover over ‘Project Link’ shows the full link:** Currently, when hovering over the project link, nothing is showing. We plan to provide users with the convenience of viewing the full link by simply hovering over it. We aim to allow users to quickly verify or copy the complete URL without having to click on it.
 3. **Better timetable display:** The current timetable of each student is displayed in text with little formatting. We plan to enhance the timetable display by incorporating a standardized graphical format, such as calendar or grid layout. This would allow users to quickly grasp their schedules at a glance and navigate through different time slots more efficiently.
-4. **View student details:** The ability to view comprehensive details of each student in text, including their project link and timetable, is essential for effective management and communication within EduConnect. We plan to introduce a new "View Student" function, allowing users to access all student information conveniently. 
+4. **View student details:** The ability to view comprehensive details of each student in text, including their project link and timetable, is essential for effective management and communication within EduConnect. We plan to introduce a new "View Student" function, allowing users to access all student information conveniently.

@@ -48,7 +48,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
    * `list` : Lists all students.
 
-   * `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com t/tutorial-1 t/high-ability` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe s/A1234567X h/@john_doe e/johnd@example.com t/tutorial-1 t/high-ability` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete s/A0001234A` : Deletes the person with the `s/STUDENT_ID` unique identifier
 
@@ -153,7 +153,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 * By default, timetables of students are not shown.
 
-* To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results.
+* To show or hide timetables of students, use `list` command.
 
 ### Viewing help: `help`
 
@@ -188,7 +188,10 @@ Format: `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETA
 </box>
 
 Examples:
-* `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com l/https://github.com/johndoe/tp t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
+
+* `add n/John Doe s/A1234567X h/@john_doe e/johnd@example.com t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue:
+  11-13 thu: 12-15, 15-17`
+
 * `add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U`
   ![result for 'add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U'](images/add.png)
 
@@ -200,14 +203,15 @@ Format: `list [timetable]`
 
 <box type="tip" seamless>
 
-**Tip:** By default, timetables of students are not shown.
+**Tip:** The choice of show timetables option will be saved and timetables will remain visible/invisible for subsequent command results. However, the choice will be restored to hiding timetable each time application is relaunched.
 
-**Tip:** To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results. However, the choice will be restored to hiding timetable each time application is relaunched.
+</box>
 
 Examples:
 * `list`
-* `list timetable` 
+* `list timetable`
 ![result for 'list timetable'](images/listTimetable.png)
+
 ### Editing a student: `edit`
 
 Edits an existing student.
@@ -232,7 +236,7 @@ Examples:
 *  `edit e:christian@nus.com h/@christan c/` Edits the telegram handle and clears the timetable of the student with an email of `christian@nus.com`.
 *  `edit h:@christan c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17` Replaces the timetable of the student with a telegram handle of `@christan` with this new one according to
    the specifications in the command
-*  `edit i:2 l/https://github.com/annemarie/tp` Edits the weblink of the 2nd student to be `https://github.com/johndoe/tp`.
+*  `edit i:2 l/https://github.com/annemarie/tp` Edits the weblink of the 2nd student to be `https://github.com/annemarie/tp`.
 
 ### Locating students by name: `find`
 
@@ -241,7 +245,7 @@ Finds students whose criteria match all the given keywords.
 Format: `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`
 
 * The search is case-insensitive. e.g. `find n/hans` will match Hans.
-* The order of the keywords do not matter. e.g. `find n/hans t/tutorial-1` will return the same result as `find 
+* The order of the keywords do not matter. e.g. `find n/hans t/tutorial-1` will return the same result as `find
   t/tutorial-1 n/hans`.
 * Name and other criteria are searched using fuzzy matching.
   * Students with any part of the names matching the keyword will be returned.
@@ -266,7 +270,7 @@ Copy student emails to the clipboard.
 Format: `copy [t/TAG]…`
 
 * When no tags are supplied, copies all student emails.
-* When multiple tags are used, copies emails of all students that has **ALL** the tags specified. 
+* When multiple tags are used, copies emails of all students that has **ALL** the tags specified.
 * Tag is searched as complete tag names. e.g. `copy t/tutorial-1` will only return those with a tag 'tutorial-1'
 (tag 'tutorial-10', 'tutorial-11', etc. will NOT be copied)
 * Copied emails are in the form of `example1@email.com, example2@email.com, example3@email.com` and adheres to the format specified in [section 3.4 of RFC5322](https://tools.ietf.org/html/rfc5322#section-3.4).
@@ -277,7 +281,7 @@ Format: `copy [t/TAG]…`
 Examples:
 * `copy` copies all emails
 * `copy t/tutorial-2` copies 3 emails (`johnsmith@example.com, irfan@example.com, royb@example.com` all with `tutorial-2` tag)
-* `copy t/tutorial-2 t/strong-student` copies 1 email (`royb@example.com` with both `tutorial-2` and `strong-student` tag) 
+* `copy t/tutorial-2 t/strong-student` copies 1 email (`royb@example.com` with both `tutorial-2` and `strong-student` tag)
 
 ### Deleting a student: `delete`
 
@@ -357,6 +361,10 @@ _Details coming soon ..._
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
+1. **When having extra long inputs** for NAME, TELEGRAM_HANDLE, EMAIL, and TAG, (which typically does not occur) the
+   long text may be truncated to a shortened version with '...' appended at the back.
+1. By default, **weekends are excluded** from `Timetable`, but `add`/`edit` commands are able to accept the inputs
+   containing weekends, just that it will be excluded from being stored to the `Student`.
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -33,7 +33,7 @@ We are a team based in the [School of Computing, National University of Singapor
 <img src="images/fy17ohhh.png" width="200px">
 
 [[github](http://github.com/fy17ohhh)]
-[[portfolio](team/feiyang.md)]
+[[portfolio](team/fy17ohhh.md)]
 
 * Role: Developer
 * Responsibilities: Team Lead + UI
@@ -62,7 +62,7 @@ We are a team based in the [School of Computing, National University of Singapor
 <img src="images/marclamp.png" width="200px">
 
 [[github](http://github.com/marclamp)]
-[[portfolio](team/marcuslam.md)]
+[[portfolio](team/marclamp)]
 
 * Role: Developer
 * Responsibilities: Documentation + Code Quality

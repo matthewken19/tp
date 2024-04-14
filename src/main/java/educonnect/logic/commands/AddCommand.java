@@ -38,7 +38,7 @@ public class AddCommand extends Command {
             + "Example1: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_STUDENT_ID + "A1234567X "
-            + PREFIX_TELEGRAM_HANDLE + "@john.doe "
+            + PREFIX_TELEGRAM_HANDLE + "@john_doe "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_LINK + "https://github.com/johndoe/tp "
             + PREFIX_TAG + "tutorial-1 "

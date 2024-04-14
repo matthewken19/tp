@@ -4,7 +4,7 @@
     "name" : "Alice Pauline",
     "studentId" : "A0077493U",
     "email" : "alice@example.com",
-    "telegramHandle" : "@Paulice",
+    "telegramHandle" : "@paulice",
     "tags" : [ "tutorial-1" ],
     "timetable" : {
       "days" : [ {

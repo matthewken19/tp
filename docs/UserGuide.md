@@ -208,6 +208,7 @@ Examples:
 * `list`
 * `list timetable` 
 ![result for 'list timetable'](images/listTimetable.png)
+
 ### Editing a student: `edit`
 
 Edits an existing student.
@@ -357,6 +358,10 @@ _Details coming soon ..._
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
+1. **When having extra long inputs** for NAME, TELEGRAM_HANDLE, EMAIL, and TAG, (which typically does not occur) the 
+   long text may be truncated to a shortened version with '...' appended at the back.
+1. By default, **weekends are excluded** from `Timetable`, but `add`/`edit` commands are able to accept the inputs 
+   containing weekends, just that it will be excluded from being stored to the `Student`.
 
 --------------------------------------------------------------------------------------------------------------------
 

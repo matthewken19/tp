@@ -211,6 +211,7 @@ Examples:
 * `list`
 * `list timetable`
 ![result for 'list timetable'](images/listTimetable.png)
+
 ### Editing a student: `edit`
 
 Edits an existing student.

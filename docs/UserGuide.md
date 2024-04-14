@@ -152,7 +152,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
     - have each domain label start and end with alphanumeric characters
     - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
 * `TAG` must start with an alphanumeric character, should only contain alphanumeric characters, spaces and hyphens, and it should not be blank.
-* `WEBLINK` is used for attaching a student's project in Educonnect. However, the parameter currently accepts any valid website links. The `https://` scheme is optional.<br>
+* `WEBLINK` is used for attaching a student's project in Educonnect. The parameter currently accepts any valid website (HTTP or HTTPS) or file transfer protocol (FTP) links, regardless if it is a broken link. If no protocol (`https://` or `ftp://`) is supplied, the link will default `https://`.<br>
   e.g `https://github.com/johndoe/tp`
 
 </box>

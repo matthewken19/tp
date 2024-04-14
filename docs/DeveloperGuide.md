@@ -246,16 +246,6 @@ The inclusion of the `Link` attribute enhances the versatility of EduConnect, en
 * `Link` must be a valid URL, and a validation regex is present to check the validity of the `link`.
 * In scenarios involving group projects, the `Link` attribute need not be unique as group members will share the same project link. Therefore, enforcing uniqueness for the `Link` attribute could lead to unnecessary constraints and complexity.
 
-### Copy Emails to Clipboard
-
-Implemented similarly to the `find` command, the `copy` command first filters the `FilteredList<Student>` to displays all students with the tags specified in the command.
-* E.g. `copy t/tutorial-1` filters and displays all students with the exact tag `tutorial-1`.
-
-The `FilteredList<Student>` is then iterated through, retrieving all student emails in the list and joining by `, ` delimiter (ascii hexadecimal `0x2C` comma and `0x20` space). The retrieved emails are then added to the `ClipboardContent` as a plain text String `text/plain` (**NOT** a HTML String `text/html`).
-* The diagram below shows the sequence diagram for `copy t\tutorial-1`.
-
-<puml src="diagrams/CopySequenceDiagram.puml"/>
-
 #### UI implementation
 
 * A student's weblink will be displayed using the JavaFX `Hyperlink` class at `StudentCard.java`. 
@@ -271,6 +261,24 @@ The `FilteredList<Student>` is then iterated through, retrieving all student ema
 * Below shows the sequence diagram when editing a student's `Link`.
 
 <puml src="diagrams/EditSequenceDiagram.puml"/>
+
+### Copy Emails to Clipboard feature
+
+Implemented similarly to the `find` command, the `copy` command first filters the `FilteredList<Student>` to display all students with the tags specified in the command.
+* E.g. `copy t/tutorial-1` filters and displays all students with the exact tag `tutorial-1`.
+
+The `FilteredList<Student>` is then iterated through, retrieving all student emails in the list and joining by `, ` delimiter (ascii hexadecimal `0x2C` comma and `0x20` space).
+* Emails are concatenated in the form of `example1@email.com, example2@email.com, example3@email.com`.
+* This adheres to the format specified in [section 3.4 of RFC5322](https://tools.ietf.org/html/rfc5322#section-3.4), which allows for easy pasting into `Gmail`, `Outlook`, `Yahoo Mail`, etc.
+
+#### Implementation using JavaFX Library
+
+The feature is implemented using `javafx.scene.input.Clipboard` instead of `java.awt.datatransfer.Clipboard` as we are using JavaFX for the UI.
+
+The fomatted email string is added to `Clipboard` as a plain text String `text/plain` (**NOT** a HTML String `text/html`).
+* The diagram below shows the sequence diagram for `copy t\tutorial-1`.
+
+<puml src="diagrams/CopySequenceDiagram.puml"/>
 
 ### \[Proposed\] Undo/redo feature
 

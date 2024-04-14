@@ -232,7 +232,7 @@ Examples:
 *  `edit e:christian@nus.com h/@christan c/` Edits the telegram handle and clears the timetable of the student with an email of `christian@nus.com`.
 *  `edit h:@christan c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17` Replaces the timetable of the student with a telegram handle of `@christan` with this new one according to
    the specifications in the command
-*  `edit i:2 l/https://github.com/annemarie/tp` Edits the weblink of the 2nd student to be `https://github.com/johndoe/tp`.
+*  `edit i:2 l/https://github.com/annemarie/tp` Edits the weblink of the 2nd student to be `https://github.com/annemarie/tp`.
 
 ### Locating students by name: `find`
 

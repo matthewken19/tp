@@ -48,7 +48,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
    * `list` : Lists all students.
 
-   * `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com t/tutorial-1 t/high-ability` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe s/A1234567X h/@john_doe e/johnd@example.com t/tutorial-1 t/high-ability` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete s/A0001234A` : Deletes the person with the `s/STUDENT_ID` unique identifier
 
@@ -188,7 +188,10 @@ Format: `add n/NAME s/STUDENT_ID e/EMAIL h/TELEGRAM_HANDLE [l/WEBLINK] [c/TIMETA
 </box>
 
 Examples:
-* `add n/John Doe s/A1234567X h/@john.doe e/johnd@example.com l/https://github.com/johndoe/tp t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue: 11-13 thu: 12-15, 15-17`
+
+* `add n/John Doe s/A1234567X h/@john_doe e/johnd@example.com t/tutorial-1 t/high-ability c/mon: 8-10, 10-12 tue:
+  11-13 thu: 12-15, 15-17`
+
 * `add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U`
   ![result for 'add n/Anne-Marie Rose Nicholson t/singer t/songwriter e/rockabye@friends.uk h/@AnneMarieofficial s/A7041991U'](images/add.png)
 
@@ -206,8 +209,9 @@ Format: `list [timetable]`
 
 Examples:
 * `list`
-* `list timetable` 
+* `list timetable`
 ![result for 'list timetable'](images/listTimetable.png)
+
 ### Editing a student: `edit`
 
 Edits an existing student.
@@ -241,7 +245,7 @@ Finds students whose criteria match all the given keywords.
 Format: `find <choose 1 or more> [n/NAME] [s/STUDENT_ID] [h/TELEGRAM_HANDLE] [t/TAG]…`
 
 * The search is case-insensitive. e.g. `find n/hans` will match Hans.
-* The order of the keywords do not matter. e.g. `find n/hans t/tutorial-1` will return the same result as `find 
+* The order of the keywords do not matter. e.g. `find n/hans t/tutorial-1` will return the same result as `find
   t/tutorial-1 n/hans`.
 * Name and other criteria are searched using fuzzy matching.
   * Students with any part of the names matching the keyword will be returned.
@@ -266,7 +270,7 @@ Copy student emails to the clipboard.
 Format: `copy [t/TAG]…`
 
 * When no tags are supplied, copies all student emails.
-* When multiple tags are used, copies emails of all students that has **ALL** the tags specified. 
+* When multiple tags are used, copies emails of all students that has **ALL** the tags specified.
 * Tag is searched as complete tag names. e.g. `copy t/tutorial-1` will only return those with a tag 'tutorial-1'
 (tag 'tutorial-10', 'tutorial-11', etc. will NOT be copied)
 * Copied emails are in the form of `example1@email.com, example2@email.com, example3@email.com` and adheres to the format specified in [section 3.4 of RFC5322](https://tools.ietf.org/html/rfc5322#section-3.4).
@@ -277,7 +281,7 @@ Format: `copy [t/TAG]…`
 Examples:
 * `copy` copies all emails
 * `copy t/tutorial-2` copies 3 emails (`johnsmith@example.com, irfan@example.com, royb@example.com` all with `tutorial-2` tag)
-* `copy t/tutorial-2 t/strong-student` copies 1 email (`royb@example.com` with both `tutorial-2` and `strong-student` tag) 
+* `copy t/tutorial-2 t/strong-student` copies 1 email (`royb@example.com` with both `tutorial-2` and `strong-student` tag)
 
 ### Deleting a student: `delete`
 

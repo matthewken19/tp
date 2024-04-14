@@ -24,7 +24,8 @@ public class TelegramHandleTest {
         // null telegram handle
         assertThrows(NullPointerException.class, () -> TelegramHandle.isValidTelegramHandle(null));
 
-        // invalid phone numbers
+        // invalid telegram handles
+        // No @ in front
         assertFalse(TelegramHandle.isValidTelegramHandle(""));
         assertFalse(TelegramHandle.isValidTelegramHandle(" "));
         assertFalse(TelegramHandle.isValidTelegramHandle("91"));
@@ -32,10 +33,20 @@ public class TelegramHandleTest {
         assertFalse(TelegramHandle.isValidTelegramHandle("9011p041"));
         assertFalse(TelegramHandle.isValidTelegramHandle("9312 1534"));
 
-        // valid phone numbers
-        assertTrue(TelegramHandle.isValidTelegramHandle("@911"));
+        // '.' is not a valid character
+        assertFalse(TelegramHandle.isValidTelegramHandle("@john.doe"));
+        // only 1 char, minimum 5
+        assertFalse(TelegramHandle.isValidTelegramHandle("@J"));
+        // only @ symbol
+        assertFalse(TelegramHandle.isValidTelegramHandle("@"));
+        // no alphanumeric characters, min 3
+        assertFalse(TelegramHandle.isValidTelegramHandle("@_______"));
+
+
+        // valid telegram handles
         assertTrue(TelegramHandle.isValidTelegramHandle("@bobthebuilder"));
         assertTrue(TelegramHandle.isValidTelegramHandle("@hello123goodbye456"));
+        assertTrue(TelegramHandle.isValidTelegramHandle("@john_doe123"));
     }
 
     @SuppressWarnings("unlikely-arg-type")
@@ -45,6 +56,9 @@ public class TelegramHandleTest {
 
         // same values -> returns true
         assertTrue(handle.equals(new TelegramHandle("@linus")));
+
+        // handles are case insensitive -> returns true
+        assertTrue(handle.equals(new TelegramHandle("@LinUs")));
 
         // same object -> returns true
         assertTrue(handle.equals(handle));

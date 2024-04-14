@@ -2,6 +2,7 @@ package educonnect.logic.parser;
 
 import static educonnect.commons.util.CollectionUtil.requireAllNonNull;
 import static educonnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static educonnect.model.student.Link.VALIDATION_REGEX;
 import static java.util.Objects.requireNonNull;
 
 import java.time.DayOfWeek;
@@ -10,7 +11,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import educonnect.MainApp;
+import educonnect.commons.core.LogsCenter;
 import educonnect.commons.core.index.Index;
 import educonnect.commons.util.StringUtil;
 import educonnect.logic.commands.SlotsCommand;
@@ -40,7 +46,7 @@ public class ParserUtil {
             "Invalid day specified! "
             + "Each day is indicated by their 3-letter identifier, e.g. 'mon', or 'fri'.\n"
             + "(Hint: by default Saturdays and Sundays are not included.)";
-
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -134,7 +140,8 @@ public class ParserUtil {
      */
     public static TelegramHandle parseTelegramHandle(String telegramHandle) throws ParseException {
         requireNonNull(telegramHandle);
-        String trimmedHandle = telegramHandle.trim();
+        String lowerHandle = telegramHandle.toLowerCase();
+        String trimmedHandle = lowerHandle.trim();
         if (!TelegramHandle.isValidTelegramHandle(trimmedHandle)) {
             throw new ParseException(TelegramHandle.MESSAGE_CONSTRAINTS);
         }
@@ -149,7 +156,8 @@ public class ParserUtil {
      */
     public static Email parseEmail(String email) throws ParseException {
         requireNonNull(email);
-        String trimmedEmail = email.trim();
+        String lowerEmail = email.toLowerCase();
+        String trimmedEmail = lowerEmail.trim();
         if (!Email.isValidEmail(trimmedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
@@ -317,14 +325,21 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code link} is invalid.
      */
-    public static Link parseLink(String s) throws ParseException {
-        requireNonNull(s);
-        String trimmedLink = s.trim();
-        if (!Link.isValidLink(trimmedLink)) {
-            System.out.println("Invalid link");
+    public static Link parseLink(String url) throws ParseException {
+        requireNonNull(url);
+        url = url.trim();
+        Pattern p = Pattern.compile(VALIDATION_REGEX);
+        Matcher m = p.matcher(url); //url is https://example.com
+        if (!m.matches()) {
             throw new ParseException(Link.MESSAGE_CONSTRAINTS);
         }
-        System.out.println("Valid link");
-        return new Link(trimmedLink);
+
+        if (m.group("scheme") == null) {
+            logger.info("No scheme found!"); //if url does not contain ftp/http/https
+            url = "https://" + url;
+        }
+
+
+        return new Link(url);
     }
 }

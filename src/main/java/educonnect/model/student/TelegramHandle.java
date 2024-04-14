@@ -10,8 +10,12 @@ import static java.util.Objects.requireNonNull;
 public class TelegramHandle {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Telegram handles should start with @";
-    public static final String VALIDATION_REGEX = "^@.*";
+            "Telegram handles should \n"
+            + "1. Start with @, \n"
+            + "2. Consist of only alphanumeric characters and underscores (_) \n"
+            + "3. Have a minimum of 5 characters\n"
+            + "4. Have a minimum of 3 alphanumeric characters\n";
+    public static final String VALIDATION_REGEX = "^@(?=(?:[0-9_]*[a-z]){3})[a-z0-9_]{5,}$";
     public final String value;
 
     /**
@@ -19,9 +23,10 @@ public class TelegramHandle {
      * @param handle a valid {@code String} representing the telegram handle.
      */
     public TelegramHandle(String handle) {
+        String lowerHandle = handle.toLowerCase();
         requireNonNull(handle);
-        checkArgument(isValidTelegramHandle(handle), MESSAGE_CONSTRAINTS);
-        value = handle;
+        checkArgument(isValidTelegramHandle(lowerHandle), MESSAGE_CONSTRAINTS);
+        value = lowerHandle;
     }
 
     /**

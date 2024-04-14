@@ -608,14 +608,17 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: List all students using the `list` command. Multiple students in the list.
 
-    2. Test case: `delete s/A1234567X`<br>
-      Expected: Student with student id A1234567X is deleted from the list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
+    2. Test case: `delete s/A1234567X`
 
-    3. Test case: (No such student with unique identifier) `delete s/A0000000U`<br>
-      Expected: No student is deleted. No such student error details shown in the status message. Status bar remains the same.
+       1. Expected: Student with student id A1234567X is deleted from the list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
 
-    4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is a non-unique identifier prefix)<br>
-      Expected: Error thrown with corresponding invalid commands.
+    3. Test case: (No such student with unique identifier) `delete s/A0000000U`
+
+       1. Expected: No student is deleted. No such student error details shown in the status message. Status bar remains the same.
+
+    4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is a non-unique identifier prefix)
+
+       1. Expected: Error thrown with corresponding invalid commands.
 
 2. _Explore other test cases..._
 
@@ -667,8 +670,21 @@ finding common slots and copying student emails, which showcases our goal of cre
 ## **Appendix D: Planner Enhancements**
 
 Team Size: 6
-1. **Use a better font:** User experience is greatly influenced by font, and choosing the right font can significantly enhance readability, Especially for EduConnect with numeric details of students displayed, the current font causes confusion sometimes. TWe plan to adapt a new font which not only improve the overall appearance of the platform but also contribute to a smoother reading experience for users.
+1. **Use a better font:** User experience is greatly influenced by font, and choosing the right font can significantly enhance readability, Especially for EduConnect with numeric details of students displayed, the current font causes confusion sometimes. We plan to adapt a new font which not only improve the overall appearance of the platform but also contribute to a smoother reading experience for users. Currently, we are aware that the number `1` and the letter `l` look too similar to users.
 
-2. **Hover over ‘Project Link’ shows the full link:** Currently, when hovering over the project link, nothing is showing. We plan to provide users with the convenience of viewing the full link by simply hovering over it. We aim to allow users to quickly verify or copy the complete URL without having to click on it.
-3. **Better timetable display:** The current timetable of each student is displayed in text with little formatting. We plan to enhance the timetable display by incorporating a standardized graphical format, such as calendar or grid layout. This would allow users to quickly grasp their schedules at a glance and navigate through different time slots more efficiently.
-4. **View student details:** The ability to view comprehensive details of each student in text, including their project link and timetable, is essential for effective management and communication within EduConnect. We plan to introduce a new "View Student" function, allowing users to access all student information conveniently. 
+2. **Hover over ‘Project Link’ shows the full link:** Currently, when hovering over the project link, nothing will be shown. We plan to provide users with the convenience of viewing the full link by simply hovering over it. We aim to allow users to quickly verify the complete URL without having to click on it.
+
+3. **Show partial ‘Project Link’ in UI:** Instead of simply a text `Project Link`, we plan to show the domain name and Top Level Domain (TLD) of the link. For example, `https://ay2324s2-cs2103-t14-1.github.io/tp/UserGuide.html` will show up as `github.io`.
+
+4. **Better timetable display:** The current timetable of each student is displayed in text with little formatting. We plan to enhance the timetable display by incorporating a standardized graphical format, such as calendar or grid layout. This would allow users to quickly grasp their schedules at a glance and navigate through different time slots more efficiently.
+
+5. **View student details:** The ability to view comprehensive details of each student in text, including their project link and timetable, is essential for effective management and communication within EduConnect. We plan to introduce a new "View Student" function, allowing users to access all student information conveniently.
+
+6. **Full Name display:** If the student's name is too long, the name may be shorted and display `[partial student name]...`, leaving users unable to view the full name. We plan to limit the length of the name to 100 and ensure the minimum window size would allow the full name to be viewed at all times.
+
+7. **Limits to Telegram Handle, Email and Tags:** There is currently no character limit for the `Telegram Handle`, `Email` and `Tag` fields. We plan to limit these fields to an appropriate character count to better represent these fields. Example:
+   1. Telegram Handle maximum length is 32 characters according to [here](https://limits.tginfo.me/en).
+   2. Email maximum length is 320 characters.
+   3. Tag should be sufficiently long but not too long as they are used as groupings. We estimate around 40 characters to be more than sufficient.
+
+8. **Editing Student with the same details:** Currently, when editing a student with the same details, no error message is displayed and EduConnect updates the Student with the same data. This is may confuse users and it will result in no changes while still showing a successfuull update. We plan to add a check and display the proper error message. E.g. A student with telegram handle `@bunny`, when running the command `edit h:@bunny h/@bunny` should return an error message `Duplicate telegram handle supplied.`

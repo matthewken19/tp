@@ -14,6 +14,10 @@ import educonnect.model.student.timetable.exceptions.OverlapPeriodException;
  * Represents the timetable of a student for a week.
  */
 public class Timetable {
+    public static final String MESSAGE_CONSTRAINTS = "A valid TIMETABLE format is written with the three lettered day "
+                                                     + "prefixes followed by a colon and the periods. "
+                                                     + "Separate multiple periods in a day with a comma.\n"
+                                                     + "e.g mon: 8-10, 10-12 tue: 8-10 thu: 12-14 fri 16-18, 18-20";
     public static final int NUMBER_OF_DAYS_TYPICAL = 5;
     public static final Period DEFAULT_TIMEFRAME = new Period(Period.DEFAULT_PERIOD_NAME,
             Day.DEFAULT_START_TIME_OF_DAY, Day.DEFAULT_END_TIME_OF_DAY);

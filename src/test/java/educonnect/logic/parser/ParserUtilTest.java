@@ -7,9 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -315,6 +317,11 @@ public class ParserUtilTest {
     @Test
     public void parseTimetable_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> ParserUtil.parseTimetable(null));
+    }
+
+    @Test
+    public void parseTimetable_invalidInput_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseTimetable(new ArrayList<>(List.of("iki: 11-13"))));
     }
 
     @Test

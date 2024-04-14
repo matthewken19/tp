@@ -52,14 +52,14 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `edit 1 s/A0123456X`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `edit i:1 s/A0123456X`.
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point).
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -158,7 +158,7 @@ This section describes some noteworthy details on how certain features are imple
 ### Timetable Support
 
 * Each `Student` object now has a `Timetable` object as an attribute.
-* Each `Timetable` contains <u>1 to 7</u> `Day` objects, by default, 5 days of the week (Monday - Friday) is used.
+* Each `Timetable` contains <u>5 or 7</u> `Day` objects, by default, 5 days of the week (Monday - Friday) is used.
 * Each `Day` object can contain <u>0 to 24</u> 1-hour `Period` objects, or less if each `Period` has intervals longer
   than 1 hour.
 * Each `Period` is defined by the start time and end time, indicated by integers on a 24-hour clock,
@@ -181,7 +181,7 @@ This section describes some noteworthy details on how certain features are imple
 
 * Each time the application is launched, the timetable will be hided in default.
 
-* Below shows the sequence diagram when <u>listing</u> stud**ents with timetables.**
+* Below shows the sequence diagram when <u>listing</u> **students with timetables**.
 
 <puml src="diagrams/ListSequenceDiagram.puml"/>
 
@@ -246,6 +246,38 @@ The inclusion of the `Link` attribute enhances the versatility of EduConnect, en
 * `Link` must be a valid URL, and a validation regex is present to check the validity of the `link`.
 * In scenarios involving group projects, the `Link` attribute need not be unique as group members will share the same project link. Therefore, enforcing uniqueness for the `Link` attribute could lead to unnecessary constraints and complexity.
 
+#### Valid URLs accepted
+The regex used for validating the URL is as shown below:
+
+    ^(?<scheme>(?:ftp|https?):\/\/)?+
+    (?:
+        (?<username>[a-zA-Z][\w-.]{0,31})
+        (?::(?<password>[!-~&&[^@$\n\r]]{6,255}))?
+    @)?
+    (?<subdomain>(?:[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]?\.){0,127})
+    (?<domain>[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9])
+    (?<tld>\.[a-zA-Z]{3,63})
+    (?<cctld>\.[a-zA-Z]{2})?
+    (?<portnumber>:\d{1,5})?
+    (?<path>(?:\/{1,2}[\w-@.~()%]*)*)
+    (?<querystring>\?(?:[\w-%]+=[\w-?/:@.~!$&'()*+,;=%]+(?:&[\w-%]+=[\w-?/:@.~!$&'()*+,;=%]+)*)?)?
+    (?<fragment>#[\w-?/:@.~!$&'()*+,;=%]+)?$
+
+The capture group plan is:
+| Group Number | Group name | Example |
+| ------------ | ---------- | ------- |
+|  1 | scheme      | `ftp://` `http://` `https://`     |
+|  2 | username    | `user` `schooluser`               |
+|  3 | password    | `password123` `PxJmot@S!KL1`      |
+|  4 | subdomain   | `www.` `blog.` `news.`            |
+|  5 | domain      | `google` `youtube` `github`       |
+|  6 | tld         | `.com` `.net` `.org`              |
+|  7 | cctld       | `.sg` `.jp` `.uk` `.de`           |
+|  8 | port        | `:8080` `:443` `:53`              | 
+|  9 | path        | `/article` `/tp/UserGuide.html`   |
+| 10 | querystring | `?q=cat` `?q=pokemon+red&ie=UTF-8`|
+| 11 | fragment    | `#xpointer(//Rube)` `#dfsdf`      |
+
 #### UI implementation
 
 * A student's weblink will be displayed using the JavaFX `Hyperlink` class at `StudentCard.java`.
@@ -260,6 +292,25 @@ The inclusion of the `Link` attribute enhances the versatility of EduConnect, en
 * `Link` can also be modified using the `edit` command with the `l/` prefix.
 * Below shows the sequence diagram when editing a student's `Link`.
 
+<puml src="diagrams/EditSequenceDiagram.puml"/>
+
+### Copy Emails to Clipboard feature
+
+Implemented similarly to the `find` command, the `copy` command first filters the `FilteredList<Student>` to display all students with the tags specified in the command.
+* E.g. `copy t/tutorial-1` filters and displays all students with the exact tag `tutorial-1`.
+
+The `FilteredList<Student>` is then iterated through, retrieving all student emails in the list and joining by `, ` delimiter (ascii hexadecimal `0x2C` comma and `0x20` space).
+* Emails are concatenated in the form of `example1@email.com, example2@email.com, example3@email.com`.
+* This adheres to the format specified in [section 3.4 of RFC5322](https://tools.ietf.org/html/rfc5322#section-3.4), which allows for easy pasting into `Gmail`, `Outlook`, `Yahoo Mail`, etc.
+
+#### Implementation using JavaFX Library
+
+The feature is implemented using `javafx.scene.input.Clipboard` instead of `java.awt.datatransfer.Clipboard` as we are using JavaFX for the UI.
+
+The fomatted email string is added to `Clipboard` as a plain text String `text/plain` (**NOT** a HTML String `text/html`).
+* The diagram below shows the sequence diagram for `copy t\tutorial-1`.
+
+<puml src="diagrams/CopySequenceDiagram.puml"/>
 
 ### \[Proposed\] Undo/redo feature
 
@@ -553,48 +604,75 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   2. Double-click the jar file
 
-1. Saving window preferences
+      1. Expected: Shows the GUI with a set of sample contacts. The window size may or may not be optimum.
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+2. Saving window preferences
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+   1. Resize the window to an optimum size.
 
-1. _{ more test cases …​ }_
+   2. Move the window to a different location.
+
+   3. Close the window.
+
+   4. Re-launch the app by double-clicking the jar file.
+
+      1. Expected: The most recent window size and location is retained.
+
+3. _Explore other test cases..._
 
 ### Listing all students
+
 1. Listing all students in the address book.
-    1. Test case: `list`<br>
-      Expected: All students showing without timetables.
-    1. Test case: `list timetable`<br>
-      Expected: All students showing with timetables appearing in student cards.
+
+    1. Test case: `list`
+
+       1. Expected: All students showing without timetables.
+
+    2. Test case: `list timetable`
+
+       1. Expected: All students showing with timetables appearing in student cards.
 
 ### Deleting a student
 
 1. Deleting a student while all students are being shown
 
-   1. Prerequisites: List all students using the `list` command. Multiple students in the list.
+    1. Prerequisites: List all students using the `list` command. Multiple students in the list.
 
-   1. Test case: `delete s/A1234567X`<br>
-      Expected: Student with student id A1234567X is deleted from the list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
+    2. Test case: `delete s/A1234567X`
 
-   1. Test case: (No such student with unique identifier) `delete s/A0000000U`<br>
-      Expected: No student is deleted. No such student error details shown in the status message. Status bar remains the same.
+       1. Expected: Student with student id A1234567X is deleted from the list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is a non-unique identifier prefix)<br>
-      Expected: Error thrown with corresponding invalid commands.
+    3. Test case: (No such student with unique identifier) `delete s/A0000000U`
 
-1. _{ more test cases …​ }_
+       1. Expected: No student is deleted. No such student error details shown in the status message. Status bar remains the same.
+
+    4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is a non-unique identifier prefix)
+
+       1. Expected: Error thrown with corresponding invalid commands.
+
+2. _Explore other test cases..._
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Prerequisites: At least one student in the addressbook. Confirm using the `list` command.
 
-1. _{ more test cases …​ }_
+   2. Navigate to the directory with the EduConnect jar file.
+
+   3. If not done, open EduConnect by double-clicking on the jar file.
+
+   4. Navigate to `./data` and open `addressbook.json` in your preferred text editor.
+
+   5. Remove a field in any of the json data, save and exit.
+
+   6. Open the EduConnect.
+
+      1. Expected: EduConnect opens with an empty addressbook.
+
+2. _Explore other test cases..._
 
 ## **Appendix C: Effort**
 
@@ -624,7 +702,25 @@ finding common slots and copying student emails, which showcases our goal of cre
 ## **Appendix D: Planned Enhancements**
 
 Team Size: 6
-1. **Use a better font:** User experience is greatly influenced by font, and choosing the right font can significantly enhance readability, Especially for EduConnect with numeric details of students displayed, the current font causes confusion sometimes. TWe plan to adapt a new font which not only improve the overall appearance of the platform but also contribute to a smoother reading experience for users.
-2. **Hover over ‘Project Link’ shows the full link:** Currently, when hovering over the project link, nothing is showing. We plan to provide users with the convenience of viewing the full link by simply hovering over it. We aim to allow users to quickly verify or copy the complete URL without having to click on it.
-3. **Better timetable display:** The current timetable of each student is displayed in text with little formatting. We plan to enhance the timetable display by incorporating a standardized graphical format, such as calendar or grid layout. This would allow users to quickly grasp their schedules at a glance and navigate through different time slots more efficiently.
-4. **View student details:** The ability to view comprehensive details of each student in text, including their project link and timetable, is essential for effective management and communication within EduConnect. We plan to introduce a new "View Student" function, allowing users to access all student information conveniently.
+
+1. **Use a better font:** User experience is greatly influenced by font, and choosing the right font can significantly enhance readability, Especially for EduConnect with numeric details of students displayed, the current font causes confusion sometimes. We plan to adapt a new font which not only improve the overall appearance of the platform but also contribute to a smoother reading experience for users. Currently, we are aware that the number `1` and the letter `l` look too similar to users.
+
+2. **Hover over ‘Project Link’ shows the full link:** Currently, when hovering over the project link, nothing will be shown. We plan to provide users with the convenience of viewing the full link by simply hovering over it. We aim to allow users to quickly verify the complete URL without having to click on it.
+
+3. **Show partial ‘Project Link’ in UI:** Instead of simply a text `Project Link`, we plan to show the domain name and Top Level Domain (TLD) of the link. For example, `https://ay2324s2-cs2103-t14-1.github.io/tp/UserGuide.html` will show up as `github.io`.
+
+4. **Better timetable display:** The current timetable of each student is displayed in text with little formatting. We plan to enhance the timetable display by incorporating a standardized graphical format, such as calendar or grid layout. This would allow users to quickly grasp their schedules at a glance and navigate through different time slots more efficiently.
+
+5. **View student details:** The ability to view comprehensive details of each student in text, including their project link and timetable, is essential for effective management and communication within EduConnect. We plan to introduce a new "View Student" function, allowing users to access all student information conveniently.
+
+6. **Full Name display:** If the student's name is too long, the name may be shorted and display `[partial student name]...`, leaving users unable to view the full name. We plan to limit the length of the name to 100 and ensure the minimum window size would allow the full name to be viewed at all times.
+
+7. **Limits to Telegram Handle, Email and Tags:** There is currently no character limit for the `Telegram Handle`, `Email` and `Tag` fields. We plan to limit these fields to an appropriate character count to better represent these fields. Example:
+   1. Telegram Handle maximum length is 32 characters according to [here](https://limits.tginfo.me/en).
+   2. Email maximum length is 320 characters.
+   3. Tag should be sufficiently long but not too long as they are used as groupings. We estimate around 40 characters to be more than sufficient.
+
+8. **Editing Student with the same details:** Currently, when editing a student with the same details, no error message is displayed and EduConnect updates the Student with the same data. This is may confuse users and it will result in no changes while still showing a successfuull update. We plan to add a check and display the proper error message. E.g. A student with telegram handle `@bunny`, when running the command `edit h:@bunny h/@bunny` should return an error message `Duplicate telegram handle supplied.`
+
+9. **Saturday and Sunday timetable:** Add an option to enable/disable Saturday and Sunday in the timetable. Currently, only Monday to Friday are enabled and periods can only be added within these 5 days. Extending the feature to 7 days will help for the situation where there are weekend classes.
+

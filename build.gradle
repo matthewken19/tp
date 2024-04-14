@@ -72,7 +72,7 @@ dependencies {
 shadowJar {
     archiveBaseName.set("educonnect")
     archiveClassifier.set(null)
-    archiveVersion.set("1.3")
+    archiveVersion.set("1.4")
     dependsOn("distZip", "distTar")
 }
 

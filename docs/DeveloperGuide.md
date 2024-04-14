@@ -572,48 +572,72 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   2. Double-click the jar file
 
-1. Saving window preferences
+      1. Expected: Shows the GUI with a set of sample contacts. The window size may or may not be optimum.
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+2. Saving window preferences
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+   1. Resize the window to an optimum size.
 
-1. _{ more test cases …​ }_
+   2. Move the window to a different location.
+
+   3. Close the window.
+
+   4. Re-launch the app by double-clicking the jar file.
+
+      1. Expected: The most recent window size and location is retained.
+
+3. _Explore other test cases..._
 
 ### Listing all students
+
 1. Listing all students in the address book.
-    1. Test case: `list`<br>
-      Expected: All students showing without timetables.
-    1. Test case: `list timetable`<br>
-      Expected: All students showing with timetables appearing in student cards.
+
+    1. Test case: `list`
+
+       1. Expected: All students showing without timetables.
+
+    2. Test case: `list timetable`
+
+       1. Expected: All students showing with timetables appearing in student cards.
 
 ### Deleting a student
 
 1. Deleting a student while all students are being shown
 
-   1. Prerequisites: List all students using the `list` command. Multiple students in the list.
+    1. Prerequisites: List all students using the `list` command. Multiple students in the list.
 
-   1. Test case: `delete s/A1234567X`<br>
+    2. Test case: `delete s/A1234567X`<br>
       Expected: Student with student id A1234567X is deleted from the list. Details of the deleted student shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: (No such student with unique identifier) `delete s/A0000000U`<br>
+    3. Test case: (No such student with unique identifier) `delete s/A0000000U`<br>
       Expected: No student is deleted. No such student error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is a non-unique identifier prefix)<br>
+    4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is a non-unique identifier prefix)<br>
       Expected: Error thrown with corresponding invalid commands.
 
-1. _{ more test cases …​ }_
+2. _Explore other test cases..._
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Prerequisites: At least one student in the addressbook. Confirm using the `list` command.
 
-1. _{ more test cases …​ }_
+   2. Navigate to the directory with the EduConnect jar file.
+
+   3. If not done, open EduConnect by double-clicking on the jar file.
+
+   4. Navigate to `./data` and open `addressbook.json` in your preferred text editor.
+
+   5. Remove a field in any of the json data, save and exit.
+
+   6. Open the EduConnect.
+
+      1. Expected: EduConnect opens with an empty addressbook.
+
+2. _Explore other test cases..._
 
 ## **Appendix C: Effort**
 

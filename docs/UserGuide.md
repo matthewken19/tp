@@ -145,7 +145,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 * By default, timetables of students are not shown.
 
 * To show or hide timetables of students, use `list` command.
-* 
+
 </box>
 ### Viewing help: `help`
 

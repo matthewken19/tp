@@ -1,0 +1,113 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":CopyCommandParser" as CopyCommandParser LOGIC_COLOR
+participant "<<class>>\nParserUtil" as ParserUtil LOGIC_COLOR
+participant "c:CopyCommand" as CopyCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+box JavaFX UI_COLOR_T1
+participant "<<class>>\nClipboard" as Clipboard UI_COLOR
+participant "b:Clipboard" as b UI_COLOR
+end box
+
+[-> LogicManager : execute(\
+"copy t/tutorial-1")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand(\
+"copy t/tutorial-1")
+activate AddressBookParser
+
+create CopyCommandParser
+AddressBookParser -> CopyCommandParser
+activate CopyCommandParser
+
+CopyCommandParser --> AddressBookParser
+deactivate CopyCommandParser
+
+AddressBookParser -> CopyCommandParser : parse(\
+"t/tutorial-1")
+activate CopyCommandParser
+
+CopyCommandParser -> ParserUtil : \
+parseTags({"tutorial-1"})
+activate ParserUtil
+
+ParserUtil --> CopyCommandParser : Set<Tag>
+deactivate ParserUtil
+
+create CopyCommand
+CopyCommandParser -> CopyCommand : predicates
+activate CopyCommand
+
+CopyCommand --> CopyCommandParser :
+deactivate CopyCommand
+
+CopyCommandParser --> AddressBookParser : c
+deactivate CopyCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+CopyCommandParser -[hidden]-> AddressBookParser
+destroy CopyCommandParser
+
+AddressBookParser --> LogicManager : c
+deactivate AddressBookParser
+
+LogicManager -> CopyCommand : execute(m)
+activate CopyCommand
+
+CopyCommand -> Model : updateFilteredStudentList(predicates)
+activate Model
+Model -> CopyCommand
+deactivate Model
+
+CopyCommand -> Model : getFilteredStudentList()
+activate Model
+Model --> CopyCommand : ObservableList<Student>
+deactivate Model
+
+CopyCommand -> Clipboard : getSystemClipboard()
+activate Clipboard
+
+create b
+Clipboard -> b
+activate b
+b -> Clipboard
+deactivate b
+
+Clipboard --> CopyCommand : b
+deactivate Clipboard
+
+CopyCommand -> b : setContent(emails)
+activate b
+b -> CopyCommand
+deactivate b
+'garbage collect
+b -[hidden]-> CopyCommand
+destroy b
+
+create CommandResult
+CopyCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> CopyCommand
+deactivate CommandResult
+
+CopyCommand --> LogicManager : r
+deactivate CopyCommand
+'garbage collect
+CopyCommand -[hidden]-> LogicManager
+destroy CopyCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

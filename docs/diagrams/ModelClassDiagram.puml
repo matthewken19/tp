@@ -48,8 +48,8 @@ Student *--> "1" Email
 Student *--> "*" Tag
 Student *--> "0..1" Link
 Student *--> "1" Timetable
-Timetable *--> "*" Day
-Day *--> "*" Period
+Timetable *--> "5..7" Day
+Day *--> "0..24" Period
 
 Student -[hidden]up--> I
 UniqueStudentList -[hidden]right-> I

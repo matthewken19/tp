@@ -52,14 +52,14 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `edit 1 s/A0123456X`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `edit i:1 s/A0123456X`.
 
 <puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
 
 Each of the four main components (also shown in the diagram above),
 
 * defines its *API* in an `interface` with the same name as the Component.
-* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point.
+* implements its functionality using a concrete `{Component Name}Manager` class (which follows the corresponding API `interface` mentioned in the previous point).
 
 For example, the `Logic` component defines its API in the `Logic.java` interface and implements its functionality using the `LogicManager.java` class which follows the `Logic` interface. Other components interact with a given component through its interface rather than the concrete class (reason: to prevent outside component's being coupled to the implementation of a component), as illustrated in the (partial) class diagram below.
 
@@ -158,7 +158,7 @@ This section describes some noteworthy details on how certain features are imple
 ### Timetable Support
 
 * Each `Student` object now has a `Timetable` object as an attribute.
-* Each `Timetable` contains <u>1 to 7</u> `Day` objects, by default, 5 days of the week (Monday - Friday) is used.
+* Each `Timetable` contains <u>5 or 7</u> `Day` objects, by default, 5 days of the week (Monday - Friday) is used.
 * Each `Day` object can contain <u>0 to 24</u> 1-hour `Period` objects, or less if each `Period` has intervals longer
   than 1 hour.
 * Each `Period` is defined by the start time and end time, indicated by integers on a 24-hour clock, 
@@ -181,7 +181,7 @@ This section describes some noteworthy details on how certain features are imple
 
 * Each time the application is launched, the timetable will be hided in default.
 
-* Below shows the sequence diagram when <u>listing</u> stud**ents with timetables.**
+* Below shows the sequence diagram when <u>listing</u> **students with timetables**.
 
 <puml src="diagrams/ListSequenceDiagram.puml"/>
 
@@ -246,6 +246,16 @@ The inclusion of the `Link` attribute enhances the versatility of EduConnect, en
 * `Link` must be a valid URL, and a validation regex is present to check the validity of the `link`.
 * In scenarios involving group projects, the `Link` attribute need not be unique as group members will share the same project link. Therefore, enforcing uniqueness for the `Link` attribute could lead to unnecessary constraints and complexity.
 
+### Copy Emails to Clipboard
+
+Implemented similarly to the `find` command, the `copy` command first filters the `FilteredList<Student>` to displays all students with the tags specified in the command.
+* E.g. `copy t/tutorial-1` filters and displays all students with the exact tag `tutorial-1`.
+
+The `FilteredList<Student>` is then iterated through, retrieving all student emails in the list and joining by `, ` delimiter (ascii hexadecimal `0x2C` comma and `0x20` space). The retrieved emails are then added to the `ClipboardContent` as a plain text String `text/plain` (**NOT** a HTML String `text/html`).
+* The diagram below shows the sequence diagram for `copy t\tutorial-1`.
+
+<puml src="diagrams/CopySequenceDiagram.puml"/>
+
 #### UI implementation
 
 * A student's weblink will be displayed using the JavaFX `Hyperlink` class at `StudentCard.java`. 
@@ -260,6 +270,7 @@ The inclusion of the `Link` attribute enhances the versatility of EduConnect, en
 * `Link` can also be modified using the `edit` command with the `l/` prefix.
 * Below shows the sequence diagram when editing a student's `Link`.
 
+<puml src="diagrams/EditSequenceDiagram.puml"/>
 
 ### \[Proposed\] Undo/redo feature
 
@@ -625,6 +636,7 @@ finding common slots and copying student emails, which showcases our goal of cre
 
 Team Size: 6
 1. **Use a better font:** User experience is greatly influenced by font, and choosing the right font can significantly enhance readability, Especially for EduConnect with numeric details of students displayed, the current font causes confusion sometimes. TWe plan to adapt a new font which not only improve the overall appearance of the platform but also contribute to a smoother reading experience for users.
+
 2. **Hover over ‘Project Link’ shows the full link:** Currently, when hovering over the project link, nothing is showing. We plan to provide users with the convenience of viewing the full link by simply hovering over it. We aim to allow users to quickly verify or copy the complete URL without having to click on it.
 3. **Better timetable display:** The current timetable of each student is displayed in text with little formatting. We plan to enhance the timetable display by incorporating a standardized graphical format, such as calendar or grid layout. This would allow users to quickly grasp their schedules at a glance and navigate through different time slots more efficiently.
 4. **View student details:** The ability to view comprehensive details of each student in text, including their project link and timetable, is essential for effective management and communication within EduConnect. We plan to introduce a new "View Student" function, allowing users to access all student information conveniently. 

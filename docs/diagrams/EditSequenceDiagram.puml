@@ -1,0 +1,106 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":EditCommandParser" as EditCommandParser LOGIC_COLOR
+participant "<<class>>\nParserUtil" as ParserUtil LOGIC_COLOR
+participant "e:EditCommand" as EditCommand LOGIC_COLOR
+participant "d:EditStudentDescriptor" as EditStudentDescriptor LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute(\
+"edit i:1 l/www.example.com")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand(\
+"edit i:1 l/www.example.com")
+activate AddressBookParser
+
+create EditCommandParser
+AddressBookParser -> EditCommandParser
+activate EditCommandParser
+
+EditCommandParser --> AddressBookParser
+deactivate EditCommandParser
+
+AddressBookParser -> EditCommandParser : parse(\
+"i:1 l/www.example.com")
+activate EditCommandParser
+
+create EditStudentDescriptor
+EditCommandParser -> EditStudentDescriptor
+activate EditStudentDescriptor
+
+EditStudentDescriptor -> EditCommandParser
+deactivate EditStudentDescriptor
+
+EditCommandParser -> ParserUtil : \
+parseIndex("1") \n\
+parseLink("www.example.com")
+activate ParserUtil
+
+ParserUtil --> EditCommandParser : index, link
+deactivate ParserUtil
+
+EditCommandParser -> EditStudentDescriptor : setLink(link)
+activate EditStudentDescriptor
+
+EditStudentDescriptor --> EditCommandParser
+deactivate EditStudentDescriptor
+
+create EditCommand
+EditCommandParser -> EditCommand : index, predicates, d
+activate EditCommand
+
+EditCommand --> EditCommandParser :
+deactivate EditCommand
+
+EditCommandParser --> AddressBookParser : e
+deactivate EditCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+EditCommandParser -[hidden]-> AddressBookParser
+destroy EditCommandParser
+
+AddressBookParser --> LogicManager : e
+deactivate AddressBookParser
+
+LogicManager -> EditCommand : execute(m)
+activate EditCommand
+
+EditCommand -> EditCommand : createEditedStudent(studentToEdit, d)
+activate EditCommand
+EditCommand -> EditCommand : editedStudent
+deactivate EditCommand
+'no more references, can be garbage collected
+destroy EditStudentDescriptor
+
+EditCommand -> Model : setStudent(studentToEdit, editedStudent)
+activate Model
+
+Model --> EditCommand
+deactivate Model
+
+create CommandResult
+EditCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> EditCommand
+deactivate CommandResult
+
+EditCommand --> LogicManager : r
+deactivate EditCommand
+'garbage collect
+EditCommand -[hidden]-> LogicManager
+destroy EditCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

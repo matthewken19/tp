@@ -9,6 +9,8 @@ import static java.util.Objects.requireNonNull;
 public class Link {
 
     public static final String MESSAGE_CONSTRAINTS = "Please provide a valid website.";
+    // @@author jeremiahlzz
+    // Solution below inspired by https://stackoverflow.com/questions/42618872/regex-for-website-or-url-validation
     // Regex groups match plan:
     // 1) scheme ftp/http/https
     // 2) ssh username

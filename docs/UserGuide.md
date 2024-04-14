@@ -153,7 +153,7 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 * By default, timetables of students are not shown.
 
-* To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results.
+* To show or hide timetables of students, use `list` command.
 
 ### Viewing help: `help`
 
@@ -200,9 +200,9 @@ Format: `list [timetable]`
 
 <box type="tip" seamless>
 
-**Tip:** By default, timetables of students are not shown.
+**Tip:** The choice of show timetables option will be saved and timetables will remain visible/invisible for subsequent command results. However, the choice will be restored to hiding timetable each time application is relaunched.
 
-**Tip:** To show or hide timetables of students, use `list` command. The choice will be saved and timetables will remain visible/invisible for subsequent command results. However, the choice will be restored to hiding timetable each time application is relaunched.
+</box>
 
 Examples:
 * `list`

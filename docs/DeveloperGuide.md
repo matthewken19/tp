@@ -621,7 +621,7 @@ finding common slots and copying student emails, which showcases our goal of cre
 
 - Adherence to project timelines and deliver the milestones on time.
 
-## **Appendix D: Planner Enhancements**
+## **Appendix D: Planned Enhancements**
 
 Team Size: 6
 1. **Use a better font:** User experience is greatly influenced by font, and choosing the right font can significantly enhance readability, Especially for EduConnect with numeric details of students displayed, the current font causes confusion sometimes. TWe plan to adapt a new font which not only improve the overall appearance of the platform but also contribute to a smoother reading experience for users.

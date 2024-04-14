@@ -133,8 +133,16 @@ EduConnect is a **desktop app for managing student contacts, optimized for use v
 
 * `NAME` allows for dashes numbers and spaces. However, there cannot be 2 consecutive dashes, spaces or a combination of both.<br>
   e.g `John Doe`, `Anne-Marie`, `William-The 3rd`
-
-* `WEBLINK` is used for attaching a student's project in Educonnect. However, the parameter currently accepts any valid website links.<br>
+* `TELEGRAM_HANDLE` should start with `@`, consists of only alphanumeric characters and underscores`_`, have a minimum of 5 characters, and have a minimum of 3 alphanumeric characters.
+* `EMAIL` should be of the format `local-part@domain`, and adhere to the following constraints:
+  * The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (+_.-). The local-part may not start or end with any special characters.
+  * This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
+  * The domain name must:
+    - end with a domain label at least 2 characters long
+    - have each domain label start and end with alphanumeric characters
+    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.
+* `TAG` must start with an alphanumeric character, should only contain alphanumeric characters, spaces and hyphens, and it should not be blank.
+* `WEBLINK` is used for attaching a student's project in Educonnect. The parameter currently accepts any valid website (HTTP or HTTPS) or file transfer protocol (FTP) links, regardless if it is a broken link. If no protocol (`https://` or `ftp://`) is supplied, the link will default `https://`.<br>
   e.g `https://github.com/johndoe/tp`
 
 </box>

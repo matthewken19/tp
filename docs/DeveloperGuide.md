@@ -246,6 +246,38 @@ The inclusion of the `Link` attribute enhances the versatility of EduConnect, en
 * `Link` must be a valid URL, and a validation regex is present to check the validity of the `link`.
 * In scenarios involving group projects, the `Link` attribute need not be unique as group members will share the same project link. Therefore, enforcing uniqueness for the `Link` attribute could lead to unnecessary constraints and complexity.
 
+#### Valid URLs accepted
+The regex used for validating the URL is as shown below:
+
+    ^(?<scheme>(?:ftp|https?):\/\/)?+
+    (?:
+        (?<username>[a-zA-Z][\w-.]{0,31})
+        (?::(?<password>[!-~&&[^@$\n\r]]{6,255}))?
+    @)?
+    (?<subdomain>(?:[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]?\.){0,127})
+    (?<domain>[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9])
+    (?<tld>\.[a-zA-Z]{3,63})
+    (?<cctld>\.[a-zA-Z]{2})?
+    (?<portnumber>:\d{1,5})?
+    (?<path>(?:\/{1,2}[\w-@.~()%]*)*)
+    (?<querystring>\?(?:[\w-%]+=[\w-?/:@.~!$&'()*+,;=%]+(?:&[\w-%]+=[\w-?/:@.~!$&'()*+,;=%]+)*)?)?
+    (?<fragment>#[\w-?/:@.~!$&'()*+,;=%]+)?$
+
+The capture group plan is:
+| Group Number | Group name | Example |
+| ------------ | ---------- | ------- |
+|  1 | scheme      | `ftp://` `http://` `https://`     |
+|  2 | username    | `user` `schooluser`               |
+|  3 | password    | `password123` `PxJmot@S!KL1`      |
+|  4 | subdomain   | `www.` `blog.` `news.`            |
+|  5 | domain      | `google` `youtube` `github`       |
+|  6 | tld         | `.com` `.net` `.org`              |
+|  7 | cctld       | `.sg` `.jp` `.uk` `.de`           |
+|  8 | port        | `:8080` `:443` `:53`              | 
+|  9 | path        | `/article` `/tp/UserGuide.html`   |
+| 10 | querystring | `?q=cat` `?q=pokemon+red&ie=UTF-8`|
+| 11 | fragment    | `#xpointer(//Rube)` `#dfsdf`      |
+
 #### UI implementation
 
 * A student's weblink will be displayed using the JavaFX `Hyperlink` class at `StudentCard.java`. 
